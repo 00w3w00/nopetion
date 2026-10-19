@@ -1,0 +1,58 @@
+.page {
+  min-width: 0;
+}
+.page p {
+  overflow-wrap: anywhere;
+}
+.copyRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.copyRow code {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.copyRow button {
+  flex-shrink: 0;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.create {
+  align-self: flex-start;
+}
+.tokenRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tokenDetails {
+  min-width: 0;
+}
+.name {
+  overflow-wrap: anywhere;
+}
+.tokenRow > button {
+  flex-shrink: 0;
+}
+@media (max-width: 40em) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+  .tokenRow {
+    flex-direction: column;
+  }
+  .copyRow {
+    align-items: flex-start;
+  }
+  .create {
+    width: 100%;
+    min-height: 42px;
+  }
+}

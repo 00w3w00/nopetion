@@ -1,0 +1,1442 @@
+{
+  "checkedAt": "2026-10-12T14:00:53.208Z",
+  "scope": "Original notices from pinned npm package releases or their registry-declared Git commit; no license entitlement or compatibility assertion",
+  "entries": [
+    {
+      "name": "@ai-sdk/provider-utils",
+      "version": "4.0.51",
+      "declaredLicense": "Apache-2.0",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40ai-sdk%2Fprovider-utils/4.0.51",
+          "sha256": "43ed09308c13639323924e48960e4dbe1b6027c2c771b4114c9cab602c6b6bc1",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@ai-sdk/provider-utils/-/provider-utils-4.0.51.tgz",
+          "sha256": "ff1eb9feb6092a42ba6fe0deb0867813c6f64348c920cf36b04317572e5f1170",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_ai-sdk_provider-utils-4.0.51/0-LICENSE",
+          "originalPath": "package/src/to-json-schema/zod3-to-json-schema/LICENSE",
+          "sha256": "6dd0d97acd4d13f4608a0f530f0487e0ff20812888bd1803aecfaaa17ff0f849",
+          "bytes": 777,
+          "source": "https://registry.npmjs.org/@ai-sdk/provider-utils/-/provider-utils-4.0.51.tgz",
+          "scope": "nested notice; may cover a separate third-party component"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "Only nested component notice found; parent package notice remains pending"
+    },
+    {
+      "name": "@atlaskit/platform-feature-flags",
+      "version": "1.1.3",
+      "declaredLicense": "Apache-2.0",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40atlaskit%2Fplatform-feature-flags/1.1.3",
+          "sha256": "cc528ffd2dd56a6dfe29e0de63dd1de85caed05849cfdce8a5d6cfb5cea808d4",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@atlaskit/platform-feature-flags/-/platform-feature-flags-1.1.3.tgz",
+          "sha256": "2450cb83766d02a24faa166b8d8a6b8498a6eee6d78665dbd4fb81e4c4bde0d5",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-http",
+      "version": "3.972.40",
+      "declaredLicense": "Apache-2.0",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40aws-sdk%2Fcredential-provider-http/3.972.40",
+          "sha256": "ca2ab51bc841091074912dcc5ff8f573b063f17d561f55b31019309f6f6ceba7",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@aws-sdk/credential-provider-http/-/credential-provider-http-3.972.40.tgz",
+          "sha256": "e3c3eb8e1a66c815257194aade6d20d0d3edcc6258c1e8e1f1517afe897deebc",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-login",
+      "version": "3.972.42",
+      "declaredLicense": "Apache-2.0",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40aws-sdk%2Fcredential-provider-login/3.972.42",
+          "sha256": "d4137ae8bda5f7cc54c8fbf0b84e469b8e5a10cc9eae21cc6cc21b9beff0f2d0",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@aws-sdk/credential-provider-login/-/credential-provider-login-3.972.42.tgz",
+          "sha256": "b3dbc0c735dd6ef34fa96923a46e5a5b9d4c15964ffb2b8dc2a8b000afb76cd3",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@aws-sdk/nested-clients",
+      "version": "3.997.10",
+      "declaredLicense": "Apache-2.0",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40aws-sdk%2Fnested-clients/3.997.10",
+          "sha256": "898d15a6b4fee698bda82462c8290f9f625bc7f6a6b1131a5db166ef347dbd06",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@aws-sdk/nested-clients/-/nested-clients-3.997.10.tgz",
+          "sha256": "26a973fb43a0708df32a931db1dfbd17bcf76c5bc8107a4cbdf9723f055351c6",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@cfworker/json-schema",
+      "version": "4.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40cfworker%2Fjson-schema/4.1.1",
+          "sha256": "ae474e5b08b09be3c2d8388583eb0b7807c9d80805b7a1172f3eb4f119148d75",
+          "gitHead": "5409fdc2bd144f68e8b28c61c71fcb16600000a6"
+        },
+        {
+          "url": "https://registry.npmjs.org/@cfworker/json-schema/-/json-schema-4.1.1.tgz",
+          "sha256": "f3a8076b450505f0671fa78a6efb5e7726883e2c6dfb13b29261872803610203",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_cfworker_json-schema-4.1.1/0-LICENSE.md",
+          "originalPath": "LICENSE.md",
+          "sha256": "376944252ab78ca6b41aee44ddea8894927ee67891e77e61eb9d59af63e35094",
+          "bytes": 1070,
+          "source": "https://raw.githubusercontent.com/cfworker/cfworker/5409fdc2bd144f68e8b28c61c71fcb16600000a6/LICENSE.md",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@compiled/react",
+      "version": "0.20.0",
+      "declaredLicense": "Apache-2.0",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40compiled%2Freact/0.20.0",
+          "sha256": "9c0788c02e1cfc6abd21357d274af7cd6784e976e2af7b81b04529811d25ae5b",
+          "gitHead": "18fa545617e54a89376d2aeece39702b29f785e7"
+        },
+        {
+          "url": "https://registry.npmjs.org/@compiled/react/-/react-0.20.0.tgz",
+          "sha256": "28b7d782c9850fbae0cc3978b5c47bce1487698b1551191976a291e93ede1a2e",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_compiled_react-0.20.0/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "bf92bedea2fe27aa3f23f2c87fbd747facb7ad536dbf54400b6331ea4fa7851a",
+          "bytes": 11355,
+          "source": "https://raw.githubusercontent.com/atlassian-labs/compiled/18fa545617e54a89376d2aeece39702b29f785e7/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@docmost/pdf-inspector",
+      "version": "1.9.6",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40docmost%2Fpdf-inspector/1.9.6",
+          "sha256": "85efb975d7c996334477ab7a2efb140883b570fd8386e6b3aff9549f66c691ea",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@docmost/pdf-inspector/-/pdf-inspector-1.9.6.tgz",
+          "sha256": "fadd658dfbb4c3f28f290a5a0366c2b536fbbce68cc2acb45c3e1df0cbe349cd",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@epic-web/invariant",
+      "version": "1.0.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40epic-web%2Finvariant/1.0.0",
+          "sha256": "626a2fe84f02c459ef9fb80af05f880f30b30e12a2f5033348faa587accf10d5",
+          "gitHead": "547be2246d3c39f8ca44dd0502b1aa70bf4378af"
+        },
+        {
+          "url": "https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz",
+          "sha256": "6f8058357a552982fc190386b1792bde9d52802022f885e2404cd7fc1ce9862d",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@esbuild/linux-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40esbuild%2Flinux-arm64/0.28.1",
+          "sha256": "c49ede6c7e9c6781badb6b05600746c4519f150d8cc2b793895726c7708f8f07",
+          "gitHead": "bb9db84c02433fbe37b3509f53f9f3e3cc48725e"
+        },
+        {
+          "url": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.28.1.tgz",
+          "sha256": "2145e9e686c95ee47c1181f83f272f0ff95820e52d7736fdcd9eeb106fd6456a",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_esbuild_linux-arm64-0.28.1/0-LICENSE.md",
+          "originalPath": "LICENSE.md",
+          "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681",
+          "bytes": 1069,
+          "source": "https://raw.githubusercontent.com/evanw/esbuild/bb9db84c02433fbe37b3509f53f9f3e3cc48725e/LICENSE.md",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original package/repository notice collected; license scope still requires review"
+    },
+    {
+      "name": "@excalidraw/common",
+      "version": "0.18.0-3a5ef40",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40excalidraw%2Fcommon/0.18.0-3a5ef40",
+          "sha256": "cb6e9720a50e1133bb6076aaf49754c14e4a0244d07577e949c7ae8bacf93120",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@excalidraw/common/-/common-0.18.0-3a5ef40.tgz",
+          "sha256": "cb5dfa0c8d97cb5812c0cd13ed063196cde77d5abb7cad517ea0a7c86b10fb21",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "@excalidraw_common-0.18.0-3a5ef40/repository-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+          "bytes": 1067,
+          "source": "https://raw.githubusercontent.com/excalidraw/excalidraw/3a5ef40/LICENSE",
+          "scope": "repository root at release reference",
+          "referenceEvidence": "commit suffix in npm version"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original repository notice collected at release reference; not a blanket binary distribution clearance"
+    },
+    {
+      "name": "@excalidraw/element",
+      "version": "0.18.0-3a5ef40",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40excalidraw%2Felement/0.18.0-3a5ef40",
+          "sha256": "e9c5d42b6d53fda76b8b5d4aae89653775bf0f244a1f260980d127df22926120",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@excalidraw/element/-/element-0.18.0-3a5ef40.tgz",
+          "sha256": "332c3b7da1715664b01f5135f7a3acfd3af2d72635619859b7f8a04d21393815",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "@excalidraw_element-0.18.0-3a5ef40/repository-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+          "bytes": 1067,
+          "source": "https://raw.githubusercontent.com/excalidraw/excalidraw/3a5ef40/LICENSE",
+          "scope": "repository root at release reference",
+          "referenceEvidence": "commit suffix in npm version"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original repository notice collected at release reference; not a blanket binary distribution clearance"
+    },
+    {
+      "name": "@excalidraw/excalidraw",
+      "version": "0.18.0-3a5ef40",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40excalidraw%2Fexcalidraw/0.18.0-3a5ef40",
+          "sha256": "86057413257c1128d6abdb6d19d101c81887101957e8bd0d23cb4b91675a6828",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@excalidraw/excalidraw/-/excalidraw-0.18.0-3a5ef40.tgz",
+          "sha256": "088eaebf465e0d7b4b2e2a741ee18b9c38a03079e016f19e4425d700020a87ad",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "@excalidraw_excalidraw-0.18.0-3a5ef40/repository-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+          "bytes": 1067,
+          "source": "https://raw.githubusercontent.com/excalidraw/excalidraw/3a5ef40/LICENSE",
+          "scope": "repository root at release reference",
+          "referenceEvidence": "commit suffix in npm version"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original repository notice collected at release reference; not a blanket binary distribution clearance"
+    },
+    {
+      "name": "@excalidraw/math",
+      "version": "0.18.0-3a5ef40",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40excalidraw%2Fmath/0.18.0-3a5ef40",
+          "sha256": "f03ef07061cad0587aaac7a1620029c81a372fa24dd6e2a89e31abea01f3c0c8",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@excalidraw/math/-/math-0.18.0-3a5ef40.tgz",
+          "sha256": "f274da5971b5b84d994eae59282ab767b995294461c65a95a55a477e65ec440a",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "@excalidraw_math-0.18.0-3a5ef40/repository-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+          "bytes": 1067,
+          "source": "https://raw.githubusercontent.com/excalidraw/excalidraw/3a5ef40/LICENSE",
+          "scope": "repository root at release reference",
+          "referenceEvidence": "commit suffix in npm version"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original repository notice collected at release reference; not a blanket binary distribution clearance"
+    },
+    {
+      "name": "@msgpackr-extract/msgpackr-extract-linux-arm64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40msgpackr-extract%2Fmsgpackr-extract-linux-arm64/3.0.4",
+          "sha256": "a0f7c3dac3cec2857878ad488aa15727c569d034899b142fab7e1be452ec7175",
+          "gitHead": "71def7bd969e5c88d2c918e0d81ee2ba3155d19c"
+        },
+        {
+          "url": "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-arm64/-/msgpackr-extract-linux-arm64-3.0.4.tgz",
+          "sha256": "f06a803a1d4db5c2baf6c4280c8e4756744f0b9eb5edea025c5d3fd976d51c7a",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_msgpackr-extract_msgpackr-extract-linux-arm64-3.0.4/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "d00470775464c789c7ac04cfba3bf1b79ef149790eb72556d1c51d8f50c8e7f3",
+          "bytes": 1065,
+          "source": "https://raw.githubusercontent.com/kriszyp/msgpackr-extract/71def7bd969e5c88d2c918e0d81ee2ba3155d19c/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original package/repository notice collected; license scope still requires review"
+    },
+    {
+      "name": "@nest-lab/throttler-storage-redis",
+      "version": "1.2.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40nest-lab%2Fthrottler-storage-redis/1.2.0",
+          "sha256": "4a78178aa4a2dcf677b21342f8afb66bdf2a08fe7b84315804535adc6106dd8e",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@nest-lab/throttler-storage-redis/-/throttler-storage-redis-1.2.0.tgz",
+          "sha256": "889ef25231cd7d1a8bfbcc52ff941075c6536fc2cd09b3c0cafb5591656782f2",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@nodable/entities",
+      "version": "2.1.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40nodable%2Fentities/2.1.0",
+          "sha256": "be4bbdb8c0c1a138eaca933f299aea88b528385d4b03d1e54e275d188279ae3a",
+          "gitHead": "f1c61a65e7b967c17b13822ef71e91bd25f17ce2"
+        },
+        {
+          "url": "https://registry.npmjs.org/@nodable/entities/-/entities-2.1.0.tgz",
+          "sha256": "9c864305f59a18ece5505610859e3308bd0c2250562f1d1f9ce9a8ea3be3518d",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_nodable_entities-2.1.0/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "750cb3fb6362804957ef52caaf9b5c824015be44d494637330d7cd8834d31d40",
+          "bytes": 1064,
+          "source": "https://raw.githubusercontent.com/nodable/val-parsers/f1c61a65e7b967c17b13822ef71e91bd25f17ce2/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@posthog/core",
+      "version": "1.35.3",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40posthog%2Fcore/1.35.3",
+          "sha256": "2412dd57b56d1ecb2b3e9444991713a69a20bcfcaa8a061950898145b9f91e20",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/@posthog/core/-/core-1.35.3.tgz",
+          "sha256": "bd8e85377225ab7426646c00e173359447349f0b5cfa416d0b400a7b19036ee8",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "@posthog_core-1.35.3/repository-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0a0f714f9707cb4b46bfcb609bc1789e561b9e03a35e1f36b1aa56bee3a126e6",
+          "bytes": 18445,
+          "source": "https://raw.githubusercontent.com/PostHog/posthog-js/b0bd00ff7279fdb3f3bc9c993e7fc2f24710c50e/LICENSE",
+          "scope": "repository root at release reference",
+          "referenceEvidence": "npm version tag @posthog/core@1.35.3"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original repository notice collected at release reference; not a blanket binary distribution clearance"
+    },
+    {
+      "name": "@radix-ui/number",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Fnumber/1.1.1",
+          "sha256": "e875c8bb712400f19455d1091c9899a9dd3432c9e26b2e1c49a5713830b45724",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/number/-/number-1.1.1.tgz",
+          "sha256": "4c8cfcc6bc5d3b7e358e0889ea38dde6faba009c23b10fd74313a04a8a94aebb",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_number-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-compose-refs",
+      "version": "1.1.2",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-compose-refs/1.1.2",
+          "sha256": "a2446f7b24a5ea03f100d759c2daefe2379e4178e5415e860289272e28934e1a",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-compose-refs/-/react-compose-refs-1.1.2.tgz",
+          "sha256": "a3417c6290a04dd4dc34a8ce6b17be86da6c6a7d7455c5f47e16d7911777169f",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-compose-refs-1.1.2/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-context",
+      "version": "1.1.2",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-context/1.1.2",
+          "sha256": "6fd61b601379b5524b15412f969e15ee0f417adb1309066f7d08e0de1a604991",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-context/-/react-context-1.1.2.tgz",
+          "sha256": "f1ed108c0bf1896d19f7b695d882e0b9dddb23b1526eca6409e8b48149b8c934",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-context-1.1.2/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-direction",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-direction/1.1.1",
+          "sha256": "312575db7a0feb75ab28b4d3b32ca125c532c93647b45e5a1b00ea4774e0c617",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-direction/-/react-direction-1.1.1.tgz",
+          "sha256": "5eb20a248a5900771e69a4d2d42dfaa91c44826f9a82220572e1a3164c0131c4",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-direction-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-id",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-id/1.1.1",
+          "sha256": "742d8093c9e3e95a97a3316b3deb560999385ccf284bd76da89d146b924aaefb",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-id/-/react-id-1.1.1.tgz",
+          "sha256": "a10d67becad6bc10846f9bc0a79e4a15a285eadca6eae4d88d06bea5586bcafb",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-id-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-use-callback-ref",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-use-callback-ref/1.1.1",
+          "sha256": "0a546529f2c55f3ab884ab2be3bdb6fbd3c3d8ce34a5551662f5da484603731c",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-use-callback-ref/-/react-use-callback-ref-1.1.1.tgz",
+          "sha256": "1c155d182c8a65220235aec52112944128866fb9524f5406203c47cd01c9a74b",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-use-callback-ref-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-use-escape-keydown",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-use-escape-keydown/1.1.1",
+          "sha256": "c95cb6d978674c6b5f2fb21773f52a0875bcc89d7ba0b88251ad99d0c1d36593",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-use-escape-keydown/-/react-use-escape-keydown-1.1.1.tgz",
+          "sha256": "dc1121b1b1793279880daecfa04230de411404c8e9ac849c1d1c8714dd013e33",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-use-escape-keydown-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-use-layout-effect",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-use-layout-effect/1.1.1",
+          "sha256": "680e00911e47a18faae7cf93c18675483730ed86a56d89c586764617d3ef904d",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-use-layout-effect/-/react-use-layout-effect-1.1.1.tgz",
+          "sha256": "fc152ce4e230913604de541dfa46af95e4c13d60e92640407a973b81272b51a7",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-use-layout-effect-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-use-previous",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-use-previous/1.1.1",
+          "sha256": "67f4e86a54423adaa295e8322b339df4128c8fc55efd407f99f61698c9f414e4",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-use-previous/-/react-use-previous-1.1.1.tgz",
+          "sha256": "6822dd3497b440baf5254cd13dce70c192ac2961759f4e88bc66dcc216adf1d8",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-use-previous-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-use-rect",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-use-rect/1.1.1",
+          "sha256": "e8c550260e1317bc3d072180702bdad3628edb538bdfa70f7ec0b5dc4b603345",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-use-rect/-/react-use-rect-1.1.1.tgz",
+          "sha256": "8a9cd8d9a2f962dd65ee2bc31fa874738aa7b778c8dd46810f8ce8ece78aabc6",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-use-rect-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/react-use-size",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Freact-use-size/1.1.1",
+          "sha256": "f04bb6982b6f50a527edc9276e8dc5efe0658ff8870f979548a9dbc40d66d8b0",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/react-use-size/-/react-use-size-1.1.1.tgz",
+          "sha256": "c939dd43081637e69a7033e6a0e23ace43bc3edc2dbd2cb26b27fddcd80a6bbb",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_react-use-size-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@radix-ui/rect",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40radix-ui%2Frect/1.1.1",
+          "sha256": "7d27c80b1fa7214073631efb6690bba9da859446362573cb9b40845c7e0a7c3e",
+          "gitHead": "fcef0668a5c827e5a4baac405474d75680f9a4eb"
+        },
+        {
+          "url": "https://registry.npmjs.org/@radix-ui/rect/-/rect-1.1.1.tgz",
+          "sha256": "4a541ef9b63826a44e1d500a5a10e80f70d2934286156d73a8143d7e17f557af",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_radix-ui_rect-1.1.1/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+          "bytes": 1063,
+          "source": "https://raw.githubusercontent.com/radix-ui/primitives/fcef0668a5c827e5a4baac405474d75680f9a4eb/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@redis/client",
+      "version": "5.11.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40redis%2Fclient/5.11.0",
+          "sha256": "c69feb1331d04cb64745c9546aedc1b21ffd98e95b1fbad836b4ad9d388f79f9",
+          "gitHead": "09c2020a07ed51b5947b39da7974ab1117f1e573"
+        },
+        {
+          "url": "https://registry.npmjs.org/@redis/client/-/client-5.11.0.tgz",
+          "sha256": "901ecadbe87d0a86c586ec444b92632af78f2b9271e778e032e19379e9ddbe68",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_redis_client-5.11.0/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "a57b250a5bf03d7afe55b74063313f2adb7b00d546c0ab149a89398333fe3cc8",
+          "bytes": 1074,
+          "source": "https://raw.githubusercontent.com/redis/node-redis/09c2020a07ed51b5947b39da7974ab1117f1e573/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "@statsig/client-core",
+      "version": "3.33.0",
+      "declaredLicense": "ISC",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40statsig%2Fclient-core/3.33.0",
+          "sha256": "d5fbeb07adce66778749511f701a8ba348a9140f57939e63c88d229d24c57b70",
+          "gitHead": "464013ded43d3e23f3d780b7a897e99698400435"
+        },
+        {
+          "url": "https://registry.npmjs.org/@statsig/client-core/-/client-core-3.33.0.tgz",
+          "sha256": "784dc7fd720f72aa8709f1b749caacc3e428a2c27f0a388a83eba49481968537",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_statsig_client-core-3.33.0/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "27cc00620b2a268e83c28709e19c28228d32cda69f4d7c62ffb09d4ed3822075",
+          "bytes": 750,
+          "source": "https://raw.githubusercontent.com/statsig-io/js-client-monorepo/464013ded43d3e23f3d780b7a897e99698400435/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "abstract-logging",
+      "version": "2.0.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/abstract-logging/2.0.1",
+          "sha256": "abe9ef6d311721b8b8eb17083f8d39e22a484c0aff2c20f403e573ebda376a86",
+          "gitHead": "80dfaef91ee87008f4ed2b6e78921d383bccd406"
+        },
+        {
+          "url": "https://registry.npmjs.org/abstract-logging/-/abstract-logging-2.0.1.tgz",
+          "sha256": "9a2ab6159e9d3b04e10f1536fab762d18e09d353941a298171e57b6e25640994",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "agent-base",
+      "version": "6.0.2",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/agent-base/6.0.2",
+          "sha256": "b4670f909dc2ae3092fee34a0c817e721ca1a6a85b3735d748e8ac78228146a0",
+          "gitHead": "c4b8ea2e1a11bae023bb09b708050a50418204e9"
+        },
+        {
+          "url": "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz",
+          "sha256": "bc6da06f2a2e6bc80fa5878bd7227bd0318812976d45f47f17e1aafcec2be831",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "boolbase",
+      "version": "1.0.0",
+      "declaredLicense": "ISC",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/boolbase/1.0.0",
+          "sha256": "cdbdd0892df76fdcb117aa6c87cef12aeb99225cb90b8e12f182f3f6f1efce3b",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz",
+          "sha256": "69628ff8092c5ff940ea4a0f29da98d520615bae138755c9e059033606c6caa8",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "brotli",
+      "version": "1.3.3",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/brotli/1.3.3",
+          "sha256": "03215eaf7ebdddf56c0e58a673dee6323dadd502977ba68e259e3787a68d71d1",
+          "gitHead": "e36051345f6d27a56e5f39ea70d2f789b8574046"
+        },
+        {
+          "url": "https://registry.npmjs.org/brotli/-/brotli-1.3.3.tgz",
+          "sha256": "3c7c260f6263df95fee49a9119e9fd21227d628b6c9d99080a75edfd9e2bdb24",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "dfa",
+      "version": "1.2.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/dfa/1.2.0",
+          "sha256": "a2f3f0a273f863856ae1b059c7e9f8c78d1b61ded01183e1972d8d404640720c",
+          "gitHead": "3f5e603e5082caedabefefdf53e8a6ca3111e966"
+        },
+        {
+          "url": "https://registry.npmjs.org/dfa/-/dfa-1.2.0.tgz",
+          "sha256": "d781eb3a307ab6aa2d97028f695b17dbeadf6fd27788c333b1fb96d18d2a23ad",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "dingbat-to-unicode",
+      "version": "1.0.1",
+      "declaredLicense": "BSD-2-Clause",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/dingbat-to-unicode/1.0.1",
+          "sha256": "5192c0af98c550b44c0fc8b95d56ba450e3e399f01aa8859e120ea7a8af86921",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/dingbat-to-unicode/-/dingbat-to-unicode-1.0.1.tgz",
+          "sha256": "e3360a80e59952789ca59b499dd443796a43a698c3b45d5ae3a3dfb2bef9560a",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "fontkit",
+      "version": "2.0.4",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/fontkit/2.0.4",
+          "sha256": "9ea7331f4966d58d4e22ce978f7c665a7715c2e45e023a758a20a98dfd2c5493",
+          "gitHead": "fbf3b9ef21eebd219eb73e666faed573af0fba09"
+        },
+        {
+          "url": "https://registry.npmjs.org/fontkit/-/fontkit-2.0.4.tgz",
+          "sha256": "f686a9515af33fce16ab4bffe50570728197e53165068548c6f75a1793797a08",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "html-parse-stringify",
+      "version": "3.0.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/html-parse-stringify/3.0.1",
+          "sha256": "02983650726c4881367a3034c1c8bd58ef7b8b40b7f60f0ea3e9e29b63575284",
+          "gitHead": "ce46022f537ef9b050fac592f9fcc30bf838e5ba"
+        },
+        {
+          "url": "https://registry.npmjs.org/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz",
+          "sha256": "12a1b9963491eddca3f60f22983653729f506919877688b82c967ac04f3c9f0a",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "5.0.1",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/https-proxy-agent/5.0.1",
+          "sha256": "9ed34fec5e4151933a940a610a49aa084fbf625f5f43fd5d841f4ecc64e0d08b",
+          "gitHead": "d0d80cc0482f20495aa8595f802e1a9f3b1b3409"
+        },
+        {
+          "url": "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz",
+          "sha256": "6da16fb44331f2e5d30bd21bf880aa934c1ad4fe7da7187910ef2b2509712019",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "js-tiktoken",
+      "version": "1.0.21",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/js-tiktoken/1.0.21",
+          "sha256": "80f6cafd48180ea6b93f6548e70bdfc6d40b6ecf5371e1c744571b6ac3e93dfc",
+          "gitHead": "4c8b748e07992c00386f3180af5c574b27b65139"
+        },
+        {
+          "url": "https://registry.npmjs.org/js-tiktoken/-/js-tiktoken-1.0.21.tgz",
+          "sha256": "3b1f24b185565ca9a8d8f51466dfc4f99d67f1f05bc009258710ddb7a8d810fa",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "js-tiktoken-1.0.21/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "418cb499b436128d653d79941333a5437b7be2ea9213dcc2f04d15d5d2c51d86",
+          "bytes": 1078,
+          "source": "https://raw.githubusercontent.com/dqbd/tiktoken/4c8b748e07992c00386f3180af5c574b27b65139/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "langsmith",
+      "version": "0.8.9",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/langsmith/0.8.9",
+          "sha256": "78441958d8171b53d131c016bd2dd3eb6efd387670bb4eb80998bbba504edf75",
+          "gitHead": "7ddda3c20b2338fdb0abc7ef49e9f445b8d07c79"
+        },
+        {
+          "url": "https://registry.npmjs.org/langsmith/-/langsmith-0.8.9.tgz",
+          "sha256": "5da75c172648e9a4f5b7112ef55dcb35631b192d319ebf759b145129f0af5234",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "langsmith-0.8.9/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "34e0b9842c7a31d34e53bc7eb224e81e07a34996106e029bbc72dea2d449f496",
+          "bytes": 1066,
+          "source": "https://raw.githubusercontent.com/langchain-ai/langsmith-sdk/7ddda3c20b2338fdb0abc7ef49e9f445b8d07c79/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "pg-tsquery",
+      "version": "8.4.2",
+      "declaredLicense": "ISC",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/pg-tsquery/8.4.2",
+          "sha256": "87bb0f9786fab95c6b21e329222cae50817668aadff199ef05140868d24895c5",
+          "gitHead": "3292b07ed42362897aa5829e24fb4ae26767e685"
+        },
+        {
+          "url": "https://registry.npmjs.org/pg-tsquery/-/pg-tsquery-8.4.2.tgz",
+          "sha256": "cc476968d6dc21213b6b26473f6bb0e4dac543f09f24bcf044d7f1238d9ba853",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "postgres",
+      "version": "3.4.8",
+      "declaredLicense": "Unlicense",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/postgres/3.4.8",
+          "sha256": "e0cd008877bd621ac71bc1eb258f5debb4cb1be819ddf6e4f60cf83a205d9e63",
+          "gitHead": "5c8135f3df1bb10e7aad10f14a6f084db3724f82"
+        },
+        {
+          "url": "https://registry.npmjs.org/postgres/-/postgres-3.4.8.tgz",
+          "sha256": "de07f53cafeb0d75e872edf807eaa811e1741647df046966a9984a49f1eff74d",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "postgres-3.4.8/0-UNLICENSE",
+          "originalPath": "UNLICENSE",
+          "sha256": "b5065838cbac452dfc855ba6e6e031481ad2c68406f70d21ead9321374653e6c",
+          "bytes": 1212,
+          "source": "https://raw.githubusercontent.com/porsager/postgres/5c8135f3df1bb10e7aad10f14a6f084db3724f82/UNLICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "react-remove-scroll-bar",
+      "version": "2.3.8",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/react-remove-scroll-bar/2.3.8",
+          "sha256": "826c618ece09367334160c1ab3a272fd54f8f12e3b0a45f75b0f2660d285855a",
+          "gitHead": "b3b1287aad81def2e2ae707274b74531b61ddbaf"
+        },
+        {
+          "url": "https://registry.npmjs.org/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.8.tgz",
+          "sha256": "ccc872d7a2dc007cbf9d755f30d56b8d80eabdbe22c44c95a709129bfdc46f01",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "rfc6902",
+      "version": "5.2.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/rfc6902/5.2.0",
+          "sha256": "cd5139fce4537b4701e94395c99d45e0f7a8c34a727402a048ce5d63c854c527",
+          "gitHead": "3d78e63e6e8d28a8c9d27e57c17df31aeb3a4a13"
+        },
+        {
+          "url": "https://registry.npmjs.org/rfc6902/-/rfc6902-5.2.0.tgz",
+          "sha256": "b7502d84beb83fbc238fb337cfc41548ed7fc0ea36e85f010c28a6cc8a2f2608",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "saxes",
+      "version": "6.0.0",
+      "declaredLicense": "ISC",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/saxes/6.0.0",
+          "sha256": "49e633171169d15e096b3a85f976a723bfcd25f97d2d63915901e0990b0e8c42",
+          "gitHead": "211fa0ebec9b628affc09219199639887174bfc3"
+        },
+        {
+          "url": "https://registry.npmjs.org/saxes/-/saxes-6.0.0.tgz",
+          "sha256": "1cdf52fbbe1ccbd175c365d2b8e63f46e590e74aff23fa6a44a6ec51522e96db",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "saxes-6.0.0/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "0fac2374380621b22e6b50451057721a9c52935b02d16d106a9f04897f061d0e",
+          "bytes": 3011,
+          "source": "https://raw.githubusercontent.com/lddubeau/saxes/211fa0ebec9b628affc09219199639887174bfc3/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "status": "Original package/repository notice collected; license scope still requires review",
+      "hasPackageLevelNotice": true
+    },
+    {
+      "name": "strict-event-emitter-types",
+      "version": "2.0.0",
+      "declaredLicense": "ISC",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/strict-event-emitter-types/2.0.0",
+          "sha256": "ed3bce991ae96f0587cb81cfdb1529092c742274d7389a4d84135d73218ea85a",
+          "gitHead": "9887607114d84758c587d53034e5da81892e8654"
+        },
+        {
+          "url": "https://registry.npmjs.org/strict-event-emitter-types/-/strict-event-emitter-types-2.0.0.tgz",
+          "sha256": "c9458b065f67d8114bf60f928df5ddea77aa1c31d64c0363bbca78ac55f65ff6",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "tmp-promise",
+      "version": "3.0.3",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/tmp-promise/3.0.3",
+          "sha256": "97fc9d1761795c32dad0a76fea26b8cff2034be1b94c96a2d04731ba375f8a7a",
+          "gitHead": "7a9d92612d24791664669596c2705313d459ce7f"
+        },
+        {
+          "url": "https://registry.npmjs.org/tmp-promise/-/tmp-promise-3.0.3.tgz",
+          "sha256": "9d884c25141e44a44d893b2f6b80e5ebc5ae8a34a4bff9084f19880e74bbc9d9",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "tr46",
+      "version": "0.0.3",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/tr46/0.0.3",
+          "sha256": "c20d82a358f998dd564519689765373451149661ebfca1040450f0fdf180878f",
+          "gitHead": "a8009f9ce80ff5dbe71dd71e203afe4e4c878d28"
+        },
+        {
+          "url": "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz",
+          "sha256": "164ae1eb32cea353551bbc7f9358dcaae4ffabbe65ec37a92ca464a9570a2a0a",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "truncate-utf8-bytes",
+      "version": "1.0.2",
+      "declaredLicense": "WTFPL",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/truncate-utf8-bytes/1.0.2",
+          "sha256": "0aef45ca35d1716e9f9e22df59bba486d3e4196cd45561efce3514d23e91bedf",
+          "gitHead": "c8fcebc8be093c8bd8db1e7d75c09b9fce7e4708"
+        },
+        {
+          "url": "https://registry.npmjs.org/truncate-utf8-bytes/-/truncate-utf8-bytes-1.0.2.tgz",
+          "sha256": "317ae6326a50e6c63b6325e9d7d90881382fd22b6351c546c3f36be58eabeb64",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "utf8-byte-length",
+      "version": "1.0.4",
+      "declaredLicense": "WTFPL",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/utf8-byte-length/1.0.4",
+          "sha256": "fe6791d9a46a212d8a6f634a85965e8b735eb62e0604639d28843b361b69210b",
+          "gitHead": "c369b9b4e23ac288fcce9a2aa8fe588fed3b7d4d"
+        },
+        {
+          "url": "https://registry.npmjs.org/utf8-byte-length/-/utf8-byte-length-1.0.4.tgz",
+          "sha256": "ff90ea289b9057204d708b0f06d4d9444a06712c087367d68d891ff9f88cc1c7",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "xml-naming",
+      "version": "0.1.0",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/xml-naming/0.1.0",
+          "sha256": "a72e78794e6d9776bce443711ab1768320cf9b1af9369ea67ffbbc255472f828",
+          "gitHead": null
+        },
+        {
+          "url": "https://registry.npmjs.org/xml-naming/-/xml-naming-0.1.0.tgz",
+          "sha256": "19347cbcba429e9f240427ce4e5998efe30a47cb9131b5673fc2f0441f7f4f57",
+          "integrityVerified": true
+        }
+      ],
+      "files": [],
+      "attempts": [],
+      "hasPackageLevelNotice": false,
+      "status": "No full notice located at pinned release/commit"
+    },
+    {
+      "name": "@msgpackr-extract/msgpackr-extract-linux-x64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "sources": [
+        {
+          "url": "https://registry.npmjs.org/%40msgpackr-extract%2Fmsgpackr-extract-linux-x64/3.0.4",
+          "sha256": "7897122e07b0b002ae08f9a9ee6a34a60743bf1c3945e144494fca03c6c08566",
+          "gitHead": "71def7bd969e5c88d2c918e0d81ee2ba3155d19c"
+        },
+        {
+          "url": "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-x64/-/msgpackr-extract-linux-x64-3.0.4.tgz",
+          "sha256": "f37705c0b60e61086acfa00e6ad37b27ba0cc6fcea88a6015970a18ea123cbe3",
+          "integrityVerified": true
+        }
+      ],
+      "files": [
+        {
+          "file": "_msgpackr-extract_msgpackr-extract-linux-x64-3.0.4/0-LICENSE",
+          "originalPath": "LICENSE",
+          "sha256": "d00470775464c789c7ac04cfba3bf1b79ef149790eb72556d1c51d8f50c8e7f3",
+          "bytes": 1065,
+          "source": "https://raw.githubusercontent.com/kriszyp/msgpackr-extract/71def7bd969e5c88d2c918e0d81ee2ba3155d19c/LICENSE",
+          "scope": "repository root at release commit"
+        }
+      ],
+      "attempts": [],
+      "hasPackageLevelNotice": true,
+      "status": "Original package/repository notice collected; license scope still requires review"
+    }
+  ],
+  "summary": {
+    "requested": 55,
+    "collected": 30,
+    "packageLevelNotices": 29,
+    "pendingPackageNotices": 26
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "html-parse-stringify",
+  "version": "3.0.1",
+  "declaredLicense": "MIT",
+  "author": {
+    "name": "Henrik Joreteg",
+    "email": "henrik@joreteg.com"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+https://github.com/henrikjoreteg/html-parse-stringify.git",
+    "type": "git"
+  },
+  "gitHead": "ce46022f537ef9b050fac592f9fcc30bf838e5ba",
+  "publisherMetadataUrl": "https://registry.npmjs.org/html-parse-stringify/3.0.1",
+  "publisherMetadataSha256": "02983650726c4881367a3034c1c8bd58ef7b8b40b7f60f0ea3e9e29b63575284",
+  "releaseArchive": "https://registry.npmjs.org/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz",
+  "archiveSha256": "12a1b9963491eddca3f60f22983653729f506919877688b82c967ac04f3c9f0a",
+  "integrity": "sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

@@ -1,0 +1,231 @@
+.document {
+  max-width: 900px;
+  padding: 71px var(--nopetion-page-padding, 16px) 160px;
+  margin: 0 auto;
+  min-height: calc(100dvh - 45px);
+  width: 100%;
+  color: light-dark(#37352f, #e7e7e5);
+}
+.document[data-full-width="true"] {
+  max-width: none;
+}
+.document :global(.ProseMirror) {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.document :global(.page-title .ProseMirror h1) {
+  font-size: 40px;
+  font-weight: 720;
+  line-height: 1.3;
+  letter-spacing: -1.2px;
+  margin: 0 0 19px;
+  padding: 0;
+}
+.document :global(.page-title .ProseMirror) {
+  margin: 0;
+}
+.document :global(.page-title) {
+  margin: 0;
+}
+.document :global(.ProseMirror h1:not(.page-title h1)) {
+  font-size: 30px;
+}
+.document :global(.ProseMirror h2) {
+  font-size: 24px;
+}
+.document :global(.ProseMirror h3) {
+  font-size: 20px;
+}
+.document :global(.ProseMirror h4) {
+  font-size: 18px;
+}
+.decoration {
+  margin-bottom: 8px;
+}
+.pageIcon {
+  border: 0;
+  background: transparent;
+  height: 100px;
+  font-size: 70px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: light-dark(#c9c9c5, #70706e);
+  cursor: pointer;
+}
+.pageIcon:disabled {
+  cursor: default;
+}
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 26px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  margin-top: -4px;
+}
+.decoration:hover .tools,
+.decoration:focus-within .tools {
+  opacity: 1;
+}
+.tools button {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  padding: 3px 4px;
+  font-size: 12px;
+  color: light-dark(#91918e, #a0a09a);
+  cursor: pointer;
+}
+.tools button:hover {
+  background: light-dark(#37352f0e, #ffffff0e);
+}
+.cover {
+  height: 204px;
+  position: relative;
+  margin-bottom: -40px;
+}
+.coverActions {
+  position: absolute;
+  right: 20px;
+  bottom: 12px;
+}
+.coverImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.coverError {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+}
+.coverSwatch {
+  border: 0;
+  border-radius: 4px;
+  width: 48px;
+  height: 34px;
+  cursor: pointer;
+}
+@media (max-width: 48em) {
+  .document {
+    padding: 34px var(--nopetion-page-padding, 16px) 120px;
+  }
+  .document :global(.page-title .ProseMirror h1) {
+    font-size: 32px;
+  }
+  .pageIcon {
+    height: 82px;
+    font-size: 60px;
+  }
+  .tools {
+    opacity: 1;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .cover {
+    height: 150px;
+  }
+}
+@media print {
+  .document {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tools,
+  .coverActions {
+    display: none;
+  }
+}
+.document[data-document-font="serif"] {
+  font-family: Georgia, "Noto Serif", serif;
+}
+.document[data-document-font="mono"] {
+  font-family: "SFMono-Regular", Consolas, "Noto Sans Mono", monospace;
+}
+.document[data-small-text="true"] :global(.ProseMirror) {
+  font-size: 14px;
+}
+.document :global([data-callout-style="info"] .mantine-Alert-root),
+.document :global([data-callout-style="default"] .mantine-Alert-root) {
+  background: light-dark(#f7f6f4, #ffffff0d);
+  padding: 12px 16px;
+}
+.document :global(ul[data-type="taskList"] li[data-checked="true"] p) {
+  text-decoration: line-through;
+  color: light-dark(#aaa9a5, #777773);
+}
+
+/* Personal block rhythm follows the measured 16px / 24px Notion body. */
+.document :global(.editor-container .ProseMirror > * + *) {
+  margin-top: 2px;
+}
+.document :global(.editor-container .ProseMirror p) {
+  margin-block: 0;
+  padding-block: 3px;
+}
+.document :global(.editor-container .ProseMirror h1),
+.document :global(.editor-container .ProseMirror h2),
+.document :global(.editor-container .ProseMirror h3),
+.document :global(.editor-container .ProseMirror h4) {
+  padding-block: 3px;
+  margin-bottom: 1px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.document :global(.editor-container .ProseMirror h1) {
+  margin-top: 30px;
+}
+.document :global(.editor-container .ProseMirror h2) {
+  margin-top: 24px;
+}
+.document :global(.editor-container .ProseMirror h3),
+.document :global(.editor-container .ProseMirror h4) {
+  margin-top: 18px;
+}
+.document :global(.editor-container .ProseMirror ul),
+.document :global(.editor-container .ProseMirror ol) {
+  margin-block: 2px;
+  padding-left: 28px;
+}
+.document :global(.editor-container .ProseMirror li) {
+  margin-block: 0;
+}
+.document :global(.editor-container .ProseMirror ul[data-type="taskList"]) {
+  padding-left: 0;
+}
+.document :global(.editor-container .ProseMirror li > label) {
+  padding-top: 5px;
+  margin-right: 9px;
+}
+.document :global(.editor-container .ProseMirror input[type="checkbox"]) {
+  width: 16px;
+  height: 16px;
+  accent-color: #2383e2;
+}
+.document :global(.editor-container .ProseMirror blockquote) {
+  margin-block: 4px;
+  border-left: 3px solid currentColor;
+  padding-left: 14px;
+}
+.document :global(.editor-container .ProseMirror hr) {
+  margin-block: 14px;
+  border-color: light-dark(#e9e9e7, #ffffff20);
+}
+.document :global(.editor-container .ProseMirror .react-renderer) {
+  margin-block: 4px;
+}
+.document :global(.editor-container .ProseMirror [data-type="details"]) {
+  margin-block: 2px;
+}

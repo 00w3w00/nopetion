@@ -1,0 +1,15 @@
+{
+  "scope": "Exportez le document actuel et les sous-pages sélectionnées dans un seul PDF. Les images PNG/JPEG importées sont incluses ; les blocs non pris en charge sont signalés.",
+  "wait": "Attendez que le document et le titre soient enregistrés, puis réessayez.",
+  "failed": "Échec de l’export PDF. Vérifiez l’accès au document et aux pièces jointes, puis réessayez.",
+  "subpages": "Sous-pages à fusionner",
+  "order": "Le document actuel apparaît en premier, puis les pages cochées dans l’ordre de l’arborescence. Chaque document commence sur une nouvelle page.",
+  "loading": "Chargement des sous-pages…",
+  "loadFailed": "Impossible de charger les sous-pages. Exportez uniquement le document actuel ou réessayez.",
+  "retry": "Réessayer",
+  "noSubpages": "Aucune sous-page exportable.",
+  "selectAll": "Tout sélectionner",
+  "clearSelection": "Effacer la sélection",
+  "selected": "{{count}} sélectionnées",
+  "limit": "Sélectionnez au maximum {{count}} sous-pages."
+}

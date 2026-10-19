@@ -1,0 +1,111 @@
+.header,
+.navbar,
+.aside {
+  background-color: light-dark(#f6f7f9, var(--mantine-color-dark-8));
+}
+
+.navbar,
+.aside {
+  @media (max-width: $mantine-breakpoint-sm) {
+    width: 350px;
+  }
+}
+
+.aside {
+  @media (max-width: $mantine-breakpoint-sm) {
+    width: 100%;
+    top: var(--app-shell-header-height, 45px);
+    height: calc(100dvh - var(--app-shell-header-height, 45px));
+    margin-top: 0;
+    padding: 0;
+  }
+}
+
+.personalAiAside {
+  background: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-7)
+  );
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    width: 100%;
+    top: var(--app-shell-header-height, 45px);
+    height: calc(100dvh - var(--app-shell-header-height, 45px));
+    margin-top: 0;
+  }
+}
+
+.sidebarContent {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.main {
+  --nopetion-page-padding: 16px;
+}
+
+/* Route containers share one gutter, without centered width limits. */
+.main > :global(.mantine-Container-root) {
+  max-width: none;
+  width: 100%;
+  padding-inline: var(--nopetion-page-padding);
+}
+
+.settingsContent { min-width: 0; padding-block: 20px 80px; }
+@media (max-width: 48em) {
+  .settingsContent { padding-top: 12px; }
+}
+
+.accountFooter {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+}
+
+.resizeHandle {
+  width: 3px;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  &:hover,
+  &:active {
+    width: 5px;
+    background: light-dark(
+      var(--mantine-color-gray-4),
+      var(--mantine-color-dark-5)
+    );
+  }
+}
+
+:global([data-personal-shell]) {
+  & :global(.mantine-AppShell-main) { background: light-dark(#fff, #191919); min-width: 0; }
+  color: light-dark(#37352f, #e7e7e5);
+  font-family: var(--mantine-font-family);
+
+  & .navbar {
+    top: 0;
+    height: 100dvh;
+    background: light-dark(#f7f7f5, #202020);
+
+    @media (max-width: $mantine-breakpoint-sm) {
+      width: min(300px, calc(100vw - 40px));
+      z-index: 101;
+      box-shadow: 8px 0 24px #0002;
+    }
+  }
+
+  & .header {
+    inset-inline-start: var(--app-shell-navbar-offset, 0rem);
+    background: light-dark(#fff, #191919);
+    border: 0;
+  }
+
+  & .accountFooter {
+    padding: 3px 8px;
+    border-color: light-dark(#e9e9e7, #ffffff13);
+  }
+}

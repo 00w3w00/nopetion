@@ -1,0 +1,21 @@
+{
+  "name": "pg-tsquery",
+  "version": "8.4.2",
+  "declaredLicense": "ISC",
+  "author": {
+    "name": "caub"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+https://github.com/caub/pg-tsquery.git",
+    "type": "git"
+  },
+  "gitHead": "3292b07ed42362897aa5829e24fb4ae26767e685",
+  "publisherMetadataUrl": "https://registry.npmjs.org/pg-tsquery/8.4.2",
+  "publisherMetadataSha256": "87bb0f9786fab95c6b21e329222cae50817668aadff199ef05140868d24895c5",
+  "releaseArchive": "https://registry.npmjs.org/pg-tsquery/-/pg-tsquery-8.4.2.tgz",
+  "archiveSha256": "cc476968d6dc21213b6b26473f6bb0e4dac543f09f24bcf044d7f1238d9ba853",
+  "integrity": "sha512-waJSlBIKE+shDhuDpuQglTH6dG5zakDhnrnxu8XB8V5c7yoDSuy4pOxY6t2dyoxTjaKMcMmlByJN7n9jx9eqMA==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

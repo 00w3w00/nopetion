@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Nopetion">
+  <rect width="64" height="64" rx="12" fill="#252525"/>
+  <path d="M17 47V17h7l16 21V17h7v30h-7L24 26v21z" fill="#fff"/>
+</svg>

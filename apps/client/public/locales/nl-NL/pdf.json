@@ -1,0 +1,15 @@
+{
+  "scope": "Exporteer het huidige document en geselecteerde subpagina’s als één PDF. Geüploade PNG/JPEG-afbeeldingen worden opgenomen; niet-ondersteunde blokken worden gemarkeerd.",
+  "wait": "Wacht tot het document en de titel zijn opgeslagen en probeer het opnieuw.",
+  "failed": "PDF-export mislukt. Controleer de toegang tot het document en de bijlagen en probeer het opnieuw.",
+  "subpages": "Subpagina’s samenvoegen",
+  "order": "Eerst het huidige document, daarna aangevinkte pagina’s in boomvolgorde. Elk document begint op een nieuwe pagina.",
+  "loading": "Subpagina’s laden…",
+  "loadFailed": "Subpagina’s konden niet worden geladen. Exporteer alleen het huidige document of probeer opnieuw.",
+  "retry": "Opnieuw proberen",
+  "noSubpages": "Geen exporteerbare subpagina’s.",
+  "selectAll": "Alles selecteren",
+  "clearSelection": "Selectie wissen",
+  "selected": "{{count}} geselecteerd",
+  "limit": "Selecteer maximaal {{count}} subpagina’s."
+}

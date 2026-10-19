@@ -1,0 +1,55 @@
+export type NotificationType =
+  | "comment.user_mention"
+  | "comment.created"
+  | "comment.resolved"
+  | "page.user_mention"
+  | "page.permission_granted"
+  | "page.updated"
+  | "page.reminder"
+  | "ai.completed"
+  | "ai.failed"
+  | "ai.conflict"
+  | "page.verification_expiring"
+  | "page.verification_expired"
+  | "page.verified"
+  | "page.approval_requested"
+  | "page.approval_rejected"
+  | "siem_destination.failing"
+  | "siem_destination.disabled"
+  | "siem_destination.recovered";
+
+export type INotification = {
+  id: string;
+  userId: string;
+  workspaceId: string;
+  type: NotificationType;
+  actorId: string | null;
+  pageId: string | null;
+  spaceId: string | null;
+  commentId: string | null;
+  data: Record<string, unknown> | null;
+  readAt: string | null;
+  emailedAt: string | null;
+  archivedAt: string | null;
+  createdAt: string;
+  actor: {
+    id: string;
+    name: string;
+    avatarUrl: string | null;
+  } | null;
+  page: {
+    id: string;
+    title: string;
+    slugId: string;
+    icon: string | null;
+  } | null;
+  space: {
+    id: string;
+    name: string;
+    slug: string;
+  } | null;
+};
+
+export type NotificationFilter = "all" | "unread";
+
+export type NotificationTab = "direct" | "updates" | "all";

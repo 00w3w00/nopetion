@@ -1,0 +1,58 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  flex-wrap: nowrap;
+
+  a {
+    color: var(--mantine-color-default-color);
+    line-height: inherit;
+  }
+
+  .mantine-Breadcrumbs-breadcrumb {
+    min-width: 1px;
+    overflow: hidden;
+  }
+}
+
+.truncatedText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.breadcrumbDiv {
+  min-width: 0;
+  overflow: hidden;
+  @media (max-width: $mantine-breakpoint-sm) {
+    flex: 1;
+  }
+}
+
+.mobileCurrent {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  padding-inline: 2px;
+  &:focus-visible { outline: 2px solid var(--mantine-primary-color-filled); outline-offset: -2px; }
+}
+.mobileTitle {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+}
+.mobileIcon { flex-shrink: 0; }
+.mobileDropdown {
+  max-width: calc(100vw - 32px);
+  max-height: min(65dvh, 420px);
+  overflow-y: auto;
+}

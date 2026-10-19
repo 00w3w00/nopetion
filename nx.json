@@ -1,0 +1,23 @@
+{
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": ["default", "^default", { "env": "APP_URL" }],
+      "cache": true
+    },
+    "start:dev": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "lint": {
+      "cache": true
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  },
+  "analytics": false
+}

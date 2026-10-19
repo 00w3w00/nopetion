@@ -1,0 +1,22 @@
+{
+  "name": "dfa",
+  "version": "1.2.0",
+  "declaredLicense": "MIT",
+  "author": {
+    "name": "Devon Govett",
+    "email": "devongovett@gmail.com"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+ssh://git@github.com/devongovett/dfa.git",
+    "type": "git"
+  },
+  "gitHead": "3f5e603e5082caedabefefdf53e8a6ca3111e966",
+  "publisherMetadataUrl": "https://registry.npmjs.org/dfa/1.2.0",
+  "publisherMetadataSha256": "a2f3f0a273f863856ae1b059c7e9f8c78d1b61ded01183e1972d8d404640720c",
+  "releaseArchive": "https://registry.npmjs.org/dfa/-/dfa-1.2.0.tgz",
+  "archiveSha256": "d781eb3a307ab6aa2d97028f695b17dbeadf6fd27788c333b1fb96d18d2a23ad",
+  "integrity": "sha512-ED3jP8saaweFTjeGX8HQPjeC1YYyZs98jGNZx6IiBvxW7JG5v492kamAQB3m2wop07CvU/RQmzcKr6bgcC5D/Q==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

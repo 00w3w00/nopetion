@@ -1,0 +1,31 @@
+{
+  "name": "utf8-byte-length",
+  "version": "1.0.4",
+  "declaredLicense": "WTFPL",
+  "author": {
+    "name": "Carl Xiong",
+    "email": "xiongc05@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Carl Xiong",
+      "email": "xiongc05@gmail.com"
+    },
+    {
+      "name": "Parsha Pourkhomami",
+      "email": "parshap@gmail.com"
+    }
+  ],
+  "repository": {
+    "url": "git+https://github.com/parshap/utf8-byte-length.git",
+    "type": "git"
+  },
+  "gitHead": "c369b9b4e23ac288fcce9a2aa8fe588fed3b7d4d",
+  "publisherMetadataUrl": "https://registry.npmjs.org/utf8-byte-length/1.0.4",
+  "publisherMetadataSha256": "fe6791d9a46a212d8a6f634a85965e8b735eb62e0604639d28843b361b69210b",
+  "releaseArchive": "https://registry.npmjs.org/utf8-byte-length/-/utf8-byte-length-1.0.4.tgz",
+  "archiveSha256": "ff90ea289b9057204d708b0f06d4d9444a06712c087367d68d891ff9f88cc1c7",
+  "integrity": "sha512-4+wkEYLBbWxqTahEsWrhxepcoVOJ+1z5PGIjPZxRkytcdSUaNjIjBM7Xn8E+pdSuV7SzvWovBFA54FO0JSoqhA==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

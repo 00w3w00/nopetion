@@ -1,0 +1,56 @@
+.root {
+  overflow: visible;
+}
+
+.icon {
+  font-size: 24px;
+  line-height: 1;
+  width: 20px;
+  height: 20px;
+  margin-inline-end: var(--mantine-spacing-xs);
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.message {
+  font-size: var(--mantine-font-size-md);
+  color: var(--mantine-color-default-color);
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.personal {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 4px;
+  background: light-dark(#f1f1ef, #ffffff0d);
+}
+.personal[data-callout-style="warning"] {
+  background: light-dark(#fbf3db, #4d4027);
+}
+.personal[data-callout-style="danger"] {
+  background: light-dark(#fdebec, #532c2c);
+}
+.personal[data-callout-style="success"] {
+  background: light-dark(#edf3ec, #2d4231);
+}
+.personal[data-callout-style="note"] {
+  background: light-dark(#f6f3f9, #3c2d49);
+}
+.personalIcon {
+  flex: 0 0 28px;
+  margin-top: -2px;
+}
+.personalContent {
+  flex: 1;
+  min-width: 0;
+}
+.personalContent > div > :first-child {
+  margin-top: 0 !important;
+}
+.personalContent > div > :last-child {
+  margin-bottom: 0 !important;
+}

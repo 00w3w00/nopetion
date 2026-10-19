@@ -1,0 +1,30 @@
+{
+  "name": "Nopetion",
+  "short_name": "Nopetion",
+  "id": "./",
+  "start_url": "./home",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#222",
+  "theme_color": "#222",
+  "icons": [
+    {
+      "src": "./icons/app-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/app-icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/nopetion.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "description": "Notion? Nope. Your docs, your rules."
+}

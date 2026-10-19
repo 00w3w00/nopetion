@@ -1,0 +1,23 @@
+{
+  "name": "https-proxy-agent",
+  "version": "5.0.1",
+  "declaredLicense": "MIT",
+  "author": {
+    "url": "http://n8.io/",
+    "name": "Nathan Rajlich",
+    "email": "nathan@tootallnate.net"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git://github.com/TooTallNate/node-https-proxy-agent.git",
+    "type": "git"
+  },
+  "gitHead": "d0d80cc0482f20495aa8595f802e1a9f3b1b3409",
+  "publisherMetadataUrl": "https://registry.npmjs.org/https-proxy-agent/5.0.1",
+  "publisherMetadataSha256": "9ed34fec5e4151933a940a610a49aa084fbf625f5f43fd5d841f4ecc64e0d08b",
+  "releaseArchive": "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz",
+  "archiveSha256": "6da16fb44331f2e5d30bd21bf880aa934c1ad4fe7da7187910ef2b2509712019",
+  "integrity": "sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

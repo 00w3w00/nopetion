@@ -1,0 +1,22 @@
+{
+  "name": "abstract-logging",
+  "version": "2.0.1",
+  "declaredLicense": "MIT",
+  "author": {
+    "name": "James Sumners",
+    "email": "james.sumners@gmail.com"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+https://github.com/jsumners/abstract-logging.git",
+    "type": "git"
+  },
+  "gitHead": "80dfaef91ee87008f4ed2b6e78921d383bccd406",
+  "publisherMetadataUrl": "https://registry.npmjs.org/abstract-logging/2.0.1",
+  "publisherMetadataSha256": "abe9ef6d311721b8b8eb17083f8d39e22a484c0aff2c20f403e573ebda376a86",
+  "releaseArchive": "https://registry.npmjs.org/abstract-logging/-/abstract-logging-2.0.1.tgz",
+  "archiveSha256": "9a2ab6159e9d3b04e10f1536fab762d18e09d353941a298171e57b6e25640994",
+  "integrity": "sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

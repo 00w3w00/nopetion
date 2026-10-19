@@ -1,0 +1,403 @@
+.database {
+  margin: 20px 0;
+  padding: 0;
+  color: inherit;
+  font-size: 13px;
+  background: light-dark(#fff, #191919);
+}
+.titleRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.database input:not(:global(.mantine-Input-input)),
+.database select:not(:global(.mantine-Input-input)),
+.detailField input,
+.detailField select {
+  font: inherit;
+  color: inherit;
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-radius: 4px;
+  padding: 5px 6px;
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+}
+.database input:focus,
+.detailField input:focus {
+  outline: 2px solid #2383e250;
+}
+.titleRow > input {
+  border: 0;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0;
+  min-width: 60px;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 0;
+  flex-wrap: wrap;
+}
+.toolbar > :first-child {
+  flex: 1;
+  min-width: 100px;
+}
+.tableScroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.database table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+  min-width: 630px;
+}
+.database th {
+  color: light-dark(#787774, #aaa9a5);
+  font-weight: 400;
+  text-align: left;
+  padding: 5px;
+  border-bottom: 1px solid light-dark(#e9e9e7, #ffffff20);
+}
+.database td {
+  padding: 0 3px;
+  border-bottom: 1px solid light-dark(#e9e9e7, #ffffff13);
+}
+.database td input,
+.database td select {
+  border: 0;
+  border-radius: 0;
+  min-width: 65px;
+  padding-block: 8px;
+}
+.database td:first-child input {
+  min-width: 140px;
+}
+.database td:nth-child(5) input {
+  max-width: 70px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  background: light-dark(#fff, #202020);
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-radius: 5px;
+  padding: 10px;
+  gap: 7px;
+  width: 100%;
+  cursor: pointer;
+}
+.card:hover {
+  background: light-dark(#fafaf9, #282828);
+}
+.card strong {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.card small {
+  color: light-dark(#91918e, #a0a09a);
+}
+.status {
+  width: fit-content;
+  padding: 1px 6px;
+  font-size: 11px;
+  border-radius: 3px;
+  background: light-dark(#ebebea, #3c3c3a);
+}
+.status[data-status="doing"] {
+  background: light-dark(#deebf7, #274461);
+}
+.status[data-status="done"] {
+  background: light-dark(#e2ece5, #314c3b);
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: 12px;
+  overflow-x: auto;
+}
+.board section {
+  background: light-dark(#f7f7f5, #ffffff08);
+  padding: 8px;
+  border-radius: 6px;
+}
+.board h4 {
+  margin: 0 0 10px !important;
+  font-size: 13px !important;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.board section > div {
+  margin-bottom: 7px;
+}
+.add {
+  font: inherit;
+  color: light-dark(#91918e, #a0a09a);
+  border: 0;
+  background: transparent;
+  border-radius: 4px;
+  padding: 7px 4px;
+  cursor: pointer;
+  margin-top: 3px;
+}
+.add:hover {
+  background: light-dark(#37352f0e, #ffffff0e);
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+.galleryPreview {
+  height: 80px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  background: light-dark(#f7f7f5, #ffffff08);
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-bottom: 0;
+  border-radius: 5px 5px 0 0;
+}
+.gallery .card {
+  border-radius: 0 0 5px 5px;
+}
+.gallery > div > input {
+  margin-top: 5px;
+}
+.gallery a {
+  color: #2383e2;
+  font-size: 12px;
+}
+.list .card {
+  flex-direction: row;
+  align-items: center;
+  border-width: 0 0 1px;
+  border-radius: 0;
+}
+.list strong {
+  flex: 1;
+}
+.feed {
+  max-width: 460px;
+  margin: auto;
+  display: grid;
+  gap: 14px;
+}
+.empty,
+.note {
+  color: light-dark(#91918e, #a0a09a);
+  font-size: 12px;
+}
+.empty {
+  padding: 22px 0;
+  text-align: center;
+}
+.month {
+  max-width: 180px;
+  margin-bottom: 12px;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(70px, 1fr));
+  overflow: auto;
+}
+.calendar > div {
+  border: 1px solid light-dark(#e9e9e7, #ffffff13);
+  min-height: 82px;
+  padding: 5px;
+}
+.calendar button:not(:global(.mantine-ActionIcon-root)) {
+  display: block;
+  font: inherit;
+  font-size: 11px;
+  background: light-dark(#deebf7, #274461);
+  border: 0;
+  border-radius: 3px;
+  color: inherit;
+  padding: 3px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  margin-top: 3px;
+  overflow: hidden;
+}
+.timeline {
+  display: grid;
+  gap: 8px;
+}
+.timeline > div {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  gap: 10px;
+}
+.timeline time {
+  font-size: 11px;
+  color: light-dark(#91918e, #a0a09a);
+  padding: 8px 0;
+}
+.number {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.number strong {
+  font-size: 44px;
+}
+.number span {
+  font-size: 12px;
+  color: light-dark(#91918e, #a0a09a);
+}
+.bars {
+  height: 210px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 16px;
+  padding: 20px 10px 10px;
+}
+.bars > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 28%;
+  height: 160px;
+  position: relative;
+  padding-bottom: 25px;
+}
+.bars > div > div {
+  width: 65%;
+  border-radius: 3px 3px 0 0;
+  min-height: 3px;
+}
+.bars span {
+  position: absolute;
+  bottom: 0;
+  font-size: 11px;
+}
+.bars small {
+  position: absolute;
+  top: -15px;
+}
+.horizontalBars {
+  display: grid;
+  gap: 12px;
+  padding: 15px 10px;
+}
+.horizontalBars > div {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  gap: 10px;
+}
+.horizontalBars span {
+  width: 75px;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.horizontalBars > div > div {
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  max-width: calc(100% - 100px);
+}
+.donutWrap {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+.donut {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.donut span {
+  background: light-dark(#fff, #191919);
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+}
+.donutWrap i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+.lineChart {
+  width: 100%;
+  height: 200px;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.dashboard > div {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-radius: 6px;
+}
+.dashboard strong {
+  font-size: 30px;
+}
+.form {
+  max-width: 380px;
+  margin: 20px auto;
+}
+.form label {
+  display: block;
+  margin-bottom: 14px;
+}
+.form input {
+  margin-top: 6px;
+}
+.detailField {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+}
+@media (max-width: 48em) {
+  .database {
+    padding: 9px;
+  }
+  .titleRow {
+    flex-wrap: wrap;
+  }
+  .toolbar {
+    gap: 3px;
+  }
+  .donutWrap {
+    gap: 14px;
+    padding: 15px 0;
+  }
+  .dashboard {
+    gap: 6px;
+  }
+  .dashboard > div {
+    padding: 8px;
+  }
+}
+
+.database th[data-db-property], .database td[data-db-property] { min-width: 170px; max-width: 240px; }
+.database th[data-db-property] { white-space: nowrap; }
+.database th[data-db-property] button { border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; padding: 3px 5px; }
+.database td[data-db-property] output { display: block; padding: 8px 5px; }

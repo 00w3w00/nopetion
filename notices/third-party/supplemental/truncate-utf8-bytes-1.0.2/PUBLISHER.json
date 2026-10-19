@@ -1,0 +1,31 @@
+{
+  "name": "truncate-utf8-bytes",
+  "version": "1.0.2",
+  "declaredLicense": "WTFPL",
+  "author": {
+    "name": "Carl Xiong",
+    "email": "xiongc05@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Carl Xiong",
+      "email": "xiongc05@gmail.com"
+    },
+    {
+      "name": "Parsha Pourkhomami",
+      "email": "parshap@gmail.com"
+    }
+  ],
+  "repository": {
+    "url": "git+https://github.com/parshap/truncate-utf8-bytes.git",
+    "type": "git"
+  },
+  "gitHead": "c8fcebc8be093c8bd8db1e7d75c09b9fce7e4708",
+  "publisherMetadataUrl": "https://registry.npmjs.org/truncate-utf8-bytes/1.0.2",
+  "publisherMetadataSha256": "0aef45ca35d1716e9f9e22df59bba486d3e4196cd45561efce3514d23e91bedf",
+  "releaseArchive": "https://registry.npmjs.org/truncate-utf8-bytes/-/truncate-utf8-bytes-1.0.2.tgz",
+  "archiveSha256": "317ae6326a50e6c63b6325e9d7d90881382fd22b6351c546c3f36be58eabeb64",
+  "integrity": "sha512-95Pu1QXQvruGEhv62XCMO3Mm90GscOCClvrIUwCM0PYOXK3kaF3l3sIHxx71ThJfcbM2O5Au6SO3AWCSEfW4mQ==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

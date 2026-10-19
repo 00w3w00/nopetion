@@ -1,0 +1,271 @@
+{
+  "checkedAt": "2026-10-18",
+  "scope": "Third-party source adapted into the CE tree; package dependencies are documented separately. Existing in-source full notices and font OFL notices remain in place.",
+  "entries": [
+    {
+      "repository": "curvenote/prosemirror-docx",
+      "licenseReferenceCommit": "c5a9610b6a10e7e4b5fe1d979a9f78cdb7f5b720",
+      "sourceUrl": "https://raw.githubusercontent.com/curvenote/prosemirror-docx/c5a9610b6a10e7e4b5fe1d979a9f78cdb7f5b720/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/prosemirror-docx"
+      ],
+      "sha256": "41be98fb7ae7875b04829c05bc07044584caf5fca9b45d9ecde8498faf77a5c5",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "curvenote_prosemirror-docx-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "sueddeutsche/prosemirror-recreate-transform",
+      "licenseReferenceCommit": "fdfe906cea10db31e1572b368002784a66c4699d",
+      "sourceUrl": "https://raw.githubusercontent.com/sueddeutsche/prosemirror-recreate-transform/fdfe906cea10db31e1572b368002784a66c4699d/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/recreate-transform"
+      ],
+      "sha256": "000b4962e6b27176a0ff89cce4be555b16472cafb5671eb2804a8fdac6854793",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "Apache-2.0",
+      "licenseFile": "sueddeutsche_prosemirror-recreate-transform-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287",
+      "additionalCopyrightFile": "recreate-steps-NOTICE",
+      "additionalCopyrightFileSha256": "56d08dfa937a505866fe98e2e7ab7a90be1516c66d6b843408e16cac6bd27fcd",
+      "additionalCopyrightFileSource": "https://raw.githubusercontent.com/sueddeutsche/prosemirror-recreate-transform/fdfe906cea10db31e1572b368002784a66c4699d/NOTICE"
+    },
+    {
+      "repository": "buttondown/tiptap-footnotes",
+      "licenseReferenceCommit": "abf2b7823d76c6b885ee503040b504cb9a6ab691",
+      "sourceUrl": "https://raw.githubusercontent.com/buttondown/tiptap-footnotes/abf2b7823d76c6b885ee503040b504cb9a6ab691/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/footnotes"
+      ],
+      "sha256": "ad774b697c616f56321189e37f1917afaf9eff9cc1d7a4478528eca5abb78f76",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "buttondown_tiptap-footnotes-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "nhedger/nestjs-encryption",
+      "licenseReferenceCommit": "048fa1d44c8684770bb22a93eed0a021b03acac2",
+      "sourceUrl": "https://raw.githubusercontent.com/nhedger/nestjs-encryption/048fa1d44c8684770bb22a93eed0a021b03acac2/LICENSE.md",
+      "localPaths": [
+        "apps/server/src/integrations/encryption"
+      ],
+      "sha256": "11c5c8e1aafeffb01ca1e28656646d2202ebc4562cd6cf2fe971d65a338844ce",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "nhedger_nestjs-encryption-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "charlie-hadden/kysely-paginate",
+      "licenseReferenceCommit": "ed37a87ad9c940596fc44e6b590d6d9ba6289b8d",
+      "sourceUrl": "https://raw.githubusercontent.com/charlie-hadden/kysely-paginate/ed37a87ad9c940596fc44e6b590d6d9ba6289b8d/LICENSE",
+      "localPaths": [
+        "apps/server/src/database/pagination"
+      ],
+      "sha256": "e27b72d11086b1216c56b74dc620472cb549ee42b6a17bf6c4573225bbc6c656",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "charlie-hadden_kysely-paginate-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "mantinedev/mantine",
+      "licenseReferenceCommit": "e47e45af06427b3b2497100c2b849935c23af30d",
+      "sourceUrl": "https://raw.githubusercontent.com/mantinedev/mantine/e47e45af06427b3b2497100c2b849935c23af30d/LICENSE",
+      "localPaths": [
+        "apps/client/src/components/common/copy-button.tsx",
+        "apps/client/src/hooks/use-clipboard.ts",
+        "apps/client/src/hooks/use-idle.ts"
+      ],
+      "sha256": "61c765e625bc25d55143f14de7554685c52f21d9e671d3d204304691a163d06a",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "mantinedev_mantine-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "aguingand/tiptap-markdown",
+      "licenseReferenceCommit": "96f5b0f6e4d318edde507a6ca18269c4e6340676",
+      "sourceUrl": "https://raw.githubusercontent.com/aguingand/tiptap-markdown/96f5b0f6e4d318edde507a6ca18269c4e6340676/LICENSE",
+      "localPaths": [
+        "apps/client/src/features/editor/extensions/markdown-clipboard.ts"
+      ],
+      "sha256": "c52376ee55360e7eff75df0c4fc2cce07dd3fbb55933736da09d5371f7f0aaba",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "aguingand_tiptap-markdown-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "ueberdosis/hocuspocus",
+      "licenseReferenceCommit": "9def0469c9cd6e9c09d3f51bd4ee282637929c9a",
+      "sourceUrl": "https://raw.githubusercontent.com/ueberdosis/hocuspocus/9def0469c9cd6e9c09d3f51bd4ee282637929c9a/LICENSE.md",
+      "localPaths": [
+        "apps/server/src/collaboration/extensions/redis-sync"
+      ],
+      "sha256": "dce30f7f8fff923e74d41b44a620714e928dd7708064c807d94f50210a1179d7",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "ueberdosis_hocuspocus-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "google/material-design-icons",
+      "licenseReferenceCommit": "49d4db35df873165d6bd6ba09b063c7dafbac2f4",
+      "sourceUrl": "https://raw.githubusercontent.com/google/material-design-icons/49d4db35df873165d6bd6ba09b063c7dafbac2f4/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/heading/heading.ts"
+      ],
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "Apache-2.0",
+      "licenseFile": "google_material-design-icons-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "ProseMirror/prosemirror-commands",
+      "licenseReferenceCommit": "52a84a842774fadec3b167bcdbd56085ec6c85df",
+      "sourceUrl": "https://raw.githubusercontent.com/ProseMirror/prosemirror-commands/52a84a842774fadec3b167bcdbd56085ec6c85df/LICENSE",
+      "localPaths": [
+        "apps/client/src/features/editor/extensions/autojoiner.ts"
+      ],
+      "sha256": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "ProseMirror_prosemirror-commands-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "https://gitlab.com/mpapp-public/prosemirror-recreate-steps",
+      "licenseReferenceCommit": "6219070b8e2435c9c3111660b7f2c558feb22f22",
+      "sourceUrl": "https://gitlab.com/mpapp-public/prosemirror-recreate-steps/-/raw/6219070b8e2435c9c3111660b7f2c558feb22f22/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/recreate-transform"
+      ],
+      "sha256": "000b4962e6b27176a0ff89cce4be555b16472cafb5671eb2804a8fdac6854793",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "Apache-2.0",
+      "licenseFile": "mpapp-prosemirror-recreate-steps-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287",
+      "additionalCopyrightFile": "recreate-steps-NOTICE",
+      "additionalCopyrightFileSha256": "56d08dfa937a505866fe98e2e7ab7a90be1516c66d6b843408e16cac6bd27fcd",
+      "additionalCopyrightFileSource": "https://raw.githubusercontent.com/sueddeutsche/prosemirror-recreate-transform/fdfe906cea10db31e1572b368002784a66c4699d/NOTICE"
+    },
+    {
+      "repository": "ueberdosis/tiptap",
+      "licenseReferenceCommit": "91c51be53c4655ef07e29ec489471524debfa0ca",
+      "sourceUrl": "https://raw.githubusercontent.com/ueberdosis/tiptap/91c51be53c4655ef07e29ec489471524debfa0ca/LICENSE.md",
+      "localPaths": [
+        "packages/editor-ext/src/lib/resizable-nodeview.ts",
+        "packages/editor-ext/src/lib/trailing-node.ts",
+        "packages/editor-ext/src/lib/embed.ts",
+        "packages/editor-ext/src/lib/custom-code-block/custom-code-block.ts",
+        "packages/editor-ext/src/lib/callout/callout.ts",
+        "packages/editor-ext/src/lib/attachment/attachment.ts",
+        "packages/editor-ext/src/lib/math",
+        "packages/editor-ext/src/lib/subpages/subpages.ts",
+        "apps/client/src/features/editor/extensions/extensions.ts"
+      ],
+      "sha256": "c96e5ecb55ac593157ad1d21d1f44a611187f494a0f04c235a1ae692c88d6ba9",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "ueberdosis_tiptap-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "remirror/remirror",
+      "licenseReferenceCommit": "e0f1bec4a1e8073ce8f5500d62193e52321155b9",
+      "sourceUrl": "https://raw.githubusercontent.com/remirror/remirror/e0f1bec4a1e8073ce8f5500d62193e52321155b9/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/trailing-node.ts"
+      ],
+      "sha256": "e917ac0bd510a1a8afca92c060d699e35afe559de52b2c100cd69c414474cfab",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "remirror_remirror-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "typestack/class-validator",
+      "licenseReferenceCommit": "2e1a5c27dbd65b80e27fe96b49bd6e6641fa3603",
+      "sourceUrl": "https://raw.githubusercontent.com/typestack/class-validator/2e1a5c27dbd65b80e27fe96b49bd6e6641fa3603/LICENSE",
+      "localPaths": [
+        "apps/server/src/common/validators/is-iso6391.ts"
+      ],
+      "sha256": "ef7c4bc854ad6f0ee0ea4bdae8dee790ed65edd22713d2806d423b8e0727328a",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "license": "MIT",
+      "licenseFile": "typestack_class-validator-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287"
+    },
+    {
+      "repository": "NiclasDev63/tiptap-extension-auto-joiner",
+      "licenseReferenceCommit": "0de5dcba6e95757e7876db63b50d0693c5513f62",
+      "sourceUrl": "https://raw.githubusercontent.com/NiclasDev63/tiptap-extension-auto-joiner/0de5dcba6e95757e7876db63b50d0693c5513f62/LICENSE.md",
+      "localPaths": [
+        "apps/client/src/features/editor/extensions/autojoiner.ts"
+      ],
+      "sha256": "9f14dec5a2eb39088556af84bbbd5cb55907e9da8d6c9c019ac410851d0b370f",
+      "license": "MIT",
+      "licenseFile": "NiclasDev63_tiptap-extension-auto-joiner-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md."
+    },
+    {
+      "repository": "https://bitbucket.org/atlassian/atlassian-frontend-mirror",
+      "licenseReferenceCommit": "5f91cb871e8248bc3bae5ddc30bb9fd9200fadbb",
+      "sourceUrl": "https://bitbucket.org/atlassian/atlassian-frontend-mirror/raw/5f91cb871e8248bc3bae5ddc30bb9fd9200fadbb/editor/editor-tables/LICENSE",
+      "localPaths": [
+        "packages/editor-ext/src/lib/table/utils/get-selection-range-in-row.ts",
+        "packages/editor-ext/src/lib/table/utils/get-selection-range-in-column.ts"
+      ],
+      "sha256": "e31dc3cac2138334fcd8ba33eaac1dc10e20bf0df03ae9396efe5aa6fd06aa8d",
+      "additionalLicenseFile": "google_material-design-icons-LICENSE",
+      "additionalCopyrightFile": "atlassian-root-LICENSE",
+      "license": "Apache-2.0",
+      "licenseFile": "atlassian-editor-tables-LICENSE",
+      "upstreamForkCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287",
+      "scope": "License provenance reference, not an assertion that locally adapted code equals this repository revision. Local changes are covered by NOPETION-MODIFICATIONS.md.",
+      "additionalCopyrightFileSha256": "cdbe644bb0fadc839ca30054b1cd4868167674e411852651df94f741302992ba",
+      "additionalLicenseFileSha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "repository": "micromatch/braces",
+      "sourceUrl": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
+      "license": "MIT",
+      "licenseFile": "braces-LICENSE",
+      "sha256": "35bdd8a44339719441900fb50fbefc5e2dca1ca662cbaed7a687de842c8b70f2",
+      "localPaths": [
+        "patches/braces@3.0.3.patch"
+      ],
+      "scope": "Permission notice from the installed pinned package; patch modifies recursive depth handling without relicensing upstream."
+    },
+    {
+      "repository": "ueberdosis/tiptap (v1)",
+      "sourceUrl": "https://registry.npmjs.org/tiptap/-/tiptap-1.32.2.tgz",
+      "licenseReferenceCommit": "d2cf88fd166092d6df079cb47fe2a55520fadf80",
+      "archiveIntegrity": "sha512-5IwVj8nGo8y5V3jbdtoEd7xNUsi8Q0N6WV2Nfs70olqz3fldXkiImBrDhZJ4Anx8vhyP6PIBttrg0prFVmwIvw==",
+      "license": "MIT",
+      "licenseFile": "tiptap-v1-LICENSE",
+      "sha256": "c89acf469c55ad9aa41a1dfb99baf6ae5c24300fe7df5ea6179a6bf76d154d84",
+      "localPaths": [
+        "packages/editor-ext/src/lib/trailing-node.ts"
+      ],
+      "scope": "Older v1 attribution cited by the source; original notice from integrity-verified tiptap 1.32.2, with no implementation byte identity claim."
+    },
+    {
+      "repository": "ProseMirror/website",
+      "sourceUrl": "https://raw.githubusercontent.com/ProseMirror/website/a16b4ece45f135e5f001ab59d25f2d43c25974e1/LICENSE",
+      "licenseReferenceCommit": "a16b4ece45f135e5f001ab59d25f2d43c25974e1",
+      "license": "MIT",
+      "licenseFile": "ProseMirror-website-LICENSE",
+      "sha256": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+      "localPaths": [
+        "packages/editor-ext/src/lib/recreate-transform/recreateTransform.ts"
+      ],
+      "scope": "ProseMirror footnote example attribution cited in the adapted implementation; no byte identity claim."
+    }
+  ]
+}

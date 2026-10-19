@@ -1,0 +1,20 @@
+{
+  "name": "@nest-lab/throttler-storage-redis",
+  "version": "1.2.0",
+  "declaredLicense": "MIT",
+  "author": null,
+  "contributors": null,
+  "repository": {
+    "url": "git+https://github.com/jmcdo29/nest-lab.git",
+    "type": "github",
+    "directory": "packages/throttler-storage-redis"
+  },
+  "gitHead": null,
+  "publisherMetadataUrl": "https://registry.npmjs.org/%40nest-lab%2Fthrottler-storage-redis/1.2.0",
+  "publisherMetadataSha256": "4a78178aa4a2dcf677b21342f8afb66bdf2a08fe7b84315804535adc6106dd8e",
+  "releaseArchive": "https://registry.npmjs.org/@nest-lab/throttler-storage-redis/-/throttler-storage-redis-1.2.0.tgz",
+  "archiveSha256": "889ef25231cd7d1a8bfbcc52ff941075c6536fc2cd09b3c0cafb5591656782f2",
+  "integrity": "sha512-tMkUyo68NCKTR+zILk+EC35SMYBtDPZY2mCj7ZaCietWGVTnuP4zwq9ERYfvU6kJv6h8teNZrC6MJCmY6/dljw==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

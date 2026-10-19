@@ -1,0 +1,37 @@
+.filtersContainer {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 0;
+  scrollbar-width: thin;
+}
+
+.filterButton {
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 13px;
+  height: 32px;
+  padding: 0 12px;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-6));
+  &:hover {
+    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-6));
+  }
+}
+
+.filterButtonActive {
+  color: var(--mantine-color-blue-light-color);
+  &:hover {
+    color: var(--mantine-color-blue-light-color);
+  }
+}
+
+@media (max-width: 40em) {
+  .filtersContainer {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .filterButton {
+    max-width: 100%;
+  }
+}

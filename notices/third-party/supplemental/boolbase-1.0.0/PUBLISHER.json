@@ -1,0 +1,22 @@
+{
+  "name": "boolbase",
+  "version": "1.0.0",
+  "declaredLicense": "ISC",
+  "author": {
+    "name": "Felix Boehm",
+    "email": "me@feedic.com"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "https://github.com/fb55/boolbase",
+    "type": "git"
+  },
+  "gitHead": null,
+  "publisherMetadataUrl": "https://registry.npmjs.org/boolbase/1.0.0",
+  "publisherMetadataSha256": "cdbdd0892df76fdcb117aa6c87cef12aeb99225cb90b8e12f182f3f6f1efce3b",
+  "releaseArchive": "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz",
+  "archiveSha256": "69628ff8092c5ff940ea4a0f29da98d520615bae138755c9e059033606c6caa8",
+  "integrity": "sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

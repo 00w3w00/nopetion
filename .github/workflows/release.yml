@@ -1,0 +1,17 @@
+name: Nopetion release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Public releases stay disabled until the distribution checks are resolved
+# and a repository owned by this fork is configured explicitly.
+jobs:
+  publishing-disabled:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release preparation required
+        run: echo "Nopetion public releases are disabled."

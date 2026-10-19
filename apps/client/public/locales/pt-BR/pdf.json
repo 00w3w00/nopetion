@@ -1,0 +1,15 @@
+{
+  "scope": "Exporte o documento atual e as subpáginas selecionadas em um PDF. Imagens PNG/JPEG enviadas são incluídas; blocos não compatíveis são marcados.",
+  "wait": "Aguarde o documento e o título serem salvos e tente novamente.",
+  "failed": "Falha ao exportar PDF. Verifique o acesso ao documento e aos anexos e tente novamente.",
+  "subpages": "Subpáginas para combinar",
+  "order": "O documento atual vem primeiro, seguido das páginas selecionadas na ordem da árvore. Cada documento começa em uma nova página.",
+  "loading": "Carregando subpáginas…",
+  "loadFailed": "Não foi possível carregar as subpáginas. Exporte apenas o documento atual ou tente novamente.",
+  "retry": "Tentar novamente",
+  "noSubpages": "Nenhuma subpágina exportável.",
+  "selectAll": "Selecionar todas",
+  "clearSelection": "Limpar seleção",
+  "selected": "{{count}} selecionadas",
+  "limit": "Selecione até {{count}} subpáginas."
+}

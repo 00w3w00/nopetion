@@ -1,0 +1,160 @@
+.widget {
+  padding: 0;
+  margin: 4px 0;
+  font-size: inherit;
+}
+.widget nav button {
+  display: block;
+  border: 0;
+  background: transparent;
+  color: light-dark(#787774, #aaa9a5);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  padding-block: 3px;
+  text-decoration: underline;
+}
+.bookmark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+  padding: 6px;
+}
+.bookmark > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.bookmark strong,
+.bookmark small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.bookmark small,
+.note,
+.widget small {
+  color: light-dark(#91918e, #a0a09a);
+  font-size: 12px;
+}
+.htmlPreview {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid #e9e9e7;
+  border-radius: 4px;
+  margin-top: 10px;
+  background: white;
+}
+.externalPreview {
+  min-width: 0;
+}
+.externalFrame {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 220px;
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-radius: 4px;
+  background: white;
+  resize: vertical;
+  overflow: auto;
+}
+.date {
+  font: inherit;
+  color: inherit;
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-radius: 4px;
+  padding: 5px;
+  background: transparent;
+}
+.ai p {
+  margin-block: 6px 10px;
+  color: light-dark(#91918e, #a0a09a);
+}
+.breadcrumb {
+  color: light-dark(#91918e, #a0a09a);
+}
+.tabs {
+  border: 1px solid light-dark(#e9e9e7, #ffffff20);
+  border-radius: 6px;
+  margin: 16px 0;
+}
+.tabBar {
+  display: flex;
+  border-bottom: 1px solid light-dark(#e9e9e7, #ffffff20);
+  overflow-x: auto;
+}
+.tabBar button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 9px 12px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  min-width: 70px;
+}
+.tabBar button[aria-selected="true"] {
+  border-bottom-color: #2383e2;
+}
+.tabBar input {
+  background: transparent;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  width: 100px;
+  text-align: center;
+}
+.tabContent {
+  padding: 12px;
+}
+.tabContent :global(section[data-type="personalTab"]) {
+  min-height: 55px;
+}
+.toggle {
+  position: relative;
+  margin-block: 18px;
+  padding-left: 24px;
+}
+.toggleButton {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  font-size: 21px;
+}
+.toggleContent :global(h1),
+.toggleContent :global(h2),
+.toggleContent :global(h3) {
+  margin-top: 0 !important;
+}
+.toggle[data-open="false"] .toggleContent > div > :not(:first-child) {
+  display: none;
+}
+
+.widget[data-personal-widget="html"],
+.widget[data-personal-widget="ai"] {
+  padding: 16px;
+  background: light-dark(#f7f6f4, #ffffff0d);
+  border-radius: 4px;
+}
+.widget[data-personal-widget="toc"] nav button {
+  width: 100%;
+  padding-block: 3px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.widget[data-personal-widget="toc"] nav button:hover {
+  background: light-dark(#37352f0e, #ffffff0e);
+}
+.widget[data-personal-widget="toc"] nav button::first-line {
+  text-decoration: underline;
+  text-decoration-color: light-dark(#d3d1cb, #555);
+}
+.widget[data-personal-widget="toc"] p {
+  color: light-dark(#aaa9a5, #777773);
+  font-size: 14px;
+}

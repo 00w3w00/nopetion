@@ -1,0 +1,69 @@
+services:
+  nopetion:
+    init: true
+    working_dir: /app/apps/server
+    image: nopetion:local
+    build:
+      context: .
+      args:
+        APP_URL: '${APP_URL:-http://localhost:3000}'
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      PORT: '3000'
+      APP_URL: '${APP_URL:-http://localhost:3000}'
+      APP_SECRET: '${APP_SECRET:?Set APP_SECRET in .env}'
+      PERSONAL_MODE: '${PERSONAL_MODE:-true}'
+      CLOUD: 'false'
+      DISABLE_TELEMETRY: 'true'
+      STORAGE_DRIVER: 'local'
+      DATABASE_URL: 'postgresql://docmost:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/docmost'
+      REDIS_URL: 'redis://redis:6379'
+      NOPETION_AI_DATA_DIR: '/app/data/personal-ai'
+      NOPETION_CONNECTORS_DATA_DIR: '/app/data/connectors'
+    ports:
+      - "127.0.0.1:${NOPETION_PORT:-3000}:3000"
+    restart: unless-stopped
+    volumes:
+      - docmost:/app/data/storage
+      - personal_ai:/app/data/personal-ai
+      - personal_connectors:/app/data/connectors
+
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: docmost
+      POSTGRES_USER: docmost
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docmost -d docmost"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql
+
+  redis:
+    image: redis:8
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  docmost:
+  db_data:
+  redis_data:
+  personal_ai:
+  personal_connectors:

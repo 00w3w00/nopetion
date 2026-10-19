@@ -1,0 +1,21 @@
+{
+  "name": "tmp-promise",
+  "version": "3.0.3",
+  "declaredLicense": "MIT",
+  "author": {
+    "name": "Benjamin Gruenbaum and Collaborators."
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git://github.com/benjamingr/tmp-promise.git",
+    "type": "git"
+  },
+  "gitHead": "7a9d92612d24791664669596c2705313d459ce7f",
+  "publisherMetadataUrl": "https://registry.npmjs.org/tmp-promise/3.0.3",
+  "publisherMetadataSha256": "97fc9d1761795c32dad0a76fea26b8cff2034be1b94c96a2d04731ba375f8a7a",
+  "releaseArchive": "https://registry.npmjs.org/tmp-promise/-/tmp-promise-3.0.3.tgz",
+  "archiveSha256": "9d884c25141e44a44d893b2f6b80e5ebc5ae8a34a4bff9084f19880e74bbc9d9",
+  "integrity": "sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

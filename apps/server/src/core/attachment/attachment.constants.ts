@@ -1,0 +1,27 @@
+export enum AttachmentType {
+  Avatar = 'avatar',
+  WorkspaceIcon = 'workspace-icon',
+  SpaceIcon = 'space-icon',
+  File = 'file',
+  Chat = 'chat',
+}
+
+export const validImageExtensions = ['.jpg', '.png', '.jpeg'];
+export const MAX_AVATAR_SIZE = '10MB';
+
+export const inlineFileExtensions = [
+  '.jpg',
+  '.png',
+  '.jpeg',
+  '.webp',
+  '.gif',
+  '.avif',
+  '.pdf',
+  '.mp4',
+  '.mov',
+  '.mp3',
+  '.wav',
+  '.ogg',
+  '.m4a',
+  '.webm',
+];

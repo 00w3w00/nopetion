@@ -1,0 +1,22 @@
+{
+  "title": "서버 기능",
+  "drawio": "다이어그램 편집기",
+  "drawioHelp": "기본 Draw.io 편집기를 사용하거나 직접 운영하는 편집기 주소를 입력하세요. 기존 다이어그램은 유지됩니다.",
+  "drawioUrl": "Draw.io 편집기 주소",
+  "pdf": "외부 PDF 처리 (선택)",
+  "pdfHelp": "비워두면 내장 PDF 내보내기를 사용합니다. 주소를 설정하면 내보낸 PDF를 해당 서버로 보내 PDF/A-2b로 변환합니다. 주소 저장 후 연결을 확인하세요.",
+  "gotenbergUrl": "Gotenberg 서버 주소",
+  "iframe": "다른 사이트에 Nopetion 표시",
+  "iframeHelp": "이 앱을 프레임 안에 표시할 수 있는 사이트를 정합니다. 문서 접근에는 계속 로그인이 필요하며 OAuth 승인 화면은 항상 프레임을 차단합니다.",
+  "iframeAllowed": "아래 사이트에서 Nopetion 표시 허용",
+  "origins": "허용할 사이트",
+  "originsHelp": "경로·와일드카드 없이 http:// 또는 https:// 출처를 한 줄에 하나씩 입력하세요. 허용을 켜면 최소 한 곳이 필요합니다.",
+  "save": "저장",
+  "reload": "저장한 설정 다시 불러오기",
+  "saved": "저장했습니다. 새 편집기와 요청부터 적용됩니다.",
+  "loadFailed": "서버 설정을 불러오지 못했습니다.",
+  "saveFailed": "저장하지 못했습니다. 주소·허용 사이트를 확인하거나 다른 탭에서 변경했다면 저장한 설정을 다시 불러오세요.",
+  "test": "저장한 연결 확인",
+  "connected": "연결을 확인했습니다.",
+  "connectionFailed": "저장한 Gotenberg 서버에 연결하지 못했습니다."
+}

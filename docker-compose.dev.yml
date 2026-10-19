@@ -1,0 +1,22 @@
+# Local development dependencies only. Separate volumes preserve deployment data.
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: docmost
+      POSTGRES_USER: docmost
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}'
+    ports:
+      - '127.0.0.1:5433:5432'
+    volumes:
+      - dev_db_data:/var/lib/postgresql
+  redis:
+    image: redis:8
+    command: ['redis-server', '--appendonly', 'yes', '--maxmemory-policy', 'noeviction']
+    ports:
+      - '127.0.0.1:6390:6379'
+    volumes:
+      - dev_redis_data:/data
+volumes:
+  dev_db_data:
+  dev_redis_data:

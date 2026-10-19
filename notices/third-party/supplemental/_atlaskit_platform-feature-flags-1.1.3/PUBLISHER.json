@@ -1,0 +1,21 @@
+{
+  "name": "@atlaskit/platform-feature-flags",
+  "version": "1.1.3",
+  "declaredLicense": "Apache-2.0",
+  "author": {
+    "name": "Atlassian Pty Ltd"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+https://bitbucket.org/atlassian/atlassian-frontend-mirror.git",
+    "type": "git"
+  },
+  "gitHead": null,
+  "publisherMetadataUrl": "https://registry.npmjs.org/%40atlaskit%2Fplatform-feature-flags/1.1.3",
+  "publisherMetadataSha256": "cc528ffd2dd56a6dfe29e0de63dd1de85caed05849cfdce8a5d6cfb5cea808d4",
+  "releaseArchive": "https://registry.npmjs.org/@atlaskit/platform-feature-flags/-/platform-feature-flags-1.1.3.tgz",
+  "archiveSha256": "2450cb83766d02a24faa166b8d8a6b8498a6eee6d78665dbd4fb81e4c4bde0d5",
+  "integrity": "sha512-dRn6UvVmMF5+WXnv7ZlxKTV2rVQncI2TgM0KTGSqpHdD9LnogITWC/rFjzUuF/W8MBCEvpouGilukqhq6rASnw==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

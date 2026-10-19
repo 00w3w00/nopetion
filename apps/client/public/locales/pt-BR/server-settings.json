@@ -1,0 +1,22 @@
+{
+  "title": "Server features",
+  "drawio": "Diagram editor",
+  "drawioHelp": "Use the default Draw.io editor or enter your own editor address. Existing diagrams are preserved.",
+  "drawioUrl": "Draw.io editor address",
+  "pdf": "External PDF processing (optional)",
+  "pdfHelp": "Leave empty to use the built-in PDF exporter. When configured, exported PDFs are sent to this server for PDF/A-2b conversion. Save before testing the connection.",
+  "gotenbergUrl": "Gotenberg server address",
+  "iframe": "Display Nopetion on other sites",
+  "iframeHelp": "Choose which sites may display this app inside a frame. Document access still requires login. OAuth consent screens always block frames.",
+  "iframeAllowed": "Allow the sites below to display Nopetion",
+  "origins": "Allowed sites",
+  "originsHelp": "One http:// or https:// origin per line, without paths or wildcards. At least one is required when enabled.",
+  "save": "Save",
+  "reload": "Reload saved settings",
+  "saved": "Saved. New editor sessions and requests use these settings.",
+  "loadFailed": "Could not load server settings.",
+  "saveFailed": "Could not save. Check the addresses and allowed sites, or reload if another tab changed the settings.",
+  "test": "Test saved connection",
+  "connected": "Connection verified.",
+  "connectionFailed": "Could not connect to the saved Gotenberg server."
+}

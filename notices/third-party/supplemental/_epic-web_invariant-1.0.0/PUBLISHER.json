@@ -1,0 +1,23 @@
+{
+  "name": "@epic-web/invariant",
+  "version": "1.0.0",
+  "declaredLicense": "MIT",
+  "author": {
+    "url": "https://kentcdodds.com/",
+    "name": "Kent C. Dodds",
+    "email": "me@kentcdodds.com"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+https://github.com/epicweb-dev/invariant.git",
+    "type": "git"
+  },
+  "gitHead": "547be2246d3c39f8ca44dd0502b1aa70bf4378af",
+  "publisherMetadataUrl": "https://registry.npmjs.org/%40epic-web%2Finvariant/1.0.0",
+  "publisherMetadataSha256": "626a2fe84f02c459ef9fb80af05f880f30b30e12a2f5033348faa587accf10d5",
+  "releaseArchive": "https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz",
+  "archiveSha256": "6f8058357a552982fc190386b1792bde9d52802022f885e2404cd7fc1ce9862d",
+  "integrity": "sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

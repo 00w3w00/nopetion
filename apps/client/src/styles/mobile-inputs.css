@@ -1,0 +1,22 @@
+/* Keep touch text fields readable before focus so iOS does not zoom them in.
+ * This must apply before focus, including to controls in lazy-loaded dialogs.
+ * Keep larger Mantine sizes and the browser's own text-size preference.
+ * Do not restrict viewport zoom: pinch zoom remains available. */
+@media (any-pointer: coarse) {
+  /* The emoji picker has a shadow root; its search uses this size minus 1px. */
+  em-emoji-picker {
+    --font-size: max(17px, calc(1rem + 1px));
+  }
+
+  input:not(:where(
+    [type="checkbox"], [type="radio"], [type="range"], [type="color"],
+    [type="file"], [type="button"], [type="submit"], [type="reset"], [type="hidden"]
+  )),
+  textarea,
+  select,
+  [contenteditable="true"],
+  [contenteditable="plaintext-only"] {
+    /* Component selectors and inline compact-field sizes must not lower this. */
+    font-size: max(16px, 1rem, var(--_input-fz, var(--input-fz, 1em))) !important;
+  }
+}

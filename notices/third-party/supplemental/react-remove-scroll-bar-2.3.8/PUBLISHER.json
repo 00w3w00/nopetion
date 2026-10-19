@@ -1,0 +1,22 @@
+{
+  "name": "react-remove-scroll-bar",
+  "version": "2.3.8",
+  "declaredLicense": "MIT",
+  "author": {
+    "name": "Anton Korzunov",
+    "email": "thekashey@gmail.com"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git+https://github.com/theKashey/react-remove-scroll-bar.git",
+    "type": "git"
+  },
+  "gitHead": "b3b1287aad81def2e2ae707274b74531b61ddbaf",
+  "publisherMetadataUrl": "https://registry.npmjs.org/react-remove-scroll-bar/2.3.8",
+  "publisherMetadataSha256": "826c618ece09367334160c1ab3a272fd54f8f12e3b0a45f75b0f2660d285855a",
+  "releaseArchive": "https://registry.npmjs.org/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.8.tgz",
+  "archiveSha256": "ccc872d7a2dc007cbf9d755f30d56b8d80eabdbe22c44c95a709129bfdc46f01",
+  "integrity": "sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

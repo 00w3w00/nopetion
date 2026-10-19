@@ -1,0 +1,23 @@
+{
+  "name": "agent-base",
+  "version": "6.0.2",
+  "declaredLicense": "MIT",
+  "author": {
+    "url": "http://n8.io/",
+    "name": "Nathan Rajlich",
+    "email": "nathan@tootallnate.net"
+  },
+  "contributors": null,
+  "repository": {
+    "url": "git://github.com/TooTallNate/node-agent-base.git",
+    "type": "git"
+  },
+  "gitHead": "c4b8ea2e1a11bae023bb09b708050a50418204e9",
+  "publisherMetadataUrl": "https://registry.npmjs.org/agent-base/6.0.2",
+  "publisherMetadataSha256": "b4670f909dc2ae3092fee34a0c817e721ca1a6a85b3735d748e8ac78228146a0",
+  "releaseArchive": "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz",
+  "archiveSha256": "bc6da06f2a2e6bc80fa5878bd7227bd0318812976d45f47f17e1aafcec2be831",
+  "integrity": "sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==",
+  "integrityVerified": true,
+  "copyrightLinesFound": []
+}

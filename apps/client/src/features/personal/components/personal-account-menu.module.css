@@ -1,0 +1,32 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--mantine-radius-sm);
+  color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-dark-0));
+
+  @mixin hover {
+    background: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.dropdown {
+  border-radius: 12px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  padding: 6px;
+}

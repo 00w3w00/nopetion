@@ -1,0 +1,15 @@
+{
+  "scope": "Das aktuelle Dokument und ausgewählte Unterseiten als eine PDF exportieren. Hochgeladene PNG/JPEG-Bilder werden eingebunden; nicht unterstützte Blöcke werden markiert.",
+  "wait": "Warte, bis Dokument und Titel gespeichert sind, und versuche es erneut.",
+  "failed": "PDF-Export fehlgeschlagen. Prüfe den Zugriff auf Dokument und Anhänge und versuche es erneut.",
+  "subpages": "Unterseiten zusammenführen",
+  "order": "Zuerst kommt das aktuelle Dokument, dann die ausgewählten Seiten in Baumreihenfolge. Jedes Dokument beginnt auf einer neuen Seite.",
+  "loading": "Unterseiten werden geladen…",
+  "loadFailed": "Unterseiten konnten nicht geladen werden. Exportieren Sie nur das aktuelle Dokument oder versuchen Sie es erneut.",
+  "retry": "Erneut versuchen",
+  "noSubpages": "Keine exportierbaren Unterseiten.",
+  "selectAll": "Alle auswählen",
+  "clearSelection": "Auswahl aufheben",
+  "selected": "{{count}} ausgewählt",
+  "limit": "Wählen Sie bis zu {{count}} Unterseiten aus."
+}

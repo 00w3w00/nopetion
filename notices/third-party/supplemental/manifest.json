@@ -1,0 +1,431 @@
+{
+  "createdAt": "2026-10-19T11:10:23.745Z",
+  "scope": "Supplemental publisher attribution; original package-level notices remain separately tracked",
+  "records": [
+    {
+      "name": "@atlaskit/platform-feature-flags",
+      "version": "1.1.3",
+      "declaredLicense": "Apache-2.0",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/Apache-2.0.json",
+        "sha256": "df014593659115a9fa450fbcea64476d1e6fa228b859a5b3d848c40887592b82"
+      },
+      "files": [
+        {
+          "file": "_atlaskit_platform-feature-flags-1.1.3/PUBLISHER.json",
+          "sha256": "58af5a47f831e1ca21799dbe868c9562f5b227a6980ca0a06e17b7eca418e94f"
+        },
+        {
+          "file": "_atlaskit_platform-feature-flags-1.1.3/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "1f83bfbb6ab612d244b9619bcf615e54c2e107fc78a05eb6e16bc1ce41fd2f8f"
+        },
+        {
+          "file": "_atlaskit_platform-feature-flags-1.1.3/NOTICE.md",
+          "sha256": "b3f5e5640fd1e87115e96b98b4fd208e051cf4305b8824d7c7f51d6c34db00db"
+        }
+      ]
+    },
+    {
+      "name": "@epic-web/invariant",
+      "version": "1.0.0",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "_epic-web_invariant-1.0.0/PUBLISHER.json",
+          "sha256": "dbdc3ad205c0bb25909340165e29127081256a9b21e0af74923dcc6808d5b3b5"
+        },
+        {
+          "file": "_epic-web_invariant-1.0.0/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "_epic-web_invariant-1.0.0/NOTICE.md",
+          "sha256": "53534f0a5633111a1dfeab3056125aff940ceac121fb4efa0b0346163c7c6273"
+        }
+      ]
+    },
+    {
+      "name": "@nest-lab/throttler-storage-redis",
+      "version": "1.2.0",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "_nest-lab_throttler-storage-redis-1.2.0/PUBLISHER.json",
+          "sha256": "1539117566b6c9fc27264c18036367a33e5170da455b28006460738289e7ef07"
+        },
+        {
+          "file": "_nest-lab_throttler-storage-redis-1.2.0/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "_nest-lab_throttler-storage-redis-1.2.0/NOTICE.md",
+          "sha256": "04070f9ecba711ea171758870e71a02346a69dbb33afea92eb0525da5d50d4ae"
+        }
+      ]
+    },
+    {
+      "name": "abstract-logging",
+      "version": "2.0.1",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "abstract-logging-2.0.1/PUBLISHER.json",
+          "sha256": "8d5ace2066439dd4b14ee71760ec074d37c930c04aa09bec768e85be3a4ba9be"
+        },
+        {
+          "file": "abstract-logging-2.0.1/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "abstract-logging-2.0.1/NOTICE.md",
+          "sha256": "ad27ff06256272eee0ea2ef62c4f3d450de0ef105a7d420a3695235278bd2d32"
+        }
+      ]
+    },
+    {
+      "name": "agent-base",
+      "version": "6.0.2",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "agent-base-6.0.2/PUBLISHER.json",
+          "sha256": "b924b423d7919b717b527360fbff296c7a1423cbfb341d050747d8535740ca28"
+        },
+        {
+          "file": "agent-base-6.0.2/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "agent-base-6.0.2/NOTICE.md",
+          "sha256": "691d3d6c956aabce1ddceb97cbdbefa44056b58f5759e3f70cceb2a3e7a1486d"
+        }
+      ]
+    },
+    {
+      "name": "boolbase",
+      "version": "1.0.0",
+      "declaredLicense": "ISC",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/ISC.json",
+        "sha256": "6ea246ab702cf7bf10ae95e3aa0306dc11ade80b2bf0aaa582f49de58417bb81"
+      },
+      "files": [
+        {
+          "file": "boolbase-1.0.0/PUBLISHER.json",
+          "sha256": "a008052f81f3f384e06566d6093c3b357191f2631490d8d1fce5e136b4b596ad"
+        },
+        {
+          "file": "boolbase-1.0.0/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "e98c16cdc4b43f528e1d02aad1558cfc62a8309a115af69f36bfb1dc11f7bc3c"
+        },
+        {
+          "file": "boolbase-1.0.0/NOTICE.md",
+          "sha256": "3ede1106c7a39a7df1d52df93bd8d7f8bc480507822f0f695adb7c6515f6cda9"
+        }
+      ]
+    },
+    {
+      "name": "brotli",
+      "version": "1.3.3",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "brotli-1.3.3/PUBLISHER.json",
+          "sha256": "dd3fd9e6ee3e0be021d060a29658b81c3f075a2ff558bc86487e3c6429aff872"
+        },
+        {
+          "file": "brotli-1.3.3/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "brotli-1.3.3/NOTICE.md",
+          "sha256": "a0707da1a640323f26bd288611fc618c70d317b5f4a13008de26b35dcdae1364"
+        }
+      ]
+    },
+    {
+      "name": "dfa",
+      "version": "1.2.0",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "dfa-1.2.0/PUBLISHER.json",
+          "sha256": "3d9498e576e99a71d06dc2ce4a48748c67250009b273bd7b42c49986fdc89481"
+        },
+        {
+          "file": "dfa-1.2.0/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "dfa-1.2.0/NOTICE.md",
+          "sha256": "300c83b73fd615879417b326c566a0d4886bc53efd16df3c943d133e8de5299a"
+        }
+      ]
+    },
+    {
+      "name": "fontkit",
+      "version": "2.0.4",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "fontkit-2.0.4/PUBLISHER.json",
+          "sha256": "bde32bfb7bf24cee530ac53e5128d31673c97b8df4e60c5f20cf8bdf089bd132"
+        },
+        {
+          "file": "fontkit-2.0.4/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "fontkit-2.0.4/NOTICE.md",
+          "sha256": "6d359f3b8f50bd8a3915d2871cdff94759cf9fc4219237ab9382ad93eef7ad35"
+        }
+      ]
+    },
+    {
+      "name": "html-parse-stringify",
+      "version": "3.0.1",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "html-parse-stringify-3.0.1/PUBLISHER.json",
+          "sha256": "700e73c852fc8e5d272c16b902f3f2446c7085021f624065a580f6fb48646d0b"
+        },
+        {
+          "file": "html-parse-stringify-3.0.1/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "html-parse-stringify-3.0.1/NOTICE.md",
+          "sha256": "13ce0b1ede5148b6b53d8c807f8c8550af08600e49e1ebf95cecf1c15ab13480"
+        }
+      ]
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "5.0.1",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "https-proxy-agent-5.0.1/PUBLISHER.json",
+          "sha256": "d22e86afb44a7f34a52cbf0278967a3d0b62b3b1a469693af86fd8b25210205d"
+        },
+        {
+          "file": "https-proxy-agent-5.0.1/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "https-proxy-agent-5.0.1/NOTICE.md",
+          "sha256": "765f05776a2ebb4dd6d3308ea4d91ddb16f43db66e1e9a3141527fbd6e33f8ce"
+        }
+      ]
+    },
+    {
+      "name": "pg-tsquery",
+      "version": "8.4.2",
+      "declaredLicense": "ISC",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/ISC.json",
+        "sha256": "6ea246ab702cf7bf10ae95e3aa0306dc11ade80b2bf0aaa582f49de58417bb81"
+      },
+      "files": [
+        {
+          "file": "pg-tsquery-8.4.2/PUBLISHER.json",
+          "sha256": "15e2cec8d300c5a942e607c07482068fdb1b12d226814ca6bd6b840cb1896521"
+        },
+        {
+          "file": "pg-tsquery-8.4.2/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "e98c16cdc4b43f528e1d02aad1558cfc62a8309a115af69f36bfb1dc11f7bc3c"
+        },
+        {
+          "file": "pg-tsquery-8.4.2/NOTICE.md",
+          "sha256": "4af4f2e868f825c0b5dd09853eb59a9dcc050813bdb6e709ae544a6deec63fdd"
+        }
+      ]
+    },
+    {
+      "name": "react-remove-scroll-bar",
+      "version": "2.3.8",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "react-remove-scroll-bar-2.3.8/PUBLISHER.json",
+          "sha256": "0ec9cdaebb479743afb215a9b728087db3a146cec6acb05cb2d4aa971c8420cd"
+        },
+        {
+          "file": "react-remove-scroll-bar-2.3.8/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "react-remove-scroll-bar-2.3.8/NOTICE.md",
+          "sha256": "685ace5bae20c4516e6c6c4e0c6c6432016308df81d9517b832ec21c7c0ca17d"
+        }
+      ]
+    },
+    {
+      "name": "rfc6902",
+      "version": "5.2.0",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "rfc6902-5.2.0/PUBLISHER.json",
+          "sha256": "e86d01d59381f0bbeb0223226ef4478d9cb41e17d15b2624f03021827a077a2e"
+        },
+        {
+          "file": "rfc6902-5.2.0/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "rfc6902-5.2.0/NOTICE.md",
+          "sha256": "39d02e1072e5dbaf24d6a0a49f3fc23af1ded2d75e04d3df5dbb0046b451ef01"
+        }
+      ]
+    },
+    {
+      "name": "tmp-promise",
+      "version": "3.0.3",
+      "declaredLicense": "MIT",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/MIT.json",
+        "sha256": "ff6b1bdaf34abe3a1299a34bca1bd15f8a721d2b1853cc7da32d5c0d99818c75"
+      },
+      "files": [
+        {
+          "file": "tmp-promise-3.0.3/PUBLISHER.json",
+          "sha256": "89eb5c484ca8814d7495a886cab4c3fa02ef18758c4d99627cff39abd52f5f51"
+        },
+        {
+          "file": "tmp-promise-3.0.3/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "9f420f8e43bbd65bddb84463a5f96db1f030fc7ecd4f0b35523b9610e8c3fa21"
+        },
+        {
+          "file": "tmp-promise-3.0.3/NOTICE.md",
+          "sha256": "f662cb768213a914327ff40469092b756521d7a623d152497b8bcaaf5a25fa2c"
+        }
+      ]
+    },
+    {
+      "name": "truncate-utf8-bytes",
+      "version": "1.0.2",
+      "declaredLicense": "WTFPL",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/WTFPL.json",
+        "sha256": "e50f8f49a99a78b2e55758a71ca12a08cfc7028d7ec68365a9a73f8abde9ddf3"
+      },
+      "files": [
+        {
+          "file": "truncate-utf8-bytes-1.0.2/PUBLISHER.json",
+          "sha256": "096ba5c4ccba7f066c67a150ed50a49b1cb2eb146da9e35543e4544c16abb66e"
+        },
+        {
+          "file": "truncate-utf8-bytes-1.0.2/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "455d924ba882643e211d7b070c8e8839babe012907e0ab3e556f3c355e95ccd3"
+        },
+        {
+          "file": "truncate-utf8-bytes-1.0.2/NOTICE.md",
+          "sha256": "101be0f6e89bcb11c37a4afb784d968d2342354a798576d9dd59f4fb1bad7080"
+        }
+      ]
+    },
+    {
+      "name": "utf8-byte-length",
+      "version": "1.0.4",
+      "declaredLicense": "WTFPL",
+      "kind": "publisher declaration and SPDX reference; not original upstream notice",
+      "originalNoticeOutstanding": true,
+      "licenseReference": {
+        "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/json/details/WTFPL.json",
+        "sha256": "e50f8f49a99a78b2e55758a71ca12a08cfc7028d7ec68365a9a73f8abde9ddf3"
+      },
+      "files": [
+        {
+          "file": "utf8-byte-length-1.0.4/PUBLISHER.json",
+          "sha256": "88576068adfa27ddf5354984d2ac458d619dc3ea3d3331b54c021b0c8428b674"
+        },
+        {
+          "file": "utf8-byte-length-1.0.4/SPDX-LICENSE-REFERENCE.txt",
+          "sha256": "455d924ba882643e211d7b070c8e8839babe012907e0ab3e556f3c355e95ccd3"
+        },
+        {
+          "file": "utf8-byte-length-1.0.4/NOTICE.md",
+          "sha256": "d962ebde84b509262a606d8c27f9ece807eed8fb91d69f5e63af22c59a5ad864"
+        }
+      ]
+    }
+  ]
+}

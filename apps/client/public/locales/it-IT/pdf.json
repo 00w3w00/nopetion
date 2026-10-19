@@ -1,0 +1,15 @@
+{
+  "scope": "Esporta il documento attuale e le sottopagine selezionate in un PDF. Le immagini PNG/JPEG caricate sono incluse; i blocchi non supportati sono segnalati.",
+  "wait": "Attendi il salvataggio del documento e del titolo, poi riprova.",
+  "failed": "Esportazione PDF non riuscita. Controlla l’accesso al documento e agli allegati, poi riprova.",
+  "subpages": "Sottopagine da unire",
+  "order": "Prima il documento attuale, poi le pagine selezionate in ordine di albero. Ogni documento inizia su una nuova pagina.",
+  "loading": "Caricamento sottopagine…",
+  "loadFailed": "Impossibile caricare le sottopagine. Esporta solo il documento attuale o riprova.",
+  "retry": "Riprova",
+  "noSubpages": "Nessuna sottopagina esportabile.",
+  "selectAll": "Seleziona tutto",
+  "clearSelection": "Cancella selezione",
+  "selected": "{{count}} selezionate",
+  "limit": "Seleziona fino a {{count}} sottopagine."
+}

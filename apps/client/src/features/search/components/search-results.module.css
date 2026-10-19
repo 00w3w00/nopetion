@@ -1,0 +1,17 @@
+.results :global(.mantine-ScrollArea-viewport) > :global(.mantine-ScrollArea-content) {
+  min-width: 0;
+  width: 100%;
+}
+
+.result {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.result > div {
+  min-width: 0;
+}
+
+.result p {
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,24 @@
+.notificationItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.notificationMain {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  text-align: inherit;
+}
+
+.notificationItem:hover {
+  background-color: var(--mantine-color-default-hover);
+}
+
+.divider {
+  border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+}
+

@@ -1,0 +1,164 @@
+import { appPath } from "@/lib/app-path";
+import React from "react";
+import {
+  Group,
+  Center,
+  Text,
+  Badge,
+  ActionIcon,
+  Tooltip,
+  getDefaultZIndex,
+} from "@mantine/core";
+import { Spotlight } from "@mantine/spotlight";
+import { Link } from "react-router-dom";
+import { IconFile, IconDownload } from "@tabler/icons-react";
+import { buildPageUrl } from "@/features/page/page.utils";
+import { getPageIcon } from "@/lib";
+import {
+  IAttachmentSearch,
+  IPageSearch,
+} from "@/features/search/types/search.types";
+import DOMPurify from "dompurify";
+import { useTranslation } from "react-i18next";
+import { timeAgo } from "@/lib/time.ts";
+import classes from "./search-results.module.css";
+
+interface SearchResultItemProps {
+  result: IPageSearch | IAttachmentSearch;
+  isAttachmentResult: boolean;
+  showSpace?: boolean;
+}
+
+// Spotlight hardcodes tabIndex={-1} after spreading props; a ref wins and
+// React never writes -1 back because the prop value never changes
+const makeActionTabbable = (el: HTMLElement | null) => {
+  if (el) {
+    el.tabIndex = 0;
+  }
+};
+
+export function SearchResultItem({
+  result,
+  isAttachmentResult,
+  showSpace,
+}: SearchResultItemProps) {
+  const { t } = useTranslation();
+
+  if (isAttachmentResult) {
+    const attachmentResult = result as IAttachmentSearch;
+
+    const handleDownload = (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const downloadUrl = `/api/files/${attachmentResult.id}/${attachmentResult.fileName}`;
+      window.open(appPath(downloadUrl), "_blank");
+    };
+
+    return (
+      <Spotlight.Action
+        className={classes.result}
+        component={Link}
+        ref={makeActionTabbable}
+        //@ts-ignore
+        to={buildPageUrl(
+          attachmentResult.space.slug,
+          attachmentResult.page.slugId,
+          attachmentResult.page.title,
+        )}
+        style={{ userSelect: "none" }}
+      >
+        <Group wrap="nowrap" w="100%">
+          <Center>
+            <IconFile size={16} />
+          </Center>
+
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <Group justify="space-between" wrap="nowrap" gap="xs">
+              <Text truncate>{attachmentResult.fileName}</Text>
+              <Text size="xs" c="dimmed" style={{ flexShrink: 0 }}>
+                {timeAgo(attachmentResult.updatedAt)}
+              </Text>
+            </Group>
+            <Text size="xs" opacity={0.6}>
+              {attachmentResult.space.name} • {attachmentResult.page.title}
+            </Text>
+
+            {attachmentResult?.highlight && (
+              <Text
+                opacity={0.6}
+                size="xs"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(attachmentResult.highlight, {
+                    ALLOWED_TAGS: ["mark", "em", "strong", "b"],
+                    ALLOWED_ATTR: [],
+                  }),
+                }}
+              />
+            )}
+          </div>
+
+          <Tooltip
+            label={t("Download attachment")}
+            zIndex={getDefaultZIndex("max")}
+            withArrow
+          >
+            <ActionIcon variant="subtle" color="gray" onClick={handleDownload}>
+              <IconDownload size={18} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
+      </Spotlight.Action>
+    );
+  } else {
+    const pageResult = result as IPageSearch;
+    return (
+      <Spotlight.Action
+        className={classes.result}
+        component={Link}
+        ref={makeActionTabbable}
+        //@ts-ignore
+        to={buildPageUrl(
+          pageResult.space.slug,
+          pageResult.slugId,
+          pageResult.title,
+          undefined,
+          pageResult.matchedText,
+          pageResult.wholeWord
+        )}
+        style={{ userSelect: "none" }}
+      >
+        <Group wrap="nowrap" w="100%">
+          <Center>{getPageIcon(pageResult?.icon)}</Center>
+
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <Group justify="space-between" wrap="nowrap" gap="xs">
+              <Text truncate>{pageResult.title || t("Untitled")}</Text>
+              <Text size="xs" c="dimmed" style={{ flexShrink: 0 }}>
+                {timeAgo(pageResult.updatedAt)}
+              </Text>
+            </Group>
+
+            {showSpace && pageResult.space && (
+              <Badge variant="light" size="xs" color="gray">
+                {pageResult.space.name}
+              </Badge>
+            )}
+
+            {pageResult?.highlight && (
+              <Text
+                opacity={0.6}
+                size="xs"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(pageResult.highlight, {
+                    ALLOWED_TAGS: ["mark", "em", "strong", "b"],
+                    ALLOWED_ATTR: [],
+                  }),
+                }}
+              />
+            )}
+          </div>
+        </Group>
+      </Spotlight.Action>
+    );
+  }
+}

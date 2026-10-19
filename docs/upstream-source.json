@@ -1,0 +1,29 @@
+{
+  "project": "Nopetion",
+  "repository": "https://github.com/docmost/docmost",
+  "upstreamVersion": "0.96.0",
+  "upstreamBranch": "main",
+  "upstreamCommit": "2e3fdbbff453fbf9265123ef75ea8db42d692287",
+  "upstreamTree": "da84a32a595ae81f86ec7fdb5c9f14f81f243b31",
+  "retrievalDate": "2026-10-10",
+  "retrievalMethod": "Connected GitHub API reads pinned to the commit; terminal clone was blocked by DNS. All 1622 source blobs were verified against Git blob SHA-1. The exact upstream tree and signed commit were reconstructed locally.",
+  "gitHistory": "Shallow at the pinned commit; local branch nopetion and remote upstream. No remote fork published.",
+  "serverEnterpriseSubmodule": {
+    "path": "apps/server/src/ee",
+    "repository": "https://github.com/docmost/ee",
+    "commit": "cc28defeec44c8f71e686cbec6e4298bb447e0e7",
+    "initialized": false
+  },
+  "nodeMajor": 26,
+  "packageManager": "pnpm@11.28.2",
+  "typescript": "5.9.3",
+  "workspace": "pnpm/Nx; apps/client, apps/server, packages/*",
+  "rootLicense": "AGPL-3.0",
+  "separateEnterprisePaths": [
+    "apps/server/src/ee",
+    "apps/client/src/ee",
+    "packages/ee",
+    "packages/base-formula"
+  ],
+  "distributionReviewComplete": false
+}

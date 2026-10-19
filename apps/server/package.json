@@ -1,0 +1,171 @@
+{
+  "name": "server",
+  "version": "0.96.0",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "cross-env NODE_ENV=development nest start",
+    "start:dev": "cross-env NODE_ENV=development nest start --watch",
+    "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
+    "start:prod": "cross-env NODE_ENV=production node dist/main",
+    "collab:prod": "cross-env NODE_ENV=production node dist/collaboration/server/collab-main",
+    "collab:dev": "cross-env NODE_ENV=development node dist/collaboration/server/collab-main",
+    "migration:create": "tsx src/database/migrate.ts create",
+    "migration:up": "tsx src/database/migrate.ts up",
+    "migration:down": "tsx src/database/migrate.ts down",
+    "migration:latest": "tsx src/database/migrate.ts latest",
+    "migration:redo": "tsx src/database/migrate.ts redo",
+    "migration:reset": "tsx src/database/migrate.ts down-to NO_MIGRATIONS",
+    "migration:codegen": "kysely-codegen --dialect=postgres --camel-case --env-file=../../.env --out-file=./src/database/types/db.d.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config test/jest-e2e.json",
+    "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\""
+  },
+  "dependencies": {
+    "@fastify/cookie": "11.1.2",
+    "@fastify/multipart": "10.1.1",
+    "@fastify/static": "10.1.3",
+    "@keyv/redis": "5.1.6",
+    "@modelcontextprotocol/sdk": "1.31.0",
+    "@nest-lab/throttler-storage-redis": "1.2.0",
+    "@nestjs-labs/nestjs-ioredis": "11.0.4",
+    "@nestjs/bullmq": "11.0.5",
+    "@nestjs/cache-manager": "3.1.3",
+    "@nestjs/common": "11.2.4",
+    "@nestjs/config": "4.0.4",
+    "@nestjs/core": "11.2.4",
+    "@nestjs/event-emitter": "3.1.0",
+    "@nestjs/jwt": "11.0.2",
+    "@nestjs/mapped-types": "2.1.1",
+    "@nestjs/passport": "11.0.5",
+    "@nestjs/platform-fastify": "11.2.4",
+    "@nestjs/platform-socket.io": "11.2.4",
+    "@nestjs/schedule": "6.1.3",
+    "@nestjs/terminus": "11.1.1",
+    "@nestjs/throttler": "6.5.0",
+    "@nestjs/websockets": "11.2.4",
+    "@socket.io/redis-adapter": "8.3.0",
+    "bcrypt": "6.0.0",
+    "bowser": "2.14.1",
+    "bullmq": "5.79.0",
+    "cache-manager": "7.2.8",
+    "cheerio": "1.2.0",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.15.1",
+    "cookie": "1.1.1",
+    "csv-stringify": "6.8.0",
+    "fs-extra": "11.3.4",
+    "happy-dom": "20.8.9",
+    "ioredis": "5.10.1",
+    "jsonwebtoken": "9.0.3",
+    "kysely": "0.28.17",
+    "kysely-migration-cli": "0.4.2",
+    "kysely-postgres-js": "3.0.0",
+    "mime-types": "3.0.2",
+    "msgpackr": "1.11.9",
+    "nanoid": "5.1.16",
+    "nestjs-cls": "6.2.0",
+    "nestjs-kysely": "3.1.2",
+    "nestjs-pino": "4.6.1",
+    "openid-client": "6.8.2",
+    "otpauth": "9.5.0",
+    "p-limit": "7.3.0",
+    "passport-jwt": "4.0.1",
+    "pdfkit": "0.20.2",
+    "pg-tsquery": "8.4.2",
+    "pino-http": "11.0.0",
+    "pino-pretty": "13.1.3",
+    "postgres": "3.4.8",
+    "react": "19.2.7",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "^7.8.2",
+    "sanitize-filename": "1.6.3",
+    "socket.io": "4.8.3",
+    "tlds": "1.261.0",
+    "tmp-promise": "3.0.3",
+    "undici": "7.29.1",
+    "ws": "8.21.3",
+    "yauzl": "3.4.0",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@nestjs/cli": "^11.0.21",
+    "@nestjs/schematics": "^11.0.10",
+    "@nestjs/testing": "^11.1.19",
+    "@types/bcrypt": "^6.0.0",
+    "@types/debounce": "^1.2.4",
+    "@types/fs-extra": "^11.0.4",
+    "@types/jest": "^30.0.0",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^25.5.0",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/pdfkit": "0.17.6",
+    "@types/supertest": "^6.0.3",
+    "@types/ws": "^8.18.1",
+    "@types/yauzl": "^2.10.3",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
+    "jest": "^30.3.0",
+    "kysely-codegen": "^0.20.0",
+    "prettier": "^3.8.1",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.6",
+    "ts-loader": "^9.5.7",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts",
+      "tsx"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "happy-dom.+\\.js$": [
+        "babel-jest",
+        {
+          "presets": [
+            [
+              "@babel/preset-env",
+              {
+                "targets": {
+                  "node": "current"
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "^.+\\.(t|j)sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(\\.pnpm/)?(nanoid|uuid|image-dimensions|marked|happy-dom)(@|/))"
+    ],
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@docmost/db/(.*)$": "<rootDir>/database/$1",
+      "^@docmost/transactional/(.*)$": "<rootDir>/integrations/transactional/$1",
+      "^src/(.*)$": "<rootDir>/$1"
+    }
+  }
+}

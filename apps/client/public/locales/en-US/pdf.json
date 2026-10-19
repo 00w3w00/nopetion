@@ -1,0 +1,15 @@
+{
+  "scope": "Export the current document and selected subpages as one PDF. Uploaded PNG/JPEG images are included; unsupported blocks are marked.",
+  "wait": "Wait until the document and title are saved, then try again.",
+  "failed": "PDF export failed. Check document and attachment access, then try again.",
+  "subpages": "Subpages to merge",
+  "order": "The current document comes first, followed by checked pages in tree order. Each document starts on a new page.",
+  "loading": "Loading subpages…",
+  "loadFailed": "Could not load subpages. Export the current document alone or try again.",
+  "retry": "Try again",
+  "noSubpages": "No exportable subpages.",
+  "selectAll": "Select all",
+  "clearSelection": "Clear selection",
+  "selected": "{{count}} selected",
+  "limit": "Select up to {{count}} subpages."
+}
