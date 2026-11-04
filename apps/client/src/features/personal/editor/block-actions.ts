@@ -79,14 +79,9 @@ export function convertBlock(
   return null;
 }
 export function duplicateBlock(editor: Editor, pos: number): boolean {
-  if (editor.isDestroyed || !editor.isEditable) return false;
+  if (!canDuplicateBlock(editor, pos)) return false;
   const node = editor.state.doc.nodeAt(pos);
-  if (
-    !editor.isEditable ||
-    !node ||
-    ["transclusionSource", "personalDatabaseRow"].includes(node.type.name)
-  )
-    return false;
+  if (!node) return false;
   const clone = (value: JSONContent): JSONContent => ({
     ...value,
     ...(value.attrs
@@ -105,17 +100,34 @@ export function duplicateBlock(editor: Editor, pos: number): boolean {
     .insertContentAt(pos + node.nodeSize, clone(node.toJSON()))
     .run();
 }
+export function canDuplicateBlock(editor: Editor, pos: number): boolean {
+  if (editor.isDestroyed || !editor.isEditable) return false;
+  const node = editor.state.doc.nodeAt(pos);
+  return (
+    !!node &&
+    !["transclusionSource", "personalDatabaseRow"].includes(node.type.name)
+  );
+}
+export function canMoveBlock(
+  editor: Editor,
+  pos: number,
+  direction: -1 | 1,
+): boolean {
+  if (editor.isDestroyed || !editor.isEditable) return false;
+  const $pos = editor.state.doc.resolve(pos);
+  const other = $pos.index() + direction;
+  return other >= 0 && other < $pos.parent.childCount;
+}
 export function moveBlock(
   editor: Editor,
   pos: number,
   direction: -1 | 1,
 ): boolean {
-  if (!editor.isEditable || editor.isDestroyed) return false;
+  if (!canMoveBlock(editor, pos, direction)) return false;
   const $pos = editor.state.doc.resolve(pos);
   const index = $pos.index();
   const parent = $pos.parent;
   const other = index + direction;
-  if (other < 0 || other >= parent.childCount) return false;
   const node = parent.child(index),
     neighbor = parent.child(other);
   const from = direction === -1 ? pos - neighbor.nodeSize : pos;

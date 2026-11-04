@@ -27,7 +27,7 @@ import {
   angleMenuPluginKey,
 } from "@/features/editor/extensions/slash-command";
 
-const CommandList = ({
+export const CommandList = ({
   items,
   command,
   editor,
@@ -59,6 +59,28 @@ const CommandList = ({
     return Object.values(items).flat();
   }, [items]);
 
+  const enabledIndices = useMemo(
+    () =>
+      flatItems.flatMap((item, index) => (isItemDisabled(item) ? [] : [index])),
+    [flatItems, hasBases, editor],
+  );
+
+  const moveSelection = useCallback(
+    (direction: -1 | 1) => {
+      if (!enabledIndices.length) return;
+      const current = enabledIndices.indexOf(selectedIndex);
+      const next =
+        current === -1
+          ? direction === 1
+            ? 0
+            : enabledIndices.length - 1
+          : (current + direction + enabledIndices.length) %
+            enabledIndices.length;
+      setSelectedIndex(enabledIndices[next]);
+    },
+    [enabledIndices, selectedIndex],
+  );
+
   const selectItem = useCallback(
     (index: number) => {
       const item = flatItems[index];
@@ -77,14 +99,12 @@ const CommandList = ({
         e.preventDefault();
 
         if (e.key === "ArrowUp") {
-          setSelectedIndex(
-            (selectedIndex + flatItems.length - 1) % flatItems.length,
-          );
+          moveSelection(-1);
           return true;
         }
 
         if (e.key === "ArrowDown") {
-          setSelectedIndex((selectedIndex + 1) % flatItems.length);
+          moveSelection(1);
           return true;
         }
 
@@ -99,11 +119,11 @@ const CommandList = ({
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [flatItems, selectedIndex, setSelectedIndex, selectItem]);
+  }, [flatItems, selectedIndex, selectItem, moveSelection]);
 
   useEffect(() => {
-    setSelectedIndex(0);
-  }, [flatItems]);
+    setSelectedIndex(enabledIndices[0] ?? -1);
+  }, [flatItems, enabledIndices]);
 
   useEffect(() => {
     if (flatItems.length === 0) {
@@ -138,7 +158,9 @@ const CommandList = ({
       withBorder
       role="listbox"
       aria-label={t("Slash commands")}
-      aria-activedescendant={`slash-command-option-${selectedIndex}`}
+      aria-activedescendant={
+        selectedIndex >= 0 ? `slash-command-option-${selectedIndex}` : undefined
+      }
       className={personal ? classes.personalMenu : undefined}
     >
       <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
@@ -150,7 +172,7 @@ const CommandList = ({
       <ScrollArea
         viewportRef={viewportRef}
         h="var(--slash-menu-scroll-height, 350px)"
-        w={personal ? 320 : 270}
+        w={personal ? 356 : 290}
         scrollbarSize={8}
         overscrollBehavior="contain"
       >
@@ -191,13 +213,19 @@ const CommandList = ({
                       role="option"
                       aria-selected={itemIndex === selectedIndex}
                       aria-disabled={disabled}
+                      disabled={disabled}
                       onClick={() => selectItem(itemIndex)}
+                      onMouseMove={() => {
+                        if (!disabled && itemIndex !== selectedIndex) {
+                          setSelectedIndex(itemIndex);
+                        }
+                      }}
                       className={clsx(classes.menuBtn, {
                         [classes.selectedItem]: itemIndex === selectedIndex,
                         [classes.gatedItem]: disabled,
                       })}
                     >
-                      <Group wrap="nowrap">
+                      <Group wrap="nowrap" align="center">
                         {personal ? (
                           <span className={classes.rowIcon} aria-hidden>
                             <item.icon size={18} stroke={1.6} />
@@ -212,13 +240,22 @@ const CommandList = ({
                           </ActionIcon>
                         )}
 
-                        <div style={{ flex: 1 }}>
-                          <Text size="sm" fw={personal ? 400 : 500}>
+                        <div className={classes.itemCopy}>
+                          <Text
+                            size="sm"
+                            fw={personal ? 500 : 500}
+                            className={classes.itemTitle}
+                          >
                             {t(item.title)}
                           </Text>
 
-                          {!personal && (
-                            <Text c="dimmed" size="xs">
+                          {(!personal || item.description !== item.title) && (
+                            <Text
+                              c="dimmed"
+                              size="xs"
+                              className={classes.itemDescription}
+                              lineClamp={1}
+                            >
                               {t(item.description)}
                             </Text>
                           )}
@@ -261,7 +298,20 @@ const CommandList = ({
         </button>
       )}
     </Paper>
-  ) : null;
+  ) : (
+    <Paper
+      id="slash-command"
+      shadow="md"
+      p="xs"
+      withBorder
+      role="status"
+      className={personal ? classes.personalMenu : undefined}
+    >
+      <Text c="dimmed" size="sm" className={classes.emptyState}>
+        {t("No results")}
+      </Text>
+    </Paper>
+  );
 };
 
 export default CommandList;

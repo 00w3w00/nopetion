@@ -13,6 +13,7 @@ import { tmpdir } from 'node:os';
 import { AiCredentialsStore, type AiAccount } from './ai-credentials.store';
 import {
   PersonalAiService,
+  documentContextText,
   documentText,
   sourceHash,
 } from './personal-ai.service';
@@ -21,7 +22,11 @@ import {
   newAttempt,
   readResponseStream,
 } from './openai-oauth.provider';
-import { AI_EDITOR_GUIDE, aiEditorGuide } from './ai-context';
+import {
+  AI_DOCUMENT_CONTEXT_LIMIT,
+  AI_EDITOR_GUIDE,
+  aiEditorGuide,
+} from './ai-context';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { PrepareAiDto } from './personal-ai.dto';
@@ -454,9 +459,17 @@ describe('approved AI scope and authorization', () => {
     expect(provider.generate).not.toHaveBeenCalled();
     expect((await service.execute(user, plan.id, true)).text).toBe('결과');
     expect(provider.generate).toHaveBeenCalledTimes(1);
-    expect(provider.generate.mock.calls[0][3]).toBe(
-      JSON.stringify({ scope: 'selection', text: '한글 원문' }),
-    );
+    expect(JSON.parse(provider.generate.mock.calls[0][3])).toEqual({
+      scope: 'selection',
+      pageTitle: '제목',
+      document: {
+        text: '승인할 한글 원문',
+        truncated: false,
+        originalCharacters: '승인할 한글 원문'.length,
+        includedCharacters: '승인할 한글 원문'.length,
+      },
+      selection: { text: '한글 원문' },
+    });
     expect(provider.generate.mock.calls[0][4]).toBe(AI_EDITOR_GUIDE);
     expect(JSON.stringify(plan)).not.toContain(AI_EDITOR_GUIDE);
     await expect(service.execute(user, plan.id, true)).rejects.toThrow('만료');
@@ -488,6 +501,140 @@ describe('approved AI scope and authorization', () => {
   it('keeps images and external resources out of current-document scope', () => {
     expect(documentText(page.content)).toBe('승인할 한글 원문\n');
   });
+  it('adds allowlisted visible custom-block text without following references or serializing metadata', () => {
+    const content = {
+      type: 'doc',
+      content: [
+        {
+          type: 'callout',
+          attrs: { icon: '💡', secret: 'metadata-secret' },
+          content: [
+            {
+              type: 'paragraph',
+              content: [{ type: 'text', text: '주의 사항' }],
+            },
+          ],
+        },
+        {
+          type: 'personalDatabase',
+          attrs: {
+            id: 'db-secret',
+            title: '출시 업무',
+            viewSettings: 'private',
+          },
+          content: [
+            {
+              type: 'personalDatabaseProperty',
+              attrs: { id: 'priority', name: '우선순위', kind: 'select' },
+            },
+            {
+              type: 'personalDatabaseProperty',
+              attrs: {
+                id: 'relation',
+                name: '외부 관계',
+                kind: 'relation',
+                targetPageId: 'other-page-secret',
+              },
+            },
+            {
+              type: 'personalDatabaseRow',
+              attrs: {
+                id: 'row-secret',
+                title: 'QA 완료',
+                status: 'doing',
+                assignee: '민지',
+                date: '2026-11-05',
+                number: 3,
+              },
+              content: [
+                {
+                  type: 'personalDatabaseCell',
+                  attrs: { propertyId: 'priority', value: '높음' },
+                },
+                {
+                  type: 'personalDatabaseCell',
+                  attrs: {
+                    propertyId: 'relation',
+                    value: ['remote-row-secret'],
+                  },
+                },
+              ],
+            },
+            {
+              type: 'personalDatabaseRow',
+              attrs: { title: '삭제된 업무', deleted: true },
+            },
+          ],
+        },
+        {
+          type: 'personalTab',
+          attrs: { title: '회의 메모' },
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                { type: 'status', attrs: { text: '검토 중', color: 'blue' } },
+                { type: 'text', text: ' ' },
+                {
+                  type: 'mention',
+                  attrs: { label: '지훈', entityId: 'user-secret' },
+                },
+                {
+                  type: 'personalDate',
+                  attrs: { value: '2026-11-06', remindAt: 'secret' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'personalWidget',
+          attrs: {
+            kind: 'button',
+            title: '회고 추가',
+            value: '잘된 점과 개선점을 작성',
+            provider: 'secret-provider',
+          },
+        },
+        {
+          type: 'personalWidget',
+          attrs: {
+            kind: 'html',
+            title: '데모',
+            value: '<script>secret()</script>',
+          },
+        },
+        {
+          type: 'personalDatabaseReference',
+          attrs: { sourcePageId: 'external-secret', databaseId: 'external-db' },
+        },
+      ],
+    };
+    const text = documentContextText(content);
+    expect(text).toContain('주의 사항');
+    expect(text).toContain('Database: 출시 업무');
+    expect(text).toContain('Name: QA 완료');
+    expect(text).toContain('우선순위: 높음');
+    expect(text).toContain('Tab: 회의 메모');
+    expect(text).toContain('검토 중');
+    expect(text).toContain('지훈');
+    expect(text).toContain('2026-11-06');
+    expect(text).toContain('회고 추가 잘된 점과 개선점을 작성');
+    expect(text).toContain('데모');
+    for (const excluded of [
+      'metadata-secret',
+      'db-secret',
+      'row-secret',
+      'other-page-secret',
+      'remote-row-secret',
+      '삭제된 업무',
+      'user-secret',
+      'secret-provider',
+      '<script>',
+      'external-secret',
+    ])
+      expect(text).not.toContain(excluded);
+  });
   it('supports writing blocks in an empty document while still requiring a request and rejecting empty selections', async () => {
     page.content = { type: 'doc', content: [{ type: 'paragraph' }] };
     const request = {
@@ -507,6 +654,56 @@ describe('approved AI scope and authorization', () => {
     await expect(
       service.prepare(user, { ...dto(), selectedText: '' }),
     ).rejects.toThrow('텍스트');
+  });
+  it('passes explicit instructions for selection actions separately from authorized page context', async () => {
+    const plan = await service.prepare(user, {
+      ...dto(),
+      instruction: '고객이 읽기 쉽게 존댓말로 작성해 주세요.',
+    });
+    expect(plan.instruction).toContain('Polish the selected text');
+    expect(plan.instruction).toContain(
+      '고객이 읽기 쉽게 존댓말로 작성해 주세요.',
+    );
+    await service.execute(user, plan.id, true);
+    const [profile, model, instruction, source] =
+      provider.generate.mock.calls[0];
+    expect(profile.id).toBe('profile');
+    expect(model).toBe('account-model');
+    expect(instruction).toBe(plan.instruction);
+    expect(source).not.toContain('존댓말로 작성');
+    expect(JSON.parse(source)).toMatchObject({
+      pageTitle: '제목',
+      document: { text: '승인할 한글 원문' },
+      selection: { text: '한글 원문' },
+    });
+  });
+  it('bounds long current-document context instead of rejecting it', async () => {
+    const longText =
+      '프로젝트 앞부분'.repeat(2_000) + '프로젝트 끝부분'.repeat(2_000);
+    page.content = {
+      type: 'doc',
+      content: [
+        { type: 'paragraph', content: [{ type: 'text', text: longText }] },
+      ],
+    };
+    const request = {
+      pageId: 'page',
+      sourceHash: sourceHash(page.content),
+      action: 'ask' as const,
+      scope: 'document' as const,
+      instruction: '현재 프로젝트 내용을 바탕으로 다음 할 일을 정리해 주세요.',
+    };
+    const plan = await service.prepare(user, request);
+    expect(plan.text).toHaveLength(AI_DOCUMENT_CONTEXT_LIMIT);
+    expect(plan.text).toContain('[Document context truncated]');
+    await service.execute(user, plan.id, true);
+    const source = JSON.parse(provider.generate.mock.calls[0][3]);
+    expect(source.scope).toBe('document');
+    expect(source.pageTitle).toBe('제목');
+    expect(source.selection).toBeNull();
+    expect(source.document.truncated).toBe(true);
+    expect(source.document.originalCharacters).toBe(longText.length);
+    expect(source.document.text).toHaveLength(AI_DOCUMENT_CONTEXT_LIMIT);
   });
   it('creates independent durable plans without invalidating a legacy interactive preview', async () => {
     const preview = await service.prepare(user, dto());

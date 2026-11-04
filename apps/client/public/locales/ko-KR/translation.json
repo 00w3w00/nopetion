@@ -1,4 +1,5 @@
 {
+  "Add icon": "아이콘 추가",
   "Source and license": "소스·라이선스",
   "Account": "계정",
   "Active": "사용 중",
@@ -1891,5 +1892,12 @@
   "Choose the font for the app and default document text.": "앱 화면과 기본 문서 본문에 사용할 글꼴을 선택하세요.",
   "Pretendard (default)": "프리텐다드 (기본)",
   "System font": "시스템 글꼴",
-  "Your docs, your rules.": "나만의 문서, 나만의 방식으로."
+  "Your docs, your rules.": "나만의 문서, 나만의 방식으로.",
+  "Welcome back, {{name}}": "{{name}}님, 반가워요",
+  "there": "사용자",
+  "Pick up where you left off.": "이어서 작업할 문서를 찾아보세요.",
+  "Find anything in your workspace": "워크스페이스의 문서를 검색하세요",
+  "Start with a ready-made page": "템플릿으로 새 페이지를 시작하세요",
+  "Resize sidebar": "사이드바 너비 조절",
+  "Retry": "다시 시도"
 }

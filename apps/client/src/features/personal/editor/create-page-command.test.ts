@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Editor } from "@tiptap/core";
+import { Editor, type JSONContent } from "@tiptap/core";
 import type { IPage } from "@/features/page/types/page.types";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -167,8 +167,13 @@ describe("Slash page creation", () => {
     expect(createPage).not.toHaveBeenCalled();
   });
   it("creates a full-page database using the same authorized child workflow", async () => {
-    const editor = make();
-    await createPageFromSlash({ editor, range: { from: 3, to: 7 } }, true);
+    const first = make();
+    const second = make();
+    await createPageFromSlash({ editor: first, range: { from: 3, to: 7 } }, true);
+    await createPageFromSlash(
+      { editor: second, range: { from: 3, to: 7 } },
+      true,
+    );
     expect(createPage).toHaveBeenCalledWith(
       expect.objectContaining({
         parentPageId: "parent",
@@ -181,5 +186,12 @@ describe("Slash page creation", () => {
         },
       }),
     );
+    const databaseIds = vi.mocked(createPage).mock.calls.map(([input]) => {
+      const content = input.content as JSONContent;
+      return content.content?.[0]?.attrs?.id as string | undefined;
+    });
+    expect(databaseIds).toHaveLength(2);
+    expect(databaseIds.every(Boolean)).toBe(true);
+    expect(new Set(databaseIds).size).toBe(2);
   });
 });

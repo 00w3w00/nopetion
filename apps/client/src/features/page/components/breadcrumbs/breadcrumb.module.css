@@ -39,7 +39,10 @@
   height: 40px;
   border-radius: 4px;
   padding-inline: 2px;
-  &:focus-visible { outline: 2px solid var(--mantine-primary-color-filled); outline-offset: -2px; }
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: -2px;
+  }
 }
 .mobileTitle {
   min-width: 0;
@@ -50,9 +53,28 @@
   font-size: 14px;
   font-weight: 500;
 }
-.mobileIcon { flex-shrink: 0; }
+.mobileIcon {
+  flex-shrink: 0;
+}
 .mobileDropdown {
   max-width: calc(100vw - 32px);
   max-height: min(65dvh, 420px);
   overflow-y: auto;
+}
+
+.breadcrumbs :global(.mantine-Breadcrumbs-separator) {
+  margin-inline: 5px;
+  color: light-dark(#c4c3bf, #63635f);
+}
+.breadcrumbs a {
+  padding: 3px 5px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: light-dark(#787774, #b3b3ae);
+}
+.breadcrumbs a[aria-current] {
+  color: light-dark(#37352f, #e7e7e5);
+}
+.breadcrumbs a:hover {
+  background: light-dark(#37352f0a, #ffffff0d);
 }

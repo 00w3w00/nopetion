@@ -42,6 +42,16 @@ export interface PersonalAiProvider {
   ): Promise<string>;
 }
 
+async function cancelReader(
+  reader: ReadableStreamDefaultReader<Uint8Array>,
+): Promise<void> {
+  try {
+    await reader.cancel();
+  } catch {
+    // Cleanup must not replace a completed result or the primary stream error.
+  }
+}
+
 export function newAttempt(
   userId: string,
   redirectUri: string,
@@ -85,7 +95,7 @@ async function limitedText(
       chunks.push(value);
     }
   } finally {
-    await reader.cancel();
+    await cancelReader(reader);
   }
   return Buffer.concat(chunks).toString('utf8');
 }
@@ -127,7 +137,12 @@ export class OpenAiOAuthProvider implements PersonalAiProvider {
     }
     try {
       return JSON.parse(await limitedText(response));
-    } catch {
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof ServiceUnavailableException
+      )
+        throw error;
       throw new ServiceUnavailableException({
         message: 'AI 제공자 응답을 해석하지 못했습니다.',
         code: 'incomplete',
@@ -385,7 +400,7 @@ export async function readResponseStream(response: Response): Promise<string> {
     completed = false,
     size = 0;
   try {
-    while (true) {
+    readLoop: while (true) {
       const { done, value } = await reader.read();
       if (done) break;
       size += value.byteLength;
@@ -435,7 +450,10 @@ export async function readResponseStream(response: Response): Promise<string> {
               'AI 응답이 완료되지 않았습니다. ChatGPT 사용 한도와 연결을 확인해 주세요.',
             code: 'incomplete',
           });
-        if (item.type === 'response.completed') completed = true;
+        if (item.type === 'response.completed') {
+          completed = true;
+          break readLoop;
+        }
       }
     }
   } catch (error) {
@@ -449,7 +467,7 @@ export async function readResponseStream(response: Response): Promise<string> {
       code: 'incomplete',
     });
   } finally {
-    await reader.cancel();
+    await cancelReader(reader);
   }
   if (!completed || !output.trim())
     throw new ServiceUnavailableException({

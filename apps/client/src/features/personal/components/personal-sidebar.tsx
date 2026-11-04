@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import {
   ActionIcon,
-  Group,
   Loader,
   NavLink,
   Select,
   Text,
+  UnstyledButton,
 } from "@mantine/core";
 import {
-  IconChevronLeft,
+  IconChevronDown,
+  IconChevronRight,
   IconFile,
   IconHome,
+  IconLayoutGrid,
   IconLayoutSidebar,
   IconPlus,
   IconSearch,
@@ -50,11 +52,40 @@ import {
   type PersonalPageCreated,
 } from "../editor/create-page-command";
 import { pageEditorAtom } from "@/features/editor/atoms/editor-atoms";
+import { platformModifierLabel } from "@/lib/utils";
+import { extractPageSlugId } from "@/lib";
+
+const FAVORITES_EXPANDED_KEY = "nopetion.sidebar.favorites-expanded";
+const PAGES_EXPANDED_KEY = "nopetion.sidebar.pages-expanded";
+
+function usePersistedExpanded(key: string) {
+  const [expanded, setExpanded] = useState(() => {
+    try {
+      return localStorage.getItem(key) !== "false";
+    } catch {
+      return true;
+    }
+  });
+
+  const toggle = () => {
+    setExpanded((current) => {
+      const next = !current;
+      try {
+        localStorage.setItem(key, String(next));
+      } catch {
+        // A restricted browser may not expose persistent storage.
+      }
+      return next;
+    });
+  };
+
+  return [expanded, toggle] as const;
+}
 
 export default function PersonalSidebar() {
   const { t } = useTranslation();
-  const { t: tc } = useTranslation('classification');
-  const { spaceSlug } = useParams();
+  const { t: tc } = useTranslation("classification");
+  const { spaceSlug, pageSlug } = useParams();
   const workspace = useAtomValue(workspaceAtom);
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,13 +99,28 @@ export default function PersonalSidebar() {
   const selectedSpace =
     spaceSlug || workspace?.defaultSpaceId || spaces?.items[0]?.id;
   const { data: space, isPending, isError } = useSpaceQuery(selectedSpace);
-  const { data: favorites } = useFavoritesQuery("page");
+  const {
+    data: favorites,
+    hasNextPage: hasMoreFavorites,
+    fetchNextPage: fetchMoreFavorites,
+    isFetchingNextPage: loadingMoreFavorites,
+  } = useFavoritesQuery("page");
   const ability = useSpaceAbility(space?.membership?.permissions);
   const canCreate =
     !!space && ability.can(SpaceCaslAction.Manage, SpaceCaslSubject.Page);
   const { handleCreate } = useTreeMutation(space?.id || "");
   const [creating, setCreating] = useState(false);
+  const [favoritesExpanded, toggleFavorites] = usePersistedExpanded(
+    FAVORITES_EXPANDED_KEY,
+  );
+  const [pagesExpanded, togglePages] = usePersistedExpanded(PAGES_EXPANDED_KEY);
   const currentEditor = useAtomValue(pageEditorAtom);
+  const isHome = location.pathname === "/home";
+  const isClassifications = location.pathname === "/classifications";
+  const isTemplates = location.pathname === "/templates";
+  const isSpaces = location.pathname === "/spaces";
+  const isSettings = location.pathname.startsWith("/settings");
+  const trashPath = space ? `${getSpaceUrl(space.slug)}/trash` : "";
   useEffect(() => {
     const openCreatedPage = (event: Event) => {
       const { page, editor } = (event as CustomEvent<PersonalPageCreated>)
@@ -138,6 +184,11 @@ export default function PersonalSidebar() {
           type="button"
           label={t("Search")}
           leftSection={<IconSearch size={18} />}
+          rightSection={
+            <span className={classes.shortcut} aria-hidden="true">
+              {platformModifierLabel} K
+            </span>
+          }
           onClick={() => {
             searchSpotlight.open();
             closeMobile();
@@ -148,130 +199,195 @@ export default function PersonalSidebar() {
           to="/home"
           label={t("Home")}
           leftSection={<IconHome size={18} />}
+          active={isHome}
+          aria-current={isHome ? "page" : undefined}
           onClick={closeMobile}
         />
-        <NavLink component={Link} to="/classifications" label={tc('title')}
-          leftSection={<IconTags size={18} />} active={location.pathname === '/classifications'}
-          aria-current={location.pathname === '/classifications' ? 'page' : undefined} onClick={closeMobile} />
+        <NavLink
+          component={Link}
+          to="/classifications"
+          label={tc("title")}
+          leftSection={<IconTags size={18} />}
+          active={isClassifications}
+          aria-current={isClassifications ? "page" : undefined}
+          onClick={closeMobile}
+        />
         <NavLink
           component={Link}
           to={space ? `/templates?spaceId=${space.id}` : "/templates"}
           label={t("Templates")}
           leftSection={<IconTemplate size={18} />}
-          active={location.pathname === "/templates"}
-          aria-current={location.pathname === "/templates" ? "page" : undefined}
+          active={isTemplates}
+          aria-current={isTemplates ? "page" : undefined}
           onClick={closeMobile}
         />
       </nav>
       <div className={classes.scroller}>
         {!!favorites?.pages.some((p) => p.items.length) && (
           <section className={classes.favorites}>
-            <Text className={classes.heading}>{t("Favorites")}</Text>
-            {favorites.pages
-              .flatMap((p) => p.items)
-              .filter((item) => item.page)
-              .map((item) => (
-                <NavLink
-                  key={item.id}
-                  component={Link}
-                  to={buildPageUrl(
-                    undefined,
-                    item.page.slugId,
-                    item.page.title,
-                  )}
-                  label={item.page.title || t("Untitled")}
-                  leftSection={
-                    item.page.icon ? (
-                      <span>{item.page.icon}</span>
-                    ) : (
-                      <IconFile size={17} />
-                    )
-                  }
-                  onClick={closeMobile}
-                />
-              ))}
+            <UnstyledButton
+              className={classes.sectionToggle}
+              aria-expanded={favoritesExpanded}
+              aria-controls="personal-sidebar-favorites"
+              onClick={toggleFavorites}
+            >
+              {favoritesExpanded ? (
+                <IconChevronDown size={13} aria-hidden="true" />
+              ) : (
+                <IconChevronRight size={13} aria-hidden="true" />
+              )}
+              <Text className={classes.heading}>{t("Favorites")}</Text>
+            </UnstyledButton>
+            {favoritesExpanded && (
+              <div id="personal-sidebar-favorites">
+                {favorites.pages
+                  .flatMap((p) => p.items)
+                  .filter((item) => item.page)
+                  .map((item) => {
+                    const active =
+                      !!pageSlug &&
+                      extractPageSlugId(pageSlug) === item.page.slugId;
+                    return (
+                      <NavLink
+                        key={item.id}
+                        component={Link}
+                        to={buildPageUrl(
+                          undefined,
+                          item.page.slugId,
+                          item.page.title,
+                        )}
+                        label={item.page.title || t("Untitled")}
+                        leftSection={
+                          item.page.icon ? (
+                            <span>{item.page.icon}</span>
+                          ) : (
+                            <IconFile size={17} />
+                          )
+                        }
+                        active={active}
+                        aria-current={active ? "page" : undefined}
+                        onClick={closeMobile}
+                      />
+                    );
+                  })}
+                {hasMoreFavorites && (
+                  <NavLink
+                    component="button"
+                    type="button"
+                    label={loadingMoreFavorites ? t("Loading") : t("Load more")}
+                    disabled={loadingMoreFavorites}
+                    onClick={() => void fetchMoreFavorites()}
+                    className={classes.loadMore}
+                  />
+                )}
+              </div>
+            )}
           </section>
         )}
-        <Group justify="space-between" className={classes.sectionHeading}>
-          <Text className={classes.heading}>{t("Personal pages")}</Text>
+        <div className={classes.sectionHeading}>
+          <UnstyledButton
+            className={classes.sectionToggle}
+            aria-expanded={pagesExpanded}
+            aria-controls="personal-sidebar-pages"
+            onClick={togglePages}
+          >
+            {pagesExpanded ? (
+              <IconChevronDown size={13} aria-hidden="true" />
+            ) : (
+              <IconChevronRight size={13} aria-hidden="true" />
+            )}
+            <Text className={classes.heading}>{t("Personal pages")}</Text>
+          </UnstyledButton>
           <ActionIcon
+            className={classes.sectionAction}
             variant="subtle"
             color="gray"
             size="xs"
             aria-label={t("New document")}
+            aria-disabled={!canCreate || creating}
             disabled={!canCreate || creating}
             onClick={create}
           >
             <IconPlus size={15} />
           </ActionIcon>
-        </Group>
-        {spaces?.items.length > 1 && (
-          <Select
-            className={classes.spacePicker}
-            aria-label={t("Spaces")}
-            size="xs"
-            variant="unstyled"
-            value={space?.slug ?? null}
-            data={spaces.items.map((item) => ({
-              value: item.slug,
-              label: item.name,
-            }))}
-            onChange={(slug) => {
-              if (slug) navigate(getSpaceUrl(slug));
-            }}
-            allowDeselect={false}
-          />
-        )}
-        <div className={classes.tree}>
-          {isPending && <Loader size="sm" aria-label={t("Loading")} />}
-          {isError && (
-            <Text size="sm" c="red">
-              {t("Failed to fetch space")}
-            </Text>
-          )}
-          {space && (
-            <SpaceTree
-              key={space.id}
-              spaceId={space.id}
-              readOnly={!canCreate}
-            />
-          )}
         </div>
-        <NavLink
-          component="button"
-          label={t("New page")}
-          leftSection={creating ? <Loader size={15} /> : <IconPlus size={18} />}
-          disabled={!canCreate || creating}
-          onClick={create}
-        />
+        {pagesExpanded && (
+          <div id="personal-sidebar-pages">
+            {spaces?.items.length > 1 && (
+              <Select
+                className={classes.spacePicker}
+                aria-label={t("Spaces")}
+                size="xs"
+                variant="unstyled"
+                value={space?.slug ?? null}
+                data={spaces.items.map((item) => ({
+                  value: item.slug,
+                  label: item.name,
+                }))}
+                onChange={(slug) => {
+                  if (slug) navigate(getSpaceUrl(slug));
+                }}
+                allowDeselect={false}
+              />
+            )}
+            <div className={classes.tree}>
+              {isPending && <Loader size="sm" aria-label={t("Loading")} />}
+              {isError && (
+                <Text size="sm" c="red">
+                  {t("Failed to fetch space")}
+                </Text>
+              )}
+              {space && (
+                <SpaceTree
+                  key={space.id}
+                  spaceId={space.id}
+                  readOnly={!canCreate}
+                />
+              )}
+            </div>
+            <NavLink
+              component="button"
+              label={t("New page")}
+              leftSection={
+                creating ? <Loader size={15} /> : <IconPlus size={18} />
+              }
+              aria-disabled={!canCreate || creating}
+              disabled={!canCreate || creating}
+              onClick={create}
+            />
+          </div>
+        )}
+      </div>
+      <nav className={classes.footer} aria-label={t("Settings and trash")}>
         <NavLink
           component={Link}
           to="/spaces"
           label={t("All spaces")}
-          leftSection={<IconChevronLeft size={16} />}
+          leftSection={<IconLayoutGrid size={18} />}
+          active={isSpaces}
+          aria-current={isSpaces ? "page" : undefined}
           onClick={closeMobile}
         />
-      </div>
-      <nav className={classes.footer} aria-label={t("Settings and trash")}>
         <NavLink
           component={Link}
           to="/settings/account/preferences"
           label={t("Settings")}
           leftSection={<IconSettings size={18} />}
+          active={isSettings}
+          aria-current={isSettings ? "page" : undefined}
           onClick={closeMobile}
         />
         {space && (
           <NavLink
             component={Link}
-            to={`${getSpaceUrl(space.slug)}/trash`}
+            to={trashPath}
             label={t("Trash")}
             leftSection={<IconTrash size={18} />}
+            active={location.pathname === trashPath}
+            aria-current={location.pathname === trashPath ? "page" : undefined}
             onClick={closeMobile}
           />
         )}
-        <Text className={classes.hint}>
-          ● {t("Automatically saved to database")}
-        </Text>
       </nav>
     </div>
   );

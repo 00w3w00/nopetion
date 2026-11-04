@@ -20,7 +20,7 @@ import {
   type PersonalAiProvider,
 } from './openai-oauth.provider';
 import { PrepareAiDto } from './personal-ai.dto';
-import { readAiContext } from './ai-context';
+import { boundedDocumentContext, readAiContext } from './ai-context';
 import { aiLocalConnection, requireLocalAiSignIn } from './ai-oauth-local';
 
 export function canonical(value: any): string {
@@ -49,6 +49,142 @@ export function documentText(node: any): string {
   const children = Array.isArray(node.content) ? node.content : [];
   return children
     .map(documentText)
+    .join(
+      ['paragraph', 'heading', 'codeBlock'].includes(node.type) ? '' : '\n',
+    );
+}
+
+const contextString = (value: unknown, max = 1_000) =>
+  typeof value === 'string' ? value.slice(0, max) : '';
+
+function databaseContextText(node: any): string {
+  const children = Array.isArray(node.content) ? node.content : [];
+  const definitions = new Map<string, { name: string; kind: string }>();
+  for (const child of children) {
+    if (
+      child?.type !== 'personalDatabaseProperty' ||
+      child.attrs?.deleted === true
+    )
+      continue;
+    const id = contextString(child.attrs?.id, 100);
+    const name = contextString(child.attrs?.name, 200);
+    const kind = contextString(child.attrs?.kind, 40);
+    if (id && name) definitions.set(id, { name, kind });
+  }
+  const lines = [`Database: ${contextString(node.attrs?.title, 500)}`];
+  if (definitions.size)
+    lines.push(
+      `Properties: ${[...definitions.values()]
+        .map((definition) => definition.name)
+        .join(', ')}`,
+    );
+  for (const row of children) {
+    if (row?.type !== 'personalDatabaseRow' || row.attrs?.deleted === true)
+      continue;
+    const fields: string[] = [];
+    const add = (label: string, value: unknown) => {
+      const text =
+        typeof value === 'number' && Number.isFinite(value)
+          ? String(value)
+          : contextString(value, 500);
+      if (text) fields.push(`${label}: ${text}`);
+    };
+    add('Name', row.attrs?.title);
+    add('Status', row.attrs?.status);
+    add('Assignee', row.attrs?.assignee);
+    add('Date', row.attrs?.date);
+    add('Value', row.attrs?.number);
+    add('Location', row.attrs?.location);
+    for (const cell of Array.isArray(row.content) ? row.content : []) {
+      if (cell?.type !== 'personalDatabaseCell') continue;
+      const definition = definitions.get(
+        contextString(cell.attrs?.propertyId, 100),
+      );
+      // Relations point outside the current page; formulas and rollups require
+      // client evaluation. Never infer or fetch those values on the server.
+      if (
+        !definition ||
+        ['relation', 'formula', 'rollup'].includes(definition.kind)
+      )
+        continue;
+      const raw = cell.attrs?.value;
+      const value = Array.isArray(raw)
+        ? raw
+            .filter((item) =>
+              ['string', 'number', 'boolean'].includes(typeof item),
+            )
+            .slice(0, 50)
+            .map(String)
+            .join(', ')
+        : ['string', 'number', 'boolean'].includes(typeof raw)
+          ? String(raw)
+          : '';
+      add(definition.name, value);
+    }
+    if (fields.length) lines.push(`Record: ${fields.join(' | ')}`);
+  }
+  return lines.join('\n');
+}
+
+/** Extract user-visible text from the authorized current page only.
+ * Unlike documentText, this includes an allowlist of atom-node attributes.
+ * It never follows references or serializes arbitrary attrs/metadata.
+ */
+export function documentContextText(node: any): string {
+  if (!node) return '';
+  if (node.type === 'text') return node.text || '';
+  if (node.type === 'hardBreak') return '\n';
+  if (
+    [
+      'image',
+      'video',
+      'audio',
+      'attachment',
+      'transclusion',
+      'transclusionReference',
+      'transclusionSource',
+      'personalDatabaseReference',
+    ].includes(node.type)
+  )
+    return '';
+  if (node.type === 'personalDatabase') return databaseContextText(node);
+  if (node.type === 'personalTab') {
+    const title = contextString(node.attrs?.title, 500);
+    const body = (Array.isArray(node.content) ? node.content : [])
+      .map(documentContextText)
+      .join('\n');
+    return [title ? `Tab: ${title}` : '', body].filter(Boolean).join('\n');
+  }
+  if (node.type === 'personalWidget') {
+    const kind = contextString(node.attrs?.kind, 40);
+    const title = contextString(node.attrs?.title, 500);
+    if (kind === 'button')
+      return [title, contextString(node.attrs?.value, 4_000)]
+        .filter(Boolean)
+        .join(' ');
+    if (kind === 'date') return contextString(node.attrs?.value, 100);
+    // Titles are visible for link/media/connector widgets. Their values are
+    // URLs, attachment paths, remote IDs or executable HTML and stay excluded.
+    if (
+      ['bookmark', 'embed', 'media', 'recording', 'connector', 'html'].includes(
+        kind,
+      )
+    )
+      return title;
+    return '';
+  }
+  const atomAttributes: Record<string, string> = {
+    status: 'text',
+    mention: 'label',
+    personalDate: 'value',
+    mathInline: 'text',
+    mathBlock: 'text',
+  };
+  const attribute = atomAttributes[node.type];
+  if (attribute) return contextString(node.attrs?.[attribute], 4_000);
+  const children = Array.isArray(node.content) ? node.content : [];
+  return children
+    .map(documentContextText)
     .join(
       ['paragraph', 'heading', 'codeBlock'].includes(node.type) ? '' : '\n',
     );
@@ -345,30 +481,42 @@ export class PersonalAiService {
         code: 'scope',
       });
     const fullText = documentText(page.content).trim();
-    const text = dto.scope === 'selection' ? dto.selectedText : fullText;
+    const fullContextText = documentContextText(page.content).trim();
+    const text =
+      dto.scope === 'selection'
+        ? dto.selectedText
+        : boundedDocumentContext(fullContextText).text;
     if (
       text == null ||
-      text.length > 20_000 ||
-      (dto.scope === 'selection' && (!text.trim() || !fullText.includes(text)))
+      (dto.scope === 'selection' &&
+        (text.length > 20_000 || !text.trim() || !fullText.includes(text)))
     )
       throw new BadRequestException({
         message: '처리할 텍스트를 20,000자 이내로 선택해 주세요.',
         code: 'selection',
       });
     const responseLocale = aiLocale(dto.responseLocale || user.locale);
-    const instructions = {
-      ask: dto.instruction?.trim() || '',
+    const explicitInstruction = dto.instruction?.trim() || '';
+    const actionInstructions = {
       summary:
         'Summarize the selected text concisely. Return only the summary.',
       polish:
         'Polish the selected text while preserving its meaning. Return only the rewritten text.',
       translate: `Translate the selected text into ${aiLanguageName(dto.targetLanguage || responseLocale)}. Return only the translation.`,
     };
-    if (dto.action === 'ask' && !dto.instruction?.trim())
+    if (dto.action === 'ask' && !explicitInstruction)
       throw new BadRequestException({
         message: '작성하거나 바꿀 내용을 입력해 주세요.',
         code: 'input',
       });
+    const instruction =
+      dto.action === 'ask'
+        ? explicitInstruction
+        : `${actionInstructions[dto.action]}${
+            explicitInstruction
+              ? `\nAdditional user instruction:\n${explicitInstruction}`
+              : ''
+          }`;
     const profile = await this.profile(aiAccountId(user));
     if (!profile.model)
       throw new BadRequestException({
@@ -386,7 +534,7 @@ export class PersonalAiService {
       action: dto.action,
       scope: dto.scope,
       text,
-      instruction: instructions[dto.action],
+      instruction,
       model: profile.model,
       profileId: profile.id,
       expiresAt: Date.now() + 5 * 60_000,
@@ -457,7 +605,12 @@ export class PersonalAiService {
         code: 'accountChanged',
       });
     const context = await readAiContext(
-      { scope: plan.scope, text: plan.text },
+      {
+        scope: plan.scope,
+        pageTitle: page.title || '',
+        documentText: documentContextText(page.content).trim(),
+        selectionText: plan.scope === 'selection' ? plan.text : undefined,
+      },
       plan.responseLocale,
     );
     const text = await this.provider.generate(

@@ -44,14 +44,15 @@ const errorKeys: Record<string, string> = {
 export function aiError(error: unknown, t: TFunction): string {
   const response = (error as any)?.response;
   const code = typeof error === "string" ? error : response?.data?.code;
+  const status = response?.data?.providerStatus || response?.status;
   const key =
-    errorKeys[code] ||
+    (code === "providerHttp" && !status ? "error_request" : errorKeys[code]) ||
     (response?.status === 401
       ? "error_connectFirst"
       : response?.status === 403
         ? "error_permission"
         : "error_request");
-  return t(key, { status: response?.data?.providerStatus || response?.status });
+  return t(key, { status });
 }
 export type AiStatus = {
   connected: boolean;

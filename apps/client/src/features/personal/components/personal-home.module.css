@@ -1,0 +1,212 @@
+.root {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  padding: 72px clamp(20px, 5vw, 72px) 100px;
+  color: light-dark(#37352f, #e7e7e5);
+}
+
+.hero {
+  margin-bottom: 30px;
+}
+.eyebrow {
+  color: light-dark(#787774, #a5a5a2);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.title {
+  font-size: clamp(27px, 4vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+.subtitle {
+  margin-top: 8px;
+  color: light-dark(#787774, #a5a5a2);
+  font-size: 14px;
+}
+
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 38px;
+}
+.quickAction {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
+  padding: 11px 13px;
+  border: 1px solid light-dark(#e6e6e3, #ffffff18);
+  border-radius: 9px;
+  background: light-dark(#fff, #242424);
+  color: inherit;
+  box-shadow: 0 1px 2px light-dark(#0f0f0f08, #00000035);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+.quickAction:hover {
+  background: light-dark(#f7f7f5, #2b2b2b);
+  border-color: light-dark(#d9d9d5, #ffffff25);
+  transform: translateY(-1px);
+}
+.quickAction:focus-visible,
+.recentCard:focus-visible,
+.favoriteRow:focus-visible {
+  outline: 2px solid var(--mantine-color-blue-5);
+  outline-offset: 2px;
+}
+.quickIcon,
+.cardIcon,
+.favoriteIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: light-dark(#787774, #b9b9b5);
+  background: light-dark(#f1f1ef, #30302f);
+}
+.quickIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 7px;
+}
+.quickDescription {
+  color: light-dark(#91918e, #92928e);
+  font-size: 12px;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+.shortcut {
+  font: inherit;
+  font-size: 11px;
+  color: light-dark(#91918e, #999995);
+  border: 1px solid light-dark(#dededb, #ffffff1d);
+  border-radius: 4px;
+  padding: 2px 5px;
+  background: transparent;
+}
+
+.section {
+  margin-top: 30px;
+}
+.sectionTitle {
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.recentGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.recentCard {
+  min-width: 0;
+  min-height: 116px;
+  padding: 14px;
+  border: 1px solid light-dark(#e7e7e4, #ffffff15);
+  border-radius: 9px;
+  color: inherit;
+  background: light-dark(#fff, #242424);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+.recentCard:hover {
+  background: light-dark(#f7f7f5, #2b2b2b);
+  border-color: light-dark(#d8d8d4, #ffffff24);
+}
+.cardIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  margin-bottom: 11px;
+}
+.emoji {
+  font-size: 19px;
+  line-height: 1;
+}
+.cardTitle {
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 600;
+  min-height: 19px;
+}
+.cardMeta {
+  color: light-dark(#91918e, #92928e);
+  font-size: 11px;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.favoriteList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+.favoriteRow {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 11px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  color: inherit;
+}
+.favoriteRow:hover {
+  background: light-dark(#37352f0a, #ffffff0b);
+}
+.favoriteIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+}
+.favoriteCopy {
+  min-width: 0;
+  flex: 1;
+}
+.favoriteTitle {
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 550;
+}
+.empty {
+  min-height: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: light-dark(#91918e, #999995);
+  border: 1px dashed light-dark(#dfdfdc, #ffffff18);
+  border-radius: 9px;
+  text-align: center;
+  padding: 18px;
+}
+
+@media (max-width: 48em) {
+  .root {
+    padding: 58px 18px 72px;
+  }
+  .quickActions,
+  .favoriteList {
+    grid-template-columns: 1fr;
+  }
+  .recentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 30em) {
+  .recentGrid {
+    grid-template-columns: 1fr;
+  }
+  .shortcut {
+    display: none;
+  }
+}

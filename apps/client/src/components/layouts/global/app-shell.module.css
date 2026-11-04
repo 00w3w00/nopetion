@@ -52,19 +52,26 @@
   padding-inline: var(--nopetion-page-padding);
 }
 
-.settingsContent { min-width: 0; padding-block: 20px 80px; }
+.settingsContent {
+  min-width: 0;
+  padding-block: 20px 80px;
+}
 @media (max-width: 48em) {
-  .settingsContent { padding-top: 12px; }
+  .settingsContent {
+    padding-top: 12px;
+  }
 }
 
 .accountFooter {
   flex-shrink: 0;
   padding: 6px 8px;
-  border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  border-top: 1px solid
+    light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
 }
 
 .resizeHandle {
-  width: 3px;
+  width: 5px;
+  z-index: 2;
   cursor: col-resize;
   position: absolute;
   right: 0;
@@ -72,7 +79,10 @@
   bottom: 0;
 
   &:hover,
-  &:active {
+  &:active,
+  &:focus-visible,
+  &[data-resizing] {
+    outline: none;
     width: 5px;
     background: light-dark(
       var(--mantine-color-gray-4),
@@ -81,8 +91,17 @@
   }
 }
 
+@media (max-width: $mantine-breakpoint-sm) {
+  .resizeHandle {
+    display: none;
+  }
+}
+
 :global([data-personal-shell]) {
-  & :global(.mantine-AppShell-main) { background: light-dark(#fff, #191919); min-width: 0; }
+  & :global(.mantine-AppShell-main) {
+    background: light-dark(#fff, #191919);
+    min-width: 0;
+  }
   color: light-dark(#37352f, #e7e7e5);
   font-family: var(--mantine-font-family);
 

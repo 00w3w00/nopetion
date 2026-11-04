@@ -14,6 +14,7 @@ import {
   Menu,
   Select,
   Stack,
+  Switch,
   Text,
   Textarea,
   Tooltip,
@@ -35,7 +36,12 @@ import {
   IconSparkles,
   IconTextCaption,
 } from "@tabler/icons-react";
-import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { extractPageSlugId } from "@/lib";
 import { asideStateAtom } from "@/components/layouts/global/hooks/atoms/sidebar-atom";
 import { ASIDE_PANEL_ID } from "@/hooks/use-toggle-aside";
@@ -51,20 +57,52 @@ import {
 import { workspaceAtom } from "@/features/user/atoms/current-user-atom";
 import { aiError, aiPost, type AiStatus } from "./ai-api";
 import {
+  applyAiBlocks,
+  canApplyAiBlocks,
   captureAiSnapshot,
   documentHash,
+  snapshotMatchesSaved,
   snapshotCurrent,
   type AiSnapshot,
 } from "./ai-editor";
+import { aiTextToBlocks } from "./ai-blocks";
+import AiDraftPreview from "./ai-draft-preview";
+import type { JSONContent } from "@tiptap/core";
+import { getPageById } from "@/features/page/services/page-service";
 import classes from "./personal-ai-panel.module.css";
 import { AI_JOB_QUERY_PARAM, aiJobIdFromSearch } from "./ai-job-link";
+import {
+  OPEN_PERSONAL_AI_EVENT,
+  type OpenPersonalAiDetail,
+} from "./open-personal-ai";
 
 type AiJob = {
-  id: string; pageId: string; title: string; instruction: string; model: string; provider: string;
-  action: string; status: "queued" | "generating" | "applying" | "completed" | "conflict" | "failed";
-  createdAt: string; errorCode?: string; resultText?: string;
+  id: string;
+  pageId: string;
+  title: string;
+  instruction: string;
+  model: string;
+  provider: string;
+  action: string;
+  status:
+    | "queued"
+    | "generating"
+    | "applying"
+    | "completed"
+    | "conflict"
+    | "failed";
+  createdAt: string;
+  errorCode?: string;
+  resultText?: string;
 };
-const jobActive = (job: AiJob | null) => !!job && ["queued", "generating", "applying"].includes(job.status);
+type AiPreview = {
+  text: string;
+  draft: JSONContent;
+  snapshot: AiSnapshot;
+  sourceHash: string;
+};
+const jobActive = (job: AiJob | null) =>
+  !!job && ["queued", "generating", "applying"].includes(job.status);
 const selectionTasks = [
   { value: "summary", label: "selectionSummary" },
   { value: "polish", label: "selectionPolish" },
@@ -104,6 +142,22 @@ export default function PersonalAiPanel({
 }) {
   const { t, i18n } = useTranslation("personal-ai");
   const responseLocale = aiLocale(i18n.resolvedLanguage || i18n.language);
+  const copy = {
+    previewTitle: t("previewTitle"),
+    previewSafe: t("previewSafe"),
+    insertBelow: t("insertBelow"),
+    replaceSelection: t("replaceSelection"),
+    retry: t("retry"),
+    discard: t("discard"),
+    writeDirectly: t("writeDirectly"),
+    previewModeHint: t("previewModeHint"),
+    writeDirectlyHint: t("writeDirectlyHint"),
+    previewSendHint: t("previewSendHint"),
+    extraInstruction: t("extraInstruction"),
+    proofread: t("proofread"),
+    concise: t("concise"),
+    longer: t("longer"),
+  };
   const storedEditor = useAtomValue(pageEditorAtom),
     storedTitleEditor = useAtomValue(titleEditorAtom);
   // During SPA navigation the atoms can briefly hold an old/destroyed editor.
@@ -139,15 +193,20 @@ export default function PersonalAiPanel({
     [busy, setBusy] = useState(false),
     [, setRevision] = useState(0);
   const [status, setStatus] = useState<AiStatus | null>(null);
+  const [preview, setPreview] = useState<AiPreview | null>(null);
+  const [writeDirectly, setWriteDirectly] = useState(false);
   const hasActiveJob = jobActive(plan);
   const workspaceId = useAtomValue(workspaceAtom)?.id;
   const location = useLocation();
   const [, setSearchParams] = useSearchParams();
   const requestedJobId = aiJobIdFromSearch(location.search);
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(requestedJobId);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(
+    requestedJobId,
+  );
   const dismissedJob = useRef<string | null>(null);
   const submission = useRef<{ key: string; id: string } | null>(null);
-  const submitting = useRef(false);
+  const submitting = useRef<number | null>(null);
+  const applying = useRef(false);
   const request = useRef(0),
     launcher = useRef<HTMLButtonElement>(null);
   const { pageSlug, spaceSlug } = useParams();
@@ -171,14 +230,43 @@ export default function PersonalAiPanel({
     setError("");
     setBusy(false);
     setQuestion("");
+    setPreview(null);
     dismissedJob.current = null;
     submission.current = null;
+    submitting.current = null;
     setAside((state) =>
       state.tab === "personal-ai" ? { ...state, isAsideOpen: false } : state,
     );
     // Renaming changes the readable URL while staying on the same document.
     // Keep the captured source so a pending result cannot use a renamed title.
   }, [pageId, routePageId, spaceSlug, setAside]);
+  useEffect(() => {
+    const openAi = (event: Event) => {
+      const detail = (event as CustomEvent<OpenPersonalAiDetail>).detail;
+      if (
+        readOnly ||
+        !editor ||
+        !titleEditor ||
+        detail?.editor !== editor ||
+        detail.pageId !== pageId
+      )
+        return;
+      const nextAction = ["ask", "summary", "polish", "translate"].includes(
+        detail.action || "",
+      )
+        ? detail.action
+        : undefined;
+      clear();
+      setSnapshot(captureAiSnapshot(editor, currentTitle()));
+      setAction(
+        nextAction || (editor.state.selection.empty ? "ask" : "polish"),
+      );
+      setQuestion(detail.instruction || "");
+      setAside({ tab: "personal-ai", isAsideOpen: true });
+    };
+    window.addEventListener(OPEN_PERSONAL_AI_EVENT, openAi);
+    return () => window.removeEventListener(OPEN_PERSONAL_AI_EVENT, openAi);
+  }, [editor, titleEditor, pageId, readOnly, setAside]);
   useEffect(() => {
     setSelectedJobId(requestedJobId);
     if (!requestedJobId || !workspaceId) return;
@@ -219,25 +307,55 @@ export default function PersonalAiPanel({
 
   useEffect(() => {
     if (!workspaceId) return;
-    let active = true, inFlight = false;
+    let active = true,
+      inFlight = false;
     let timer: ReturnType<typeof setTimeout>;
     async function refresh() {
       if (inFlight) return;
       inFlight = true;
       let pending = false;
       try {
-        const data = await aiPost<{ items: AiJob[] }>("jobs/list", {
-          pageId,
-          ...(selectedJobId ? { jobId: selectedJobId } : {}),
-        }, workspaceId);
+        const data = await aiPost<{ items: AiJob[] }>(
+          "jobs/list",
+          {
+            pageId,
+            ...(selectedJobId ? { jobId: selectedJobId } : {}),
+          },
+          workspaceId,
+        );
         const latest = data.items?.[0];
         pending = jobActive(latest);
-        if (active && latest && latest.id !== dismissedJob.current && !submitting.current) {
-          setPlan(previous => !selectedJobId && previous && new Date(previous.createdAt) > new Date(latest.createdAt) ? previous : latest);
+        if (
+          active &&
+          latest &&
+          latest.id !== dismissedJob.current &&
+          submitting.current === null
+        ) {
+          setPlan((previous) =>
+            !selectedJobId &&
+            previous &&
+            new Date(previous.createdAt) > new Date(latest.createdAt)
+              ? previous
+              : latest,
+          );
           setWritten(latest.status === "completed");
           setBusy(pending);
-          setSentRequest(latest.action === "ask" ? latest.instruction : t(latest.action === "summary" ? "selectionSummary" : latest.action === "translate" ? "selectionTranslate" : "selectionPolish"));
-          setError(latest.errorCode ? { response: { data: { code: latest.errorCode } } } : null);
+          setSentRequest(
+            latest.action === "ask"
+              ? latest.instruction
+              : t(
+                  latest.action === "summary"
+                    ? "selectionSummary"
+                    : latest.action === "translate"
+                      ? "selectionTranslate"
+                      : "selectionPolish",
+                ),
+          );
+          setError(
+            latest.errorCode
+              ? { response: { data: { code: latest.errorCode } } }
+              : null,
+          );
         } else if (active && selectedJobId && !latest) {
           setPlan(null);
           setBusy(false);
@@ -246,26 +364,35 @@ export default function PersonalAiPanel({
       } catch (error) {
         pending = true;
         if (active && selectedJobId) setError(error);
-      }
-      finally {
+      } finally {
         inFlight = false;
         if (active && (opened || pending)) timer = setTimeout(refresh, 1500);
       }
     }
-    const wake = () => { clearTimeout(timer); void refresh(); };
+    const wake = () => {
+      clearTimeout(timer);
+      void refresh();
+    };
     void refresh();
     window.addEventListener("focus", wake);
-    return () => { active = false; clearTimeout(timer); window.removeEventListener("focus", wake); };
+    return () => {
+      active = false;
+      clearTimeout(timer);
+      window.removeEventListener("focus", wake);
+    };
   }, [pageId, workspaceId, opened, hasActiveJob, selectedJobId, t]);
 
   function clear() {
     setSelectedJobId(null);
     if (requestedJobId) {
-      setSearchParams((previous) => {
-        const next = new URLSearchParams(previous);
-        next.delete(AI_JOB_QUERY_PARAM);
-        return next;
-      }, { replace: true });
+      setSearchParams(
+        (previous) => {
+          const next = new URLSearchParams(previous);
+          next.delete(AI_JOB_QUERY_PARAM);
+          return next;
+        },
+        { replace: true },
+      );
     }
     dismissedJob.current = plan?.id || dismissedJob.current;
     submission.current = null;
@@ -275,9 +402,18 @@ export default function PersonalAiPanel({
     setSentRequest("");
     setError("");
     setBusy(false);
+    setPreview(null);
+    applying.current = false;
   }
   function capture(nextAction?: string, reset = true) {
-    if (readOnly || !editor || !titleEditor || editor.isDestroyed || (busy && reset)) return;
+    if (
+      readOnly ||
+      !editor ||
+      !titleEditor ||
+      editor.isDestroyed ||
+      (busy && reset)
+    )
+      return;
     if (reset) clear();
     const next = captureAiSnapshot(editor, currentTitle());
     setSnapshot(next);
@@ -291,8 +427,19 @@ export default function PersonalAiPanel({
     setQuestion("");
     capture("ask");
   }
+  function updateInstruction(value: string) {
+    setPreview(null);
+    setError("");
+    setQuestion(value);
+  }
   const current =
     !!editor && !!snapshot && snapshotCurrent(editor, currentTitle(), snapshot);
+  const previewCurrent =
+    !!editor &&
+    !!preview &&
+    snapshotCurrent(editor, currentTitle(), preview.snapshot);
+  const previewCanReplace =
+    !!preview && canApplyAiBlocks(preview.snapshot, preview.draft, true);
   const saved =
     !!snapshot &&
     body.pageId === snapshot.pageId &&
@@ -306,35 +453,150 @@ export default function PersonalAiPanel({
     saved &&
     (action === "ask" ? !!question.trim() : current && !!snapshot?.text.trim());
   async function send() {
-    if (!editor || !snapshot || !ready || busy || submitting.current) return;
-    const captured = action === "ask" ? captureAiSnapshot(editor, currentTitle()) : snapshot;
+    if (!editor || !snapshot || !ready || busy || submitting.current !== null)
+      return;
+    const captured =
+      action === "ask" ? captureAiSnapshot(editor, currentTitle()) : snapshot;
     const sourceContent = captured.doc.toJSON();
     const at = captured.doc.resolve(captured.to);
     const insertionIndex = at.index(0) + (at.depth ? 1 : 0);
-    const requestBody = { pageId: captured.pageId, sourceContent, sourceTitle: captured.title,
-      insertionIndex, action, scope: action === "ask" ? "document" : "selection",
-      selectedText: action === "ask" ? undefined : captured.text, instruction: question,
-      targetLanguage: language, responseLocale };
+    const requestBody = {
+      pageId: captured.pageId,
+      sourceContent,
+      sourceTitle: captured.title,
+      insertionIndex,
+      action,
+      scope: action === "ask" ? "document" : "selection",
+      selectedText: action === "ask" ? undefined : captured.text,
+      instruction: question,
+      targetLanguage: language,
+      responseLocale,
+    };
     const key = JSON.stringify(requestBody);
-    if (submission.current?.key !== key) submission.current = { key, id: crypto.randomUUID() };
+    if (submission.current?.key !== key)
+      submission.current = { key, id: crypto.randomUUID() };
     const operationId = submission.current.id;
     const sequence = ++request.current;
-    submitting.current = true;
+    submitting.current = sequence;
     dismissedJob.current = plan?.id || dismissedJob.current;
-    setBusy(true); setError(""); setPlan(null); setWritten(false);
+    setBusy(true);
+    setError("");
+    setPlan(null);
+    setWritten(false);
     try {
+      if (!writeDirectly) {
+        const savedPage = await getPageById({ pageId: captured.pageId });
+        if (
+          sequence !== request.current ||
+          !snapshotMatchesSaved(editor, currentTitle(), captured, savedPage)
+        )
+          throw { response: { data: { code: "savingOrChanged" } } };
+        // Hash the server-authoritative JSON verbatim. Yjs can omit default
+        // attributes that Tiptap adds in getJSON(), despite equal semantics.
+        const hash = await documentHash(savedPage.content);
+        const prepared = await aiPost<{ id: string; sourceHash: string }>(
+          "prepare",
+          {
+            pageId: captured.pageId,
+            sourceHash: hash,
+            action,
+            scope: action === "ask" ? "document" : "selection",
+            selectedText: action === "ask" ? undefined : captured.text,
+            instruction: question,
+            targetLanguage: language,
+            responseLocale,
+          },
+          workspaceId,
+        );
+        if (sequence !== request.current) return;
+        const result = await aiPost<{
+          text: string;
+          sourceHash: string;
+          pageId: string;
+        }>("execute", { id: prepared.id, approved: true }, workspaceId);
+        if (sequence !== request.current) return;
+        if (
+          result.pageId !== captured.pageId ||
+          result.sourceHash !== hash ||
+          prepared.sourceHash !== hash
+        ) {
+          throw { response: { data: { code: "savingOrChanged" } } };
+        }
+        const draft = aiTextToBlocks(result.text);
+        setPreview({
+          text: result.text,
+          draft,
+          snapshot: captured,
+          sourceHash: hash,
+        });
+        setSentRequest(
+          action === "ask"
+            ? question
+            : t(
+                action === "summary"
+                  ? "selectionSummary"
+                  : action === "translate"
+                    ? "selectionTranslate"
+                    : "selectionPolish",
+              ),
+        );
+        setBusy(false);
+        return;
+      }
       const hash = await documentHash(sourceContent);
       // The immutable request remains valid when this component unmounts.
       // Only its UI response is ignored; the server owns inference and insertion.
-      const next = await aiPost<AiJob>("jobs/create", { ...requestBody, sourceHash: hash, operationId }, workspaceId);
+      const next = await aiPost<AiJob>(
+        "jobs/create",
+        { ...requestBody, sourceHash: hash, operationId },
+        workspaceId,
+      );
       if (sequence !== request.current) return;
       submission.current = null;
-      setPlan(next); setBusy(jobActive(next)); setWritten(next.status === "completed");
-      setSentRequest(action === "ask" ? question : t(action === "summary" ? "selectionSummary" : action === "translate" ? "selectionTranslate" : "selectionPolish"));
-      setQuestion(""); setAction("ask");
+      setPlan(next);
+      setBusy(jobActive(next));
+      setWritten(next.status === "completed");
+      setSentRequest(
+        action === "ask"
+          ? question
+          : t(
+              action === "summary"
+                ? "selectionSummary"
+                : action === "translate"
+                  ? "selectionTranslate"
+                  : "selectionPolish",
+            ),
+      );
+      setQuestion("");
+      setAction("ask");
     } catch (error) {
-      if (sequence === request.current) { setError(error); setBusy(false); }
-    } finally { submitting.current = false; }
+      if (sequence === request.current) {
+        setError(error);
+        setBusy(false);
+      }
+    } finally {
+      if (submitting.current === sequence) submitting.current = null;
+    }
+  }
+  function applyPreview(replace: boolean) {
+    if (!preview || !editor || readOnly || applying.current) return;
+    applying.current = true;
+    const applied = applyAiBlocks(
+      editor,
+      currentTitle(),
+      preview.snapshot,
+      preview.draft,
+      replace,
+    );
+    if (applied) {
+      setPreview(null);
+      setWritten(true);
+      setAction("ask");
+      setQuestion("");
+    } else {
+      setError({ response: { data: { code: "cannotWrite" } } });
+    }
+    applying.current = false;
   }
   const panel = (
     <section
@@ -427,6 +689,11 @@ export default function PersonalAiPanel({
         </Group>
       </header>
       <div className={classes.conversation} aria-live="polite" aria-busy={busy}>
+        <Text size="xs" c="dimmed" mb="sm">
+          {t("contextPage", {
+            title: currentTitle() || t("Untitled", { ns: "translation" }),
+          })}
+        </Text>
         {error && (
           <Alert color="red" role="alert" mb="md">
             {aiError(error, t)}
@@ -451,7 +718,7 @@ export default function PersonalAiPanel({
             {t("saveWaiting")}
           </Text>
         )}
-        {!plan && !written && (
+        {!plan && !preview && !written && (
           <div className={classes.welcome}>
             <div className={classes.logo}>
               <IconSparkles size={29} stroke={1.6} />
@@ -496,9 +763,82 @@ export default function PersonalAiPanel({
         )}
         {plan?.resultText && ["conflict", "failed"].includes(plan.status) && (
           <Alert color="yellow" title={t("backgroundResultHeld")} mt="md">
-            <Text size="sm" component="pre" style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere", maxHeight: 280, overflowY: "auto" }}>{plan.resultText}</Text>
-            <CopyButton value={plan.resultText}>{({ copied, copy }) => <Button size="xs" variant="light" onClick={copy}>{t(copied ? "copiedResult" : "copyResult")}</Button>}</CopyButton>
+            <Text
+              size="sm"
+              component="pre"
+              style={{
+                whiteSpace: "pre-wrap",
+                overflowWrap: "anywhere",
+                maxHeight: 280,
+                overflowY: "auto",
+              }}
+            >
+              {plan.resultText}
+            </Text>
+            <CopyButton value={plan.resultText}>
+              {({ copied, copy }) => (
+                <Button size="xs" variant="light" onClick={copy}>
+                  {t(copied ? "copiedResult" : "copyResult")}
+                </Button>
+              )}
+            </CopyButton>
           </Alert>
+        )}
+        {preview && (
+          <section className={classes.preview} aria-label={copy.previewTitle}>
+            <Group justify="space-between" align="center">
+              <Text fw={600} size="sm">
+                {copy.previewTitle}
+              </Text>
+              <Text size="xs" c="dimmed">
+                {copy.previewSafe}
+              </Text>
+            </Group>
+            <AiDraftPreview draft={preview.draft} />
+            {!previewCurrent && (
+              <Alert color="yellow">{t("sourceChanged")}</Alert>
+            )}
+            <Group gap="xs">
+              <Button
+                size="xs"
+                onClick={() => applyPreview(false)}
+                disabled={readOnly || !previewCurrent}
+              >
+                {copy.insertBelow}
+              </Button>
+              <Button
+                size="xs"
+                variant="light"
+                onClick={() => applyPreview(true)}
+                disabled={readOnly || !previewCanReplace || !previewCurrent}
+              >
+                {copy.replaceSelection}
+              </Button>
+              <Button
+                size="xs"
+                variant="subtle"
+                onClick={() => void send()}
+                disabled={busy}
+              >
+                {copy.retry}
+              </Button>
+              <CopyButton value={preview.text}>
+                {({ copied, copy }) => (
+                  <Button size="xs" variant="subtle" onClick={copy}>
+                    {t(copied ? "copiedResult" : "copyResult")}
+                  </Button>
+                )}
+              </CopyButton>
+              <Button
+                size="xs"
+                color="gray"
+                variant="subtle"
+                onClick={() => setPreview(null)}
+              >
+                {copy.discard}
+              </Button>
+            </Group>
+          </section>
         )}
         {written && (
           <Text size="sm" mt="md" role="status">
@@ -525,7 +865,7 @@ export default function PersonalAiPanel({
         )}
         <div className={classes.composer}>
           <Tooltip
-            label={currentTitle() || t("untitled")}
+            label={currentTitle() || t("Untitled", { ns: "translation" })}
             multiline
             w={280}
             style={{ overflowWrap: "anywhere" }}
@@ -533,7 +873,7 @@ export default function PersonalAiPanel({
             <div className={classes.pagePill}>
               <IconFileText size={14} />
               <Text size="xs" truncate>
-                {currentTitle() || t("untitled")}
+                {currentTitle() || t("Untitled", { ns: "translation" })}
               </Text>
               <IconCheck
                 size={12}
@@ -584,6 +924,36 @@ export default function PersonalAiPanel({
                 autosize
                 minRows={2}
                 maxRows={4}
+              />
+              {action === "polish" && (
+                <Group gap={6}>
+                  {[
+                    [copy.proofread, t("promptProofread")],
+                    [copy.concise, t("promptConcise")],
+                    [copy.longer, t("promptLonger")],
+                  ].map(([label, instruction]) => (
+                    <Button
+                      key={label}
+                      size="compact-xs"
+                      variant="light"
+                      color="gray"
+                      onClick={() => updateInstruction(instruction)}
+                    >
+                      {label}
+                    </Button>
+                  ))}
+                </Group>
+              )}
+              <Textarea
+                label={copy.extraInstruction}
+                value={question}
+                onChange={(event) =>
+                  updateInstruction(event.currentTarget.value)
+                }
+                autosize
+                minRows={1}
+                maxRows={3}
+                disabled={busy || readOnly}
               />
               {action === "translate" && (
                 <Select
@@ -675,8 +1045,19 @@ export default function PersonalAiPanel({
               </Tooltip>
             </Group>
           </Group>
+          <Switch
+            mt="xs"
+            size="xs"
+            checked={writeDirectly}
+            onChange={(event) => setWriteDirectly(event.currentTarget.checked)}
+            label={copy.writeDirectly}
+            description={
+              writeDirectly ? copy.writeDirectlyHint : copy.previewModeHint
+            }
+            disabled={busy}
+          />
           <Text size="xs" c="dimmed" mt="xs">
-            {t("sendHint")}
+            {writeDirectly ? t("sendHint") : copy.previewSendHint}
           </Text>
         </div>
       </footer>
@@ -703,7 +1084,12 @@ export default function PersonalAiPanel({
           style={{ visibility: opened ? "hidden" : "visible" }}
         >
           <IconSparkles size={25} stroke={1.7} />
-          {busy && <span className={classes.backgroundBadge} aria-label={t("backgroundRunning")} />}
+          {busy && (
+            <span
+              className={classes.backgroundBadge}
+              aria-label={t("backgroundRunning")}
+            />
+          )}
         </ActionIcon>
       </Tooltip>
       {target && createPortal(panel, target)}

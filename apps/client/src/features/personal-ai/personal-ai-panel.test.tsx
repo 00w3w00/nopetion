@@ -58,6 +58,7 @@ beforeEach(async () => {
   vi.mocked(aiPost)
     .mockReset()
     .mockResolvedValue({ connected: true, model: "test-model" });
+  vi.mocked(getPageById).mockReset();
   Object.defineProperty(document, "fonts", {
     configurable: true,
     value: new EventTarget(),
@@ -69,6 +70,14 @@ beforeEach(async () => {
       addEventListener() {},
       removeEventListener() {},
     })),
+  });
+  Object.defineProperty(globalThis, "ResizeObserver", {
+    configurable: true,
+    value: class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
   });
 });
 afterEach(() => {
@@ -106,29 +115,158 @@ function fixture(pageId = "first", route = "/", readOnly = false) {
 }
 
 describe("AI panel during document navigation", () => {
+  it("previews without mutation and inserts the approved result exactly once", async () => {
+    const { store, content } = fixture();
+    const body = editor("first", '<a href="https://example.com">원문</a>'),
+      title = editor("first", "제목");
+    store.set(pageEditorAtom, body);
+    store.set(titleEditorAtom, title);
+    store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(yjsConnectionStatusAtom, "connected");
+    const savedContent = {
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: "원문",
+              marks: [{ type: "link", attrs: { href: "https://example.com" } }],
+            },
+          ],
+        },
+      ],
+    };
+    expect(savedContent).not.toEqual(body.getJSON());
+    vi.mocked(getPageById).mockResolvedValue({
+      title: "제목",
+      content: savedContent,
+    } as any);
+    let sourceHash = "";
+    vi.mocked(aiPost).mockImplementation(async (path, data) => {
+      if (path === "prepare") {
+        sourceHash = (data as any).sourceHash;
+        return { id: "plan-1", sourceHash } as any;
+      }
+      if (path === "execute")
+        return { text: "AI 결과", sourceHash, pageId: "first" } as any;
+      return { connected: true, model: "test-model" } as any;
+    });
+    render(content("first", "제목"));
+    fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), {
+      target: { value: "이어 써줘" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "보내기" }));
+    expect(body.getText()).toBe("원문");
+    await screen.findByRole("region", { name: "AI 제안" });
+    expect(body.getText()).toBe("원문");
+    fireEvent.click(screen.getByRole("button", { name: "아래에 삽입" }));
+    expect(body.getText()).toBe("원문\n\nAI 결과");
+    expect(screen.queryByRole("region", { name: "AI 제안" })).toBeNull();
+  });
+
+  it("keeps a late preview but blocks applying it after the source changes", async () => {
+    const { store, content } = fixture();
+    const body = editor("first", "원문"),
+      title = editor("first", "제목");
+    store.set(pageEditorAtom, body);
+    store.set(titleEditorAtom, title);
+    store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(yjsConnectionStatusAtom, "connected");
+    vi.mocked(getPageById).mockResolvedValue({
+      title: "제목",
+      content: body.getJSON(),
+    } as any);
+    let sourceHash = "";
+    let finish!: (value: any) => void;
+    vi.mocked(aiPost).mockImplementation(async (path, data) => {
+      if (path === "prepare") {
+        sourceHash = (data as any).sourceHash;
+        return { id: "plan-1", sourceHash } as any;
+      }
+      if (path === "execute")
+        return new Promise((resolve) => {
+          finish = resolve;
+        });
+      return { connected: true, model: "test-model" } as any;
+    });
+    render(content("first", "제목"));
+    fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), {
+      target: { value: "이어 써줘" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "보내기" }));
+    await waitFor(() => expect(finish).toBeTypeOf("function"));
+    body.commands.insertContent(" 변경");
+    await act(async () =>
+      finish({ text: "늦은 결과", sourceHash, pageId: "first" }),
+    );
+    const insert = (await screen.findByRole("button", {
+      name: "아래에 삽입",
+    })) as HTMLButtonElement;
+    expect(insert.disabled).toBe(true);
+    expect(screen.getByText(ko.sourceChanged)).toBeTruthy();
+    expect(body.getText()).not.toContain("늦은 결과");
+    await act(async () => store.set(pageEditorAtom, null));
+    expect(
+      (screen.getByRole("button", { name: "아래에 삽입" }) as HTMLButtonElement)
+        .disabled,
+    ).toBe(true);
+  });
+
   it("keeps an accepted background job when the panel closes and reopens", async () => {
     const { store, content } = fixture();
-    const body = editor("first", "보존할 원문"), title = editor("first", "제목");
-    store.set(pageEditorAtom, body); store.set(titleEditorAtom, title);
+    const body = editor("first", "보존할 원문"),
+      title = editor("first", "제목");
+    store.set(pageEditorAtom, body);
+    store.set(titleEditorAtom, title);
     store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
     store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
     store.set(yjsConnectionStatusAtom, "connected");
     let finish: (job: any) => void;
-    vi.mocked(aiPost).mockImplementation(async path => path === "jobs/create"
-      ? new Promise(resolve => { finish = resolve; })
-      : { connected: true, model: "test-model" } as any);
+    vi.mocked(aiPost).mockImplementation(async (path) =>
+      path === "jobs/create"
+        ? new Promise((resolve) => {
+            finish = resolve;
+          })
+        : ({ connected: true, model: "test-model" } as any),
+    );
     render(content("first", "제목"));
     fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
-    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), { target: { value: "계속 작성" } });
+    fireEvent.click(screen.getByRole("switch", { name: /문서에 바로 작성/ }));
+    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), {
+      target: { value: "계속 작성" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "보내기" }));
     await waitFor(() => expect(finish).toBeTypeOf("function"));
     fireEvent.click(screen.getByRole("button", { name: "AI 패널 닫기" }));
-    await act(async () => finish({ id: "job-1", pageId: "first", title: "제목", instruction: "계속 작성", action: "ask", model: "test-model", provider: "ChatGPT OAuth", status: "queued", createdAt: new Date().toISOString() }));
+    await act(async () =>
+      finish({
+        id: "job-1",
+        pageId: "first",
+        title: "제목",
+        instruction: "계속 작성",
+        action: "ask",
+        model: "test-model",
+        provider: "ChatGPT OAuth",
+        status: "queued",
+        createdAt: new Date().toISOString(),
+      }),
+    );
     fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
     expect(screen.getByText(ko.backgroundRunning)).toBeTruthy();
-    expect((screen.getByRole("button", { name: "보내기" }) as HTMLButtonElement).disabled).toBe(true);
+    expect(
+      (screen.getByRole("button", { name: "보내기" }) as HTMLButtonElement)
+        .disabled,
+    ).toBe(true);
     expect(body.getText()).toBe("보존할 원문");
-    expect(vi.mocked(aiPost).mock.calls.filter(([path]) => path === "jobs/create")).toHaveLength(1);
+    expect(
+      vi.mocked(aiPost).mock.calls.filter(([path]) => path === "jobs/create"),
+    ).toHaveLength(1);
   });
   it("submits the captured request even if document navigation unmounts the panel", async () => {
     const { store, content } = fixture();
@@ -137,14 +275,24 @@ describe("AI panel during document navigation", () => {
     store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
     store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
     store.set(yjsConnectionStatusAtom, "connected");
-    vi.mocked(aiPost).mockImplementation(async path => path === "jobs/create"
-      ? { id: "job", pageId: "first", status: "queued" } as any : { connected: true, model: "test-model" } as any);
+    vi.mocked(aiPost).mockImplementation(async (path) =>
+      path === "jobs/create"
+        ? ({ id: "job", pageId: "first", status: "queued" } as any)
+        : ({ connected: true, model: "test-model" } as any),
+    );
     const mounted = render(content("first", "제목"));
     fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
-    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), { target: { value: "계속" } });
+    fireEvent.click(screen.getByRole("switch", { name: /문서에 바로 작성/ }));
+    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), {
+      target: { value: "계속" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "보내기" }));
     mounted.unmount();
-    await waitFor(() => expect(vi.mocked(aiPost).mock.calls.filter(([path]) => path === "jobs/create")).toHaveLength(1));
+    await waitFor(() =>
+      expect(
+        vi.mocked(aiPost).mock.calls.filter(([path]) => path === "jobs/create"),
+      ).toHaveLength(1),
+    );
   });
   it("changes language without clearing a question and sends the selected app locale", async () => {
     const { store, content } = fixture();
@@ -185,7 +333,7 @@ describe("AI panel during document navigation", () => {
     fireEvent.click(screen.getByRole("button", { name: "Send" }));
     await waitFor(() =>
       expect(aiPost).toHaveBeenCalledWith(
-        "jobs/create",
+        "prepare",
         expect.objectContaining({
           responseLocale: "en-US",
           targetLanguage: "en-US",
@@ -250,49 +398,281 @@ describe("AI panel during document navigation", () => {
         .disabled,
     ).toBe(false);
   });
+
+  it("does not let a hanging page-one request lock page two", async () => {
+    const { store, content } = fixture();
+    const firstBody = editor("first", "첫 문서"),
+      firstTitle = editor("first", "첫 제목");
+    store.set(pageEditorAtom, firstBody);
+    store.set(titleEditorAtom, firstTitle);
+    store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(yjsConnectionStatusAtom, "connected");
+    let firstSaved!: (value: any) => void;
+    const secondBody = editor("second", "둘째 문서");
+    vi.mocked(getPageById).mockImplementation(({ pageId }) =>
+      pageId === "first"
+        ? new Promise((resolve) => {
+            firstSaved = resolve;
+          })
+        : Promise.resolve({
+            title: "둘째 제목",
+            content: secondBody.getJSON(),
+          } as any),
+    );
+    vi.mocked(aiPost).mockImplementation(async (path, data) =>
+      path === "prepare"
+        ? ({ id: "page-two-plan", sourceHash: (data as any).sourceHash } as any)
+        : path === "execute"
+          ? ({
+              text: "둘째 결과",
+              sourceHash: "mismatch",
+              pageId: "second",
+            } as any)
+          : ({ connected: true, model: "test-model" } as any),
+    );
+    const mounted = render(content("first", "첫 제목"));
+    fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), {
+      target: { value: "첫 요청" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "보내기" }));
+    await waitFor(() => expect(firstSaved).toBeTypeOf("function"));
+
+    const secondTitle = editor("second", "둘째 제목");
+    await act(async () => {
+      store.set(pageEditorAtom, secondBody);
+      store.set(titleEditorAtom, secondTitle);
+      store.set(bodySaveStateAtom, { pageId: "second", state: "saved" });
+      store.set(titleSaveStateAtom, { pageId: "second", state: "saved" });
+      mounted.rerender(content("second", "둘째 제목"));
+    });
+    await waitFor(() =>
+      expect(store.get(asideStateAtom).isAsideOpen).toBe(false),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "문서 AI" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "질문" }), {
+      target: { value: "둘째 요청" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "보내기" }));
+    await waitFor(() =>
+      expect(aiPost).toHaveBeenCalledWith(
+        "prepare",
+        expect.objectContaining({ pageId: "second", instruction: "둘째 요청" }),
+        undefined,
+      ),
+    );
+    firstSaved({ title: "첫 제목", content: firstBody.getJSON() });
+  });
+
+  it("disables rich replacement for a partial selection", async () => {
+    const { store, content } = fixture();
+    const body = editor("first", "부분 원문"),
+      title = editor("first", "제목");
+    body.commands.setTextSelection({ from: 2, to: 4 });
+    store.set(pageEditorAtom, body);
+    store.set(titleEditorAtom, title);
+    store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(yjsConnectionStatusAtom, "connected");
+    vi.mocked(getPageById).mockResolvedValue({
+      title: "제목",
+      content: body.getJSON(),
+    } as any);
+    let sourceHash = "";
+    vi.mocked(aiPost).mockImplementation(async (path, data) => {
+      if (path === "prepare") {
+        sourceHash = (data as any).sourceHash;
+        return { id: "plan", sourceHash } as any;
+      }
+      if (path === "execute")
+        return {
+          text: "## 제목\n\n여러 블록",
+          sourceHash,
+          pageId: "first",
+        } as any;
+      return { connected: true, model: "test-model" } as any;
+    });
+    render(content("first", "제목"));
+    act(() =>
+      window.dispatchEvent(
+        new CustomEvent("nopetion:open-ai", {
+          detail: { editor: body, pageId: "first", action: "polish" },
+        }),
+      ),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "보내기" }));
+    const replace = (await screen.findByRole("button", {
+      name: "선택 영역 바꾸기",
+    })) as HTMLButtonElement;
+    expect(replace.disabled).toBe(true);
+    expect(body.getText()).toBe("부분 원문");
+  });
+
+  it("discards a preview when the selection instruction changes", async () => {
+    const { store, content } = fixture();
+    const body = editor("first", "선택 원문"),
+      title = editor("first", "제목");
+    body.commands.setTextSelection({ from: 1, to: 5 });
+    store.set(pageEditorAtom, body);
+    store.set(titleEditorAtom, title);
+    store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
+    store.set(yjsConnectionStatusAtom, "connected");
+    vi.mocked(getPageById).mockResolvedValue({
+      title: "제목",
+      content: body.getJSON(),
+    } as any);
+    let sourceHash = "";
+    vi.mocked(aiPost).mockImplementation(async (path, data) => {
+      if (path === "prepare") {
+        sourceHash = (data as any).sourceHash;
+        return { id: "plan", sourceHash } as any;
+      }
+      if (path === "execute")
+        return { text: "다듬은 결과", sourceHash, pageId: "first" } as any;
+      return { connected: true, model: "test-model" } as any;
+    });
+    render(content("first", "제목"));
+    act(() =>
+      window.dispatchEvent(
+        new CustomEvent("nopetion:open-ai", {
+          detail: { editor: body, pageId: "first", action: "polish" },
+        }),
+      ),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "보내기" }));
+    await screen.findByRole("region", { name: "AI 제안" });
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "추가 요청 (선택)" }),
+      {
+        target: { value: "더 짧게" },
+      },
+    );
+    expect(screen.queryByRole("region", { name: "AI 제안" })).toBeNull();
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "추가 요청 (선택)",
+        }) as HTMLTextAreaElement
+      ).value,
+    ).toBe("더 짧게");
+    expect(body.getText()).toBe("선택 원문");
+  });
 });
 
 describe("AI task notification links", () => {
   const jobId = "11111111-1111-4111-8111-111111111111";
   it("opens the selected older task and its held result after arriving from the inbox", async () => {
     const { store, content } = fixture("first", `/p/my-page?aiJobId=${jobId}`);
-    store.set(currentUserAtom, { user: { id: "owner" }, workspace: { id: "workspace" } } as any);
-    vi.mocked(aiPost).mockImplementation(async (path) => path === "jobs/list"
-      ? { items: [{ id: jobId, pageId: "first", title: "제목", instruction: "이전 작업", action: "ask", model: "test-model", provider: "ChatGPT OAuth", status: "conflict", createdAt: "2026-10-10T01:00:00Z", errorCode: "sourceChanged", resultText: "검토할 초안" }] } as any
-      : { connected: true, model: "test-model" } as any);
+    store.set(currentUserAtom, {
+      user: { id: "owner" },
+      workspace: { id: "workspace" },
+    } as any);
+    vi.mocked(aiPost).mockImplementation(async (path) =>
+      path === "jobs/list"
+        ? ({
+            items: [
+              {
+                id: jobId,
+                pageId: "first",
+                title: "제목",
+                instruction: "이전 작업",
+                action: "ask",
+                model: "test-model",
+                provider: "ChatGPT OAuth",
+                status: "conflict",
+                createdAt: "2026-10-10T01:00:00Z",
+                errorCode: "sourceChanged",
+                resultText: "검토할 초안",
+              },
+            ],
+          } as any)
+        : ({ connected: true, model: "test-model" } as any),
+    );
     render(content("first", "제목"));
     await screen.findByText("검토할 초안");
-    expect(store.get(asideStateAtom)).toEqual({ tab: "personal-ai", isAsideOpen: true });
-    expect(aiPost).toHaveBeenCalledWith("jobs/list", { pageId: "first", jobId }, "workspace");
-    expect(vi.mocked(aiPost).mock.calls.some(([path]) => path === "jobs/create")).toBe(false);
+    expect(store.get(asideStateAtom)).toEqual({
+      tab: "personal-ai",
+      isAsideOpen: true,
+    });
+    expect(aiPost).toHaveBeenCalledWith(
+      "jobs/list",
+      { pageId: "first", jobId },
+      "workspace",
+    );
+    expect(
+      vi.mocked(aiPost).mock.calls.some(([path]) => path === "jobs/create"),
+    ).toBe(false);
   });
   it("shows a safe error when the selected task is no longer accessible", async () => {
     const { store, content } = fixture("first", `/p/my-page?aiJobId=${jobId}`);
-    store.set(currentUserAtom, { user: { id: "owner" }, workspace: { id: "workspace" } } as any);
-    vi.mocked(aiPost).mockImplementation(async (path) => path === "jobs/list"
-      ? { items: [] } as any : { connected: true, model: "test-model" } as any);
+    store.set(currentUserAtom, {
+      user: { id: "owner" },
+      workspace: { id: "workspace" },
+    } as any);
+    vi.mocked(aiPost).mockImplementation(async (path) =>
+      path === "jobs/list"
+        ? ({ items: [] } as any)
+        : ({ connected: true, model: "test-model" } as any),
+    );
     render(content("first", "제목"));
     expect(await screen.findByText("error")).toBeTruthy();
-    expect(vi.mocked(aiPost).mock.calls.some(([path]) => path === "jobs/create")).toBe(false);
+    expect(
+      vi.mocked(aiPost).mock.calls.some(([path]) => path === "jobs/create"),
+    ).toBe(false);
   });
   it("allows reviewing a task in reading mode without enabling document writes", async () => {
-    const { store, content } = fixture("first", `/p/my-page?aiJobId=${jobId}`, true);
-    store.set(currentUserAtom, { user: { id: "owner" }, workspace: { id: "workspace" } } as any);
+    const { store, content } = fixture(
+      "first",
+      `/p/my-page?aiJobId=${jobId}`,
+      true,
+    );
+    store.set(currentUserAtom, {
+      user: { id: "owner" },
+      workspace: { id: "workspace" },
+    } as any);
     const body = editor("first", "보존할 원문");
-    store.set(pageEditorAtom, body); store.set(titleEditorAtom, editor("first", "제목"));
+    store.set(pageEditorAtom, body);
+    store.set(titleEditorAtom, editor("first", "제목"));
     store.set(bodySaveStateAtom, { pageId: "first", state: "saved" });
     store.set(titleSaveStateAtom, { pageId: "first", state: "saved" });
     store.set(yjsConnectionStatusAtom, "connected");
-    vi.mocked(aiPost).mockImplementation(async (path) => path === "jobs/list"
-      ? { items: [{ id: jobId, pageId: "first", title: "제목", instruction: "이전 작업", action: "ask", model: "test-model", provider: "ChatGPT OAuth", status: "failed", createdAt: "2026-10-10T01:00:00Z", errorCode: "backgroundFailed", resultText: "보관된 결과" }] } as any
-      : { connected: true, model: "test-model" } as any);
+    vi.mocked(aiPost).mockImplementation(async (path) =>
+      path === "jobs/list"
+        ? ({
+            items: [
+              {
+                id: jobId,
+                pageId: "first",
+                title: "제목",
+                instruction: "이전 작업",
+                action: "ask",
+                model: "test-model",
+                provider: "ChatGPT OAuth",
+                status: "failed",
+                createdAt: "2026-10-10T01:00:00Z",
+                errorCode: "backgroundFailed",
+                resultText: "보관된 결과",
+              },
+            ],
+          } as any)
+        : ({ connected: true, model: "test-model" } as any),
+    );
     render(content("first", "제목"));
     await screen.findByText("보관된 결과");
-    expect((screen.getByRole("textbox", { name: "질문" }) as HTMLTextAreaElement).disabled).toBe(true);
-    const send = screen.getByRole("button", { name: "보내기" }) as HTMLButtonElement;
+    expect(
+      (screen.getByRole("textbox", { name: "질문" }) as HTMLTextAreaElement)
+        .disabled,
+    ).toBe(true);
+    const send = screen.getByRole("button", {
+      name: "보내기",
+    }) as HTMLButtonElement;
     expect(send.disabled).toBe(true);
     fireEvent.click(send);
     expect(body.getText()).toBe("보존할 원문");
-    expect(vi.mocked(aiPost).mock.calls.some(([path]) => path === "jobs/create")).toBe(false);
+    expect(
+      vi.mocked(aiPost).mock.calls.some(([path]) => path === "jobs/create"),
+    ).toBe(false);
   });
 });

@@ -100,7 +100,11 @@ export async function createPageFromSlash(
               content: [
                 {
                   type: "personalDatabase",
-                  attrs: { title: i18n.t("Database"), view: "table" },
+                  attrs: {
+                    id: crypto.randomUUID(),
+                    title: i18n.t("Database"),
+                    view: "table",
+                  },
                   content: [],
                 },
                 { type: "paragraph" },

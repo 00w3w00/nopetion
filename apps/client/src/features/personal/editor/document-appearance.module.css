@@ -1,0 +1,49 @@
+.font {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: 5px;
+  color: light-dark(#37352f, #e7e7e5);
+}
+.font:hover {
+  background: light-dark(#37352f0a, #ffffff0d);
+}
+.font[aria-pressed="true"] {
+  color: light-dark(#2383e2, #75b6ff);
+  background: light-dark(#2383e20b, #2383e21a);
+}
+.font:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.font:focus-visible {
+  outline: 2px solid #2383e2;
+  outline-offset: -2px;
+}
+.specimen {
+  font-size: 24px;
+  line-height: 1.3;
+}
+.font[data-font="serif"] .specimen {
+  font-family: Georgia, serif;
+}
+.font[data-font="mono"] .specimen {
+  font-family: "SFMono-Regular", Consolas, monospace;
+}
+.label {
+  font-size: 11px;
+  text-align: center;
+}
+.toggle :global(.mantine-Switch-body) {
+  justify-content: space-between;
+  align-items: center;
+}
+.toggle :global(.mantine-Switch-labelWrapper) {
+  flex: 1;
+}
+.toggle :global(.mantine-Switch-label) {
+  padding-left: 0;
+  font-size: 13px;
+}

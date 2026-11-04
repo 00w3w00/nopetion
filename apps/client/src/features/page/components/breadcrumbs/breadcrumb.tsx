@@ -39,9 +39,15 @@ export default function Breadcrumb() {
     pageId: extractPageSlugId(pageSlug),
   });
   const isMobile = useMediaQuery("(max-width: 47.99em)");
-  const [mobileTrailOpened, { close: closeMobileTrail, toggle: toggleMobileTrail }] = useDisclosure(false);
+  const [
+    mobileTrailOpened,
+    { close: closeMobileTrail, toggle: toggleMobileTrail },
+  ] = useDisclosure(false);
   const breadcrumbNodes = useMemo(
-    () => currentPage ? findBreadcrumbPath(treeData || [], currentPage.id) || null : null,
+    () =>
+      currentPage
+        ? findBreadcrumbPath(treeData || [], currentPage.id) || null
+        : null,
     [currentPage?.id, treeData],
   );
 
@@ -141,30 +147,75 @@ export default function Breadcrumb() {
   return (
     <nav aria-label={t("Breadcrumb")} className={classes.breadcrumbDiv}>
       {isMobile ? (
-        <Popover width={280} position="bottom-start" shadow="md" offset={6} opened={mobileTrailOpened} onChange={(opened) => { if (!opened) closeMobileTrail(); }}>
+        <Popover
+          width={280}
+          position="bottom-start"
+          shadow="md"
+          offset={6}
+          opened={mobileTrailOpened}
+          onChange={(opened) => {
+            if (!opened) closeMobileTrail();
+          }}
+        >
           <Popover.Target>
             <UnstyledButton
               className={classes.mobileCurrent}
               onClick={toggleMobileTrail}
               aria-label={`${t("Breadcrumbs")}: ${getPageTitle(currentPage?.title, currentPage?.isBase, t)}`}
             >
-              {currentPage?.icon && <span className={classes.mobileIcon} aria-hidden>{currentPage.icon}</span>}
+              {currentPage?.icon && (
+                <span className={classes.mobileIcon} aria-hidden>
+                  {currentPage.icon}
+                </span>
+              )}
               <Text span className={classes.mobileTitle}>
                 {getPageTitle(currentPage?.title, currentPage?.isBase, t)}
               </Text>
-              <IconChevronDown size={14} aria-hidden className={classes.mobileIcon} />
+              <IconChevronDown
+                size={14}
+                aria-hidden
+                className={classes.mobileIcon}
+              />
             </UnstyledButton>
           </Popover.Target>
-          <Popover.Dropdown className={classes.mobileDropdown} onClick={closeMobileTrail}>
-            {breadcrumbNodes?.length ? <MobileHiddenNodesTooltipContent /> : currentPage && (
-              renderAnchor({ id: currentPage.id, slugId: currentPage.slugId, name: currentPage.title, icon: currentPage.icon, isBase: currentPage.isBase } as SpaceTreeNode, true)
+          <Popover.Dropdown
+            className={classes.mobileDropdown}
+            onClick={closeMobileTrail}
+          >
+            {breadcrumbNodes?.length ? (
+              <MobileHiddenNodesTooltipContent />
+            ) : (
+              currentPage &&
+              renderAnchor(
+                {
+                  id: currentPage.id,
+                  slugId: currentPage.slugId,
+                  name: currentPage.title,
+                  icon: currentPage.icon,
+                  isBase: currentPage.isBase,
+                } as SpaceTreeNode,
+                true,
+              )
             )}
           </Popover.Dropdown>
         </Popover>
-      ) : breadcrumbNodes && (
-        <Breadcrumbs className={classes.breadcrumbs}>
-          {getBreadcrumbItems()}
-        </Breadcrumbs>
+      ) : (
+        (breadcrumbNodes?.length || currentPage) && (
+          <Breadcrumbs className={classes.breadcrumbs}>
+            {breadcrumbNodes?.length
+              ? getBreadcrumbItems()
+              : renderAnchor(
+                  {
+                    id: currentPage.id,
+                    slugId: currentPage.slugId,
+                    name: currentPage.title,
+                    icon: currentPage.icon,
+                    isBase: currentPage.isBase,
+                  } as SpaceTreeNode,
+                  true,
+                )}
+          </Breadcrumbs>
+        )
       )}
     </nav>
   );

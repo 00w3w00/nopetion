@@ -9,6 +9,7 @@ import {
   desktopSidebarAtom,
   mobileSidebarAtom,
   sidebarWidthAtom,
+  personalSidebarWidthAtom,
 } from "@/components/layouts/global/hooks/atoms/sidebar-atom.ts";
 import { SpaceSidebar } from "@/features/space/components/sidebar/space-sidebar.tsx";
 import { AppHeader } from "@/components/layouts/global/app-header.tsx";
@@ -34,56 +35,74 @@ export default function GlobalAppShell({
   const [desktopOpened] = useAtom(desktopSidebarAtom);
   const [{ isAsideOpen, tab: asideTab }] = useAtom(asideStateAtom);
   const [sidebarWidth, setSidebarWidth] = useAtom(sidebarWidthAtom);
+  const [personalWidth, setPersonalWidth] = useAtom(personalSidebarWidthAtom);
+  const location = useLocation();
+  const isSettingsRoute = location.pathname.startsWith("/settings");
+  const isSpaceRoute = location.pathname.startsWith("/s/");
+  const personalSidebar = isPersonalMode() && !isSettingsRoute;
+  const defaultWidth = personalSidebar ? 240 : 300;
+  const storedWidth = Number(personalSidebar ? personalWidth : sidebarWidth);
+  const width = Number.isFinite(storedWidth)
+    ? Math.min(600, Math.max(220, storedWidth))
+    : defaultWidth;
+  const setWidth = personalSidebar ? setPersonalWidth : setSidebarWidth;
   const [isResizing, setIsResizing] = useState(false);
-  const sidebarRef = useRef(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const startResizing = React.useCallback((mouseDownEvent) => {
-    mouseDownEvent.preventDefault();
-    setIsResizing(true);
-  }, []);
+  const startResizing = React.useCallback(
+    (mouseDownEvent: React.MouseEvent) => {
+      if (mouseDownEvent.button !== 0) return;
+      mouseDownEvent.preventDefault();
+      setIsResizing(true);
+    },
+    [],
+  );
 
   const stopResizing = React.useCallback(() => {
     setIsResizing(false);
   }, []);
 
   const resize = React.useCallback(
-    (mouseMoveEvent) => {
-      if (isResizing) {
+    (mouseMoveEvent: MouseEvent) => {
+      if (isResizing && sidebarRef.current) {
         const newWidth =
           mouseMoveEvent.clientX -
           sidebarRef.current.getBoundingClientRect().left;
         if (newWidth < 220) {
-          setSidebarWidth(220);
+          setWidth(220);
           return;
         }
         if (newWidth > 600) {
-          setSidebarWidth(600);
+          setWidth(600);
           return;
         }
-        setSidebarWidth(newWidth);
+        setWidth(newWidth);
       }
     },
-    [isResizing],
+    [isResizing, setWidth],
   );
 
   useEffect(() => {
-    //https://codesandbox.io/p/sandbox/kz9de
     window.addEventListener("mousemove", resize);
     window.addEventListener("mouseup", stopResizing);
+    window.addEventListener("blur", stopResizing);
     return () => {
       window.removeEventListener("mousemove", resize);
       window.removeEventListener("mouseup", stopResizing);
+      window.removeEventListener("blur", stopResizing);
     };
   }, [resize, stopResizing]);
 
-  const location = useLocation();
-  const isSettingsRoute = location.pathname.startsWith("/settings");
-  const isSpaceRoute = location.pathname.startsWith("/s/");
   const isPageRoute = location.pathname.includes("/p/");
   const showGlobalSidebar = !isSpaceRoute && !isSettingsRoute;
-  const personalSidebar = isPersonalMode() && !isSettingsRoute;
   const showAside = isAsideOpen && !(isPersonalMode() && asideTab === "chat");
   const isPersonalAiAside = isPersonalMode() && asideTab === "personal-ai";
+  const asideTransform = showAside
+    ? "translateX(0)"
+    : "translateX(var(--app-shell-aside-width))";
+  const asideTransformRtl = showAside
+    ? "translateX(0)"
+    : "translateX(calc(var(--app-shell-aside-width) * -1))";
 
   return (
     <>
@@ -92,7 +111,7 @@ export default function GlobalAppShell({
         data-personal-shell={isPersonalMode() || undefined}
         header={{ height: 45 }}
         navbar={{
-          width: personalSidebar ? 240 : isSpaceRoute ? sidebarWidth : 300,
+          width: personalSidebar || isSpaceRoute ? width : 300,
           breakpoint: "sm",
           collapsed: {
             mobile: !mobileOpened,
@@ -107,6 +126,14 @@ export default function GlobalAppShell({
           }
         }
         padding={isPersonalMode() ? 0 : "md"}
+        style={
+          isPageRoute
+            ? ({
+                "--app-shell-aside-transform": asideTransform,
+                "--app-shell-aside-transform-rtl": asideTransformRtl,
+              } as React.CSSProperties)
+            : undefined
+        }
       >
         {!(personalSidebar && isPageRoute) && (
           <AppShell.Header px={0} className={classes.header}>
@@ -122,11 +149,39 @@ export default function GlobalAppShell({
               ? t("Space navigation")
               : isSettingsRoute
                 ? t("Settings navigation")
-: t("Main navigation")
+                : t("Main navigation")
           }
         >
-          {isSpaceRoute && (
-            <div className={classes.resizeHandle} onMouseDown={startResizing} />
+          {(personalSidebar || isSpaceRoute) && (
+            <div
+              className={classes.resizeHandle}
+              role="separator"
+              tabIndex={0}
+              aria-label={t("Resize sidebar")}
+              aria-orientation="vertical"
+              aria-valuemin={220}
+              aria-valuemax={600}
+              aria-valuenow={width}
+              data-resizing={isResizing || undefined}
+              onMouseDown={startResizing}
+              onDoubleClick={() => setWidth(defaultWidth)}
+              onKeyDown={(event) => {
+                const step = event.shiftKey ? 50 : 10;
+                const next =
+                  event.key === "ArrowLeft"
+                    ? width - step
+                    : event.key === "ArrowRight"
+                      ? width + step
+                      : event.key === "Home"
+                        ? 220
+                        : event.key === "End"
+                          ? 600
+                          : null;
+                if (next === null) return;
+                event.preventDefault();
+                setWidth(Math.min(600, Math.max(220, next)));
+              }}
+            />
           )}
           <div className={classes.sidebarContent}>
             {personalSidebar && <PersonalSidebar />}
@@ -144,7 +199,11 @@ export default function GlobalAppShell({
             </Box>
           )}
         </AppShell.Navbar>
-        <AppShell.Main id={MAIN_CONTENT_ID} tabIndex={-1} className={classes.main}>
+        <AppShell.Main
+          id={MAIN_CONTENT_ID}
+          tabIndex={-1}
+          className={classes.main}
+        >
           {isSettingsRoute ? (
             <Container size={900} className={classes.settingsContent}>
               {children}

@@ -1,5 +1,5 @@
 import { appPath } from "@/lib/app-path";
-import PersonalAccountMenu from '@/features/personal/components/personal-account-menu';
+import PersonalAccountMenu from "@/features/personal/components/personal-account-menu";
 import {
   ActionIcon,
   Badge,
@@ -37,12 +37,11 @@ import {
 import { NotificationPopover } from "@/features/notification/components/notification-popover.tsx";
 import { workspaceAtom } from "@/features/user/atoms/current-user-atom.ts";
 
-const links = [
-  { link: APP_ROUTE.HOME, label: "Home" },
-];
+const links = [{ link: APP_ROUTE.HOME, label: "Home" }];
 
 export function AppHeader() {
   const { t } = useTranslation();
+  const { t: tc } = useTranslation("classification");
   const [mobileOpened] = useAtom(mobileSidebarAtom);
   const toggleMobile = useToggleSidebar(mobileSidebarAtom);
 
@@ -52,9 +51,26 @@ export function AppHeader() {
   const location = useLocation();
   const toggleAside = useToggleAside();
   const [workspace] = useAtom(workspaceAtom);
-  const aiChatEnabled = !isPersonalMode() && workspace?.settings?.ai?.chat === true;
+  const aiChatEnabled =
+    !isPersonalMode() && workspace?.settings?.ai?.chat === true;
+  const personal = isPersonalMode();
 
   const isPageRoute = location.pathname.includes("/p/");
+  const personalTitle = location.pathname.startsWith("/templates")
+    ? t("Templates")
+    : location.pathname.startsWith("/classifications")
+      ? tc("title")
+      : location.pathname.startsWith("/spaces")
+        ? t("All spaces")
+        : location.pathname.startsWith("/favorites")
+          ? t("Favorites")
+          : location.pathname.startsWith("/settings")
+            ? t("Settings")
+            : location.pathname.endsWith("/trash")
+              ? t("Trash")
+              : location.pathname === "/home"
+                ? t("Home")
+                : workspace?.name || getAppName();
 
   const items = links.map((link) => (
     <Link key={link.label} to={link.link} className={classes.link}>
@@ -64,7 +80,14 @@ export function AppHeader() {
 
   return (
     <>
-      <Group h="100%" px="md" justify="space-between" wrap={"nowrap"} className={classes.root}>
+      <Group
+        h="100%"
+        px="md"
+        justify="space-between"
+        wrap="nowrap"
+        className={classes.root}
+        data-personal-header={personal || undefined}
+      >
         <Group wrap="nowrap" className={classes.identity}>
           <Tooltip label={t("Sidebar toggle")}>
             <SidebarToggle
@@ -76,53 +99,72 @@ export function AppHeader() {
             />
           </Tooltip>
 
-          <Tooltip label={t("Sidebar toggle")}>
-            <SidebarToggle
-              aria-label={t("Sidebar toggle")}
-              opened={desktopOpened}
-              onClick={toggleDesktop}
-              visibleFrom="sm"
-              size="sm"
-            />
-          </Tooltip>
-
-          <Link to="/home" className={classes.brand} aria-label={getAppName()}>
-            <Box hiddenFrom="sm" className={classes.brandIcon}>
-              <img
-                src={appPath("/icons/nopetion.svg")}
-                alt={getAppName()}
-                width={22}
-                height={22}
+          {(!personal || !desktopOpened) && (
+            <Tooltip label={t("Sidebar toggle")}>
+              <SidebarToggle
+                aria-label={t("Sidebar toggle")}
+                opened={desktopOpened}
+                onClick={toggleDesktop}
+                visibleFrom="sm"
+                size="sm"
               />
-            </Box>
-            <Text
-              size="lg"
-              fw={600}
-              style={{ userSelect: "none" }}
-              visibleFrom="sm"
-            >
-              {getAppName()}
-            </Text>
-          </Link>
+            </Tooltip>
+          )}
 
-          {!isPersonalMode() && <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
-            {items}
-          </Group>}
+          {!personal && (
+            <Link
+              to="/home"
+              className={classes.brand}
+              aria-label={getAppName()}
+            >
+              <Box hiddenFrom="sm" className={classes.brandIcon}>
+                <img
+                  src={appPath("/icons/nopetion.svg")}
+                  alt={getAppName()}
+                  width={22}
+                  height={22}
+                />
+              </Box>
+              <Text
+                size="lg"
+                fw={600}
+                style={{ userSelect: "none" }}
+                visibleFrom="sm"
+              >
+                {getAppName()}
+              </Text>
+            </Link>
+          )}
+
+          {personal && (
+            <Text className={classes.routeTitle} lineClamp={1}>
+              {personalTitle}
+            </Text>
+          )}
+
+          {!personal && (
+            <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
+              {items}
+            </Group>
+          )}
         </Group>
 
-        <div>
-          <Group visibleFrom="sm">
-            <SearchControl onClick={searchSpotlight.open} />
-          </Group>
-          <Group hiddenFrom="sm">
+        <div className={classes.search}>
+          {!personal && (
+            <Group visibleFrom="sm">
+              <SearchControl onClick={searchSpotlight.open} />
+            </Group>
+          )}
+          <Group hiddenFrom={personal ? undefined : "sm"}>
             <SearchMobileControl onSearch={searchSpotlight.open} />
           </Group>
         </div>
 
         <Group
-          px={isPersonalMode() ? 0 : "xl"}
+          px={personal ? 0 : "xl"}
           wrap="nowrap"
-          hiddenFrom={isPersonalMode() && desktopOpened ? "sm" : undefined}
+          hiddenFrom={personal && desktopOpened ? "sm" : undefined}
+          className={classes.actions}
         >
           {aiChatEnabled && (
             <>
@@ -153,7 +195,12 @@ export function AppHeader() {
                   hiddenFrom="sm"
                   aria-label={t("AI Chat")}
                   onClick={(e: React.MouseEvent) => {
-                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) {
+                    if (
+                      e.metaKey ||
+                      e.ctrlKey ||
+                      e.shiftKey ||
+                      e.button === 1
+                    ) {
                       return;
                     }
                     if (isPageRoute) {
@@ -167,7 +214,7 @@ export function AppHeader() {
               </Tooltip>
             </>
           )}
-          {!isPersonalMode() && <NotificationPopover />}
+          {!personal && <NotificationPopover />}
           {isCloud() && isTrial && trialDaysLeft !== 0 && (
             <Badge
               variant="light"
@@ -181,7 +228,7 @@ export function AppHeader() {
                 : `${trialDaysLeft} days left`}
             </Badge>
           )}
-          <>{isPersonalMode() ? <PersonalAccountMenu header /> : <TopMenu />}</>
+          <>{personal ? <PersonalAccountMenu header /> : <TopMenu />}</>
         </Group>
       </Group>
     </>

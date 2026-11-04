@@ -36,6 +36,7 @@ import i18n from "@/i18n";
 import { PERSONAL_DATABASE_VIEWS } from "@docmost/editor-ext";
 import { viewLabels } from "./presentation";
 import { createPageFromSlash } from "./create-page-command";
+import { openPersonalAi } from "@/features/personal-ai/open-personal-ai";
 const insert =
   (content: object | object[]) =>
   ({ editor, range }: CommandProps) => {
@@ -48,6 +49,14 @@ const widget =
     props.editor.storage.personalNewWidgetId = id;
     insert({ type: "personalWidget", attrs: { id, kind, provider } })(props);
   };
+const database =
+  (view: string) =>
+  (props: CommandProps) =>
+    insert({
+      type: "personalDatabase",
+      attrs: { id: crypto.randomUUID(), title: i18n.t("Database"), view },
+      content: [],
+    })(props);
 const item = (
   title: string,
   icon: SlashMenuItemType["icon"],
@@ -75,26 +84,46 @@ export function personalCommandGroups(
   const meeting = item(
     "AI notes",
     IconSparkles,
-    insert([
-      {
-        type: "heading",
-        attrs: { level: 2 },
-        content: [{ type: "text", text: i18n.t("Meeting notes") }],
-      },
-      {
-        type: "paragraph",
-        content: [
-          { type: "text", text: new Date().toLocaleDateString(i18n.language) },
-        ],
-      },
-      { type: "paragraph" },
-      { type: "personalWidget", attrs: { id: crypto.randomUUID(), kind: "recording" } },
-      { type: "personalWidget", attrs: { kind: "ai" } },
-    ]),
+    (props) =>
+      insert([
+        {
+          type: "heading",
+          attrs: { level: 2 },
+          content: [{ type: "text", text: i18n.t("Meeting notes") }],
+        },
+        {
+          type: "paragraph",
+          content: [
+            {
+              type: "text",
+              text: new Date().toLocaleDateString(i18n.language),
+            },
+          ],
+        },
+        { type: "paragraph" },
+        {
+          type: "personalWidget",
+          attrs: { id: crypto.randomUUID(), kind: "recording" },
+        },
+        {
+          type: "personalWidget",
+          attrs: { id: crypto.randomUUID(), kind: "ai" },
+        },
+      ])(props),
   );
   const childPage = item("Page", IconFile, (props) => {
     void createPageFromSlash(props);
   });
+  const askAi = item(
+    "Ask AI",
+    IconSparkles,
+    ({ editor, range }) => {
+      const removedQuery = editor.chain().focus().deleteRange(range).run();
+      if (removedQuery) openPersonalAi(editor, { action: "ask" });
+    },
+    undefined,
+    ["ai", "ask", "질문"],
+  );
   const html = { ...item("HTML", IconCode, widget("html")), isNew: true };
   const maps = item("Google Maps", IconMap, widget("embed", "Google Maps"));
   const dbIcons = {
@@ -114,15 +143,11 @@ export function personalCommandGroups(
     number: IconMath,
     form: IconFile,
   };
-  const database = PERSONAL_DATABASE_VIEWS.map((view) =>
+  const databases = PERSONAL_DATABASE_VIEWS.map((view) =>
     item(
       view === "map" ? "Map view" : viewLabels[view],
       dbIcons[view],
-      insert({
-        type: "personalDatabase",
-        attrs: { title: i18n.t("Database"), view },
-        content: [],
-      }),
+      database(view),
     ),
   );
   const external = [
@@ -176,6 +201,7 @@ export function personalCommandGroups(
   });
   return {
     Recommended: [
+      askAi,
       meeting,
       { ...html, title: "HTML · Embed" },
       { ...maps, title: "Google Maps · Embed" },
@@ -236,15 +262,11 @@ export function personalCommandGroups(
       item("Web bookmark", IconBookmark, widget("bookmark")),
     ],
     Databases: [
-      ...database,
+      ...databases,
       item(
         "Database - inline",
         IconTable,
-        insert({
-          type: "personalDatabase",
-          attrs: { title: i18n.t("Database"), view: "table" },
-          content: [],
-        }),
+        database("table"),
       ),
       item("Database - full page", IconTable, (props) => {
         void createPageFromSlash(props, true);

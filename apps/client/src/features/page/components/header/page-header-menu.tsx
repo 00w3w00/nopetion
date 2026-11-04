@@ -116,16 +116,21 @@ export default function PageHeaderMenu({ readOnly }: PageHeaderMenuProps) {
         <ConnectionWarning />
       )}
 
-      {!readOnly && !page?.isBase && (
+      {!isPersonalMode() && !readOnly && !page?.isBase && (
         <Box visibleFrom={isPersonalMode() ? "sm" : undefined}>
           <PageEditModeToggle size="xs" compact={isPersonalMode()} />
         </Box>
       )}
-      {isPersonalMode() && (!readOnly || notificationJobId) && page && !page.isBase && (
-        <PersonalAiPanel pageId={page.id} title={page.title || ""} readOnly={readOnly} />
-      )}
-
-      {!isPersonalMode() && null}
+      {isPersonalMode() &&
+        (!readOnly || notificationJobId) &&
+        page &&
+        !page.isBase && (
+          <PersonalAiPanel
+            pageId={page.id}
+            title={page.title || ""}
+            readOnly={readOnly}
+          />
+        )}
 
       {!isPersonalMode() && (
         <Tooltip label={t("Comments")} openDelay={250} withArrow>
@@ -140,7 +145,7 @@ export default function PageHeaderMenu({ readOnly }: PageHeaderMenuProps) {
         </Tooltip>
       )}
 
-      {!page?.isBase && (
+      {!isPersonalMode() && !page?.isBase && (
         <Tooltip label={t("Table of contents")} openDelay={250} withArrow>
           <ActionIcon
             variant="subtle"
@@ -154,7 +159,11 @@ export default function PageHeaderMenu({ readOnly }: PageHeaderMenuProps) {
         </Tooltip>
       )}
 
-      {isPersonalMode() && page && <Group visibleFrom="sm" gap={4} wrap="nowrap"><PersonalQuickActions pageId={page.id} /></Group>}
+      {isPersonalMode() && page && (
+        <Group visibleFrom="sm" gap={4} wrap="nowrap">
+          <PersonalQuickActions pageId={page.id} />
+        </Group>
+      )}
       <PageActionMenu readOnly={readOnly} />
     </>
   );
@@ -165,19 +174,8 @@ function PersonalQuickActions({ pageId }: { pageId: string }) {
   const ids = useFavoriteIds("page");
   const add = useAddFavoriteMutation();
   const remove = useRemoveFavoriteMutation();
-  const [, setHistory] = useAtom(historyAtoms);
   return (
     <>
-      <Tooltip label={t("Page history")}>
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          aria-label={t("Page history")}
-          onClick={() => setHistory(true)}
-        >
-          <IconHistory size={18} />
-        </ActionIcon>
-      </Tooltip>
       <Tooltip label={t("Favorites")}>
         <ActionIcon
           variant="subtle"
@@ -291,8 +289,8 @@ function PageActionMenu({ readOnly }: PageActionMenuProps) {
         shadow="xl"
         position="bottom-end"
         offset={8}
-        width={230}
-        withArrow
+        width={isPersonalMode() ? 268 : 230}
+        withArrow={!isPersonalMode()}
         arrowPosition="center"
       >
         <Menu.Target>
@@ -308,14 +306,24 @@ function PageActionMenu({ readOnly }: PageActionMenuProps) {
 
         <Menu.Dropdown className={headerClasses.actionDropdown}>
           {isPersonalMode() && !readOnly && !page.isBase && (
-            <Box hiddenFrom="sm" p="xs"><PageEditModeToggle size="sm" /></Box>
+            <Box p="xs">
+              <PageEditModeToggle size="sm" />
+            </Box>
           )}
           {isPersonalMode() && !page.isBase && (
-            <Menu.Item hiddenFrom="sm" leftSection={<IconList size={16} />} {...tocTriggerProps}>
+            <Menu.Item
+              leftSection={<IconList size={16} />}
+              {...tocTriggerProps}
+            >
               {t("Table of contents")}
             </Menu.Item>
           )}
-          {isPersonalMode() && <DocumentAppearance />}
+          {isPersonalMode() && (
+            <>
+              <DocumentAppearance fullWidth={!page.isBase} />
+              <Menu.Divider />
+            </>
+          )}
           <Menu.Item
             leftSection={<IconLink size={16} />}
             onClick={handleCopyLink}
@@ -348,25 +356,26 @@ function PageActionMenu({ readOnly }: PageActionMenuProps) {
             {isFavorited ? t("Remove from favorites") : t("Add to favorites")}
           </Menu.Item>
 
-          {!isPersonalMode() && (watchStatus?.watching ? (
-            <Menu.Item
-              leftSection={<IconEyeOff size={16} />}
-              onClick={() => unwatchPage.mutate(page.id)}
-            >
-              {t("Stop watching")}
-            </Menu.Item>
-          ) : (
-            <Menu.Item
-              leftSection={<IconEye size={16} />}
-              onClick={() => watchPage.mutate(page.id)}
-            >
-              {t("Watch page")}
-            </Menu.Item>
-          ))}
+          {!isPersonalMode() &&
+            (watchStatus?.watching ? (
+              <Menu.Item
+                leftSection={<IconEyeOff size={16} />}
+                onClick={() => unwatchPage.mutate(page.id)}
+              >
+                {t("Stop watching")}
+              </Menu.Item>
+            ) : (
+              <Menu.Item
+                leftSection={<IconEye size={16} />}
+                onClick={() => watchPage.mutate(page.id)}
+              >
+                {t("Watch page")}
+              </Menu.Item>
+            ))}
 
           {!page?.isBase && <Menu.Divider />}
 
-          {!page?.isBase && (
+          {!isPersonalMode() && !page?.isBase && (
             <Menu.Item leftSection={<IconArrowsHorizontal size={16} />}>
               <Group wrap="nowrap">
                 <PageWidthToggle label={t("Full width")} />
@@ -438,7 +447,7 @@ function PageActionMenu({ readOnly }: PageActionMenuProps) {
             <Group px="sm" wrap="nowrap" style={{ cursor: "pointer" }}>
               <Tooltip
                 label={t("Edited by {{name}} {{time}}", {
-                  name: page.lastUpdatedBy.name,
+                  name: page.lastUpdatedBy?.name || page.creator?.name || "",
                   time: pageUpdatedAt,
                 })}
                 position="left-start"
@@ -483,8 +492,6 @@ function PageActionMenu({ readOnly }: PageActionMenuProps) {
         onClose={closeMoveSpaceModal}
         open={movePageModalOpened}
       />
-
-
 
       <PageAttachmentsModal
         pageId={page.id}

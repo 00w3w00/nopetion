@@ -13,8 +13,8 @@ import { QuickInsertsGroup } from "./groups/quick-inserts-group";
 import { MoreInsertsGroup } from "./groups/more-inserts-group";
 import { HistoryGroup } from "./groups/history-group";
 import { AskAiGroup } from "./groups/ask-ai-group";
-import { workspaceAtom } from "@/features/user/atoms/current-user-atom";
 import classes from "./fixed-toolbar.module.css";
+import { isPersonalMode } from "@/lib/config";
 
 type FixedToolbarProps = {
   editor?: Editor | null;
@@ -28,9 +28,6 @@ export const FixedToolbar: FC<FixedToolbarProps> = ({
   const editorFromAtom = useAtomValue(pageEditorAtom);
   const editor = editorProp ?? editorFromAtom;
   const state = useToolbarState(editor);
-  const workspace = useAtomValue(workspaceAtom);
-  const isGenerativeAiEnabled = workspace?.settings?.ai?.generative === true;
-
   return (
     <>
       <div
@@ -41,12 +38,12 @@ export const FixedToolbar: FC<FixedToolbarProps> = ({
         onMouseDown={(e) => e.preventDefault()}
       >
         <div className={classes.inner}>
-          {/* {isGenerativeAiEnabled && (
+          {editor && isPersonalMode() && (
             <>
-              <AskAiGroup />
+              <AskAiGroup editor={editor} />
               <div className={classes.divider} />
             </>
-          )} */}
+          )}
           {editor && state && (
             <>
               <BlockTypeGroup editor={editor} />

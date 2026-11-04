@@ -38,6 +38,8 @@ import {
   userAtom,
   workspaceAtom,
 } from "@/features/user/atoms/current-user-atom";
+import { isPersonalMode } from "@/lib/config";
+import { openPersonalAi } from "@/features/personal-ai/open-personal-ai";
 
 export interface BubbleMenuItem {
   name: string;
@@ -60,7 +62,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
   const isGenerativeAiEnabled = workspace?.settings?.ai?.generative === true;
   const user = useAtomValue(userAtom);
   const editorToolbarEnabled =
-    user?.settings?.preferences?.editorToolbar ?? false;
+    !isPersonalMode() && (user?.settings?.preferences?.editorToolbar ?? false);
   const [, setDraftCommentId] = useAtom(draftCommentIdAtom);
   const showCommentPopupRef = useRef(showCommentPopup);
   const showAiMenuRef = useRef(showAiMenu);
@@ -187,15 +189,19 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
       style={{ zIndex: 199, position: "relative" }}
     >
       <div className={classes.bubbleMenu}>
-        {isGenerativeAiEnabled && (
+        {(isPersonalMode() || isGenerativeAiEnabled) && (
           <>
             <Button
               variant="default"
               className={clsx(classes.buttonRoot)}
               radius="0"
               leftSection={<IconSparkles size={16} />}
+              onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
-                setShowAiMenu(true);
+                if (!isEditorReady(props.editor) || !props.editor.isEditable)
+                  return;
+                if (isPersonalMode()) openPersonalAi(props.editor);
+                else setShowAiMenu(true);
               }}
             >
               {t("Ask AI")}
