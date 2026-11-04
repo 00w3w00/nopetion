@@ -140,9 +140,7 @@ export function applyAiBlocks(
   if (
     !editor.isEditable ||
     !snapshotCurrent(editor, title, snapshot) ||
-    (replace && !snapshot.canApply) ||
-    draft.type !== "doc" ||
-    !safeAiBlocks(draft)
+    !canApplyAiBlocks(snapshot, draft, replace)
   )
     return false;
   try {
@@ -215,4 +213,24 @@ export function applyAiBlocks(
   } catch {
     return false;
   }
+}
+
+export function canApplyAiBlocks(
+  snapshot: AiSnapshot,
+  draft: JSONContent,
+  replace: boolean,
+): boolean {
+  if (draft.type !== "doc" || !safeAiBlocks(draft)) return false;
+  if (!replace) return true;
+  if (!snapshot.canApply) return false;
+  if (draft.content?.length === 1 && draft.content[0].type === "paragraph")
+    return true;
+  const from = snapshot.doc.resolve(snapshot.from),
+    to = snapshot.doc.resolve(snapshot.to);
+  return (
+    from.depth === 1 &&
+    from.parentOffset === 0 &&
+    to.parentOffset === to.parent.content.size &&
+    ["paragraph", "heading"].includes(from.parent.type.name)
+  );
 }

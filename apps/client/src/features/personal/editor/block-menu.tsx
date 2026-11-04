@@ -15,6 +15,8 @@ import { useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { asideStateAtom } from "@/components/layouts/global/hooks/atoms/sidebar-atom";
 import {
+  canDuplicateBlock,
+  canMoveBlock,
   convertibleBlocks,
   convertBlock,
   duplicateBlock,
@@ -196,19 +198,21 @@ export default function BlockMenu({ editor }: { editor: Editor }) {
         </Menu.Sub>
         <Menu.Item
           leftSection={<IconCopy size={17} />}
-          disabled={node?.type.name === "transclusionSource"}
+          disabled={!target || !canDuplicateBlock(editor, target.pos)}
           onClick={() => act((pos) => duplicateBlock(editor, pos))}
         >
           {t("Duplicate")}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconArrowUp size={17} />}
+          disabled={!target || !canMoveBlock(editor, target.pos, -1)}
           onClick={() => act((pos) => moveBlock(editor, pos, -1))}
         >
           {t("Move up")}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconArrowDown size={17} />}
+          disabled={!target || !canMoveBlock(editor, target.pos, 1)}
           onClick={() => act((pos) => moveBlock(editor, pos, 1))}
         >
           {t("Move down")}

@@ -145,6 +145,7 @@ export const PersonalDatabase = Node.create({
       id: { default: '' },
       title: { default: 'Database' },
       view: { default: 'table' },
+      viewSettings: { default: '{}' },
     };
   },
   parseHTML() {
@@ -154,12 +155,27 @@ export const PersonalDatabase = Node.create({
         contentElement: (element) =>
           element.querySelector('[data-database-rows]') ||
           element.querySelector(':scope > div') || element,
-        getAttrs: (element) => ({
-          id: (element as HTMLElement).getAttribute('data-database-id') || '',
-          title:
-            (element as HTMLElement).getAttribute('data-title') || 'Database',
-          view: (element as HTMLElement).getAttribute('data-view') || 'table',
-        }),
+        getAttrs: (element) => {
+          const el = element as HTMLElement;
+          const rawSettings = el.getAttribute('data-view-settings') || '{}';
+          let viewSettings = '{}';
+          if (rawSettings.length <= 20_000) {
+            try {
+              const parsed = JSON.parse(rawSettings);
+              if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+                viewSettings = rawSettings;
+              }
+            } catch {
+              // Keep the empty settings object for malformed imported HTML.
+            }
+          }
+          return {
+            id: el.getAttribute('data-database-id') || '',
+            title: el.getAttribute('data-title') || 'Database',
+            view: el.getAttribute('data-view') || 'table',
+            viewSettings,
+          };
+        },
       },
     ];
   },
@@ -171,6 +187,7 @@ export const PersonalDatabase = Node.create({
         'data-database-id': node.attrs.id,
         'data-title': node.attrs.title,
         'data-view': node.attrs.view,
+        'data-view-settings': node.attrs.viewSettings,
       }),
       ['h3', {}, String(node.attrs.title)],
       ['div', { 'data-database-rows': '' }, 0],

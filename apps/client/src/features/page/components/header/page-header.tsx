@@ -1,7 +1,7 @@
 import { appPath } from "@/lib/app-path";
 import classes from "./page-header.module.css";
 import PageHeaderMenu from "@/features/page/components/header/page-header-menu.tsx";
-import { Badge, Group, Tooltip, Text } from "@mantine/core";
+import { Badge, Group, Tooltip } from "@mantine/core";
 import { IconExternalLink, IconWorld } from "@tabler/icons-react";
 import Breadcrumb from "@/features/page/components/breadcrumbs/breadcrumb.tsx";
 import { useParams } from "react-router-dom";
@@ -71,27 +71,19 @@ export default function PageHeader({ readOnly }: Props) {
               <IconLayoutSidebar size={18} />
             </ActionIcon>
           )}
-          {isPersonalMode() && (
-            <Text
-              c="dimmed"
-              fz={13}
-              visibleFrom="sm"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              {t("Personal pages")} /
-            </Text>
-          )}
           <Breadcrumb />
 
           {showPublicBadge && (
             <Tooltip label={t("Open public page")} openDelay={250} withArrow>
               <Badge
                 component="a"
-                href={appPath(buildPublicSpaceUrl({
-                  spaceSlug: space.slug,
-                  pageSlugId: page.slugId,
-                  pageTitle: page.title,
-                }))}
+                href={appPath(
+                  buildPublicSpaceUrl({
+                    spaceSlug: space.slug,
+                    pageSlugId: page.slugId,
+                    pageTitle: page.title,
+                  }),
+                )}
                 target="_blank"
                 rel="noopener"
                 size="sm"

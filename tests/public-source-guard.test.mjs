@@ -20,6 +20,10 @@ const check=root=>spawnSync(process.execPath,[script,'--root='+root],{encoding:'
 test('clean source with retained license boundaries passes',async t=>{
   const result=check(await fixture(t));assert.equal(result.status,0,result.stderr);
 });
+test('public design guidance is accepted at the repository root',async t=>{
+  const root=await fixture(t);await writeFile(path.join(root,'DESIGN.md'),'# Design\nPublic interface guidelines.\n');
+  const result=check(root);assert.equal(result.status,0,result.stderr);
+});
 test('private root data and unlisted backup files are refused before reading their contents',async t=>{
   const root=await fixture(t);await mkdir(path.join(root,'data'));await writeFile(path.join(root,'data','private'),'synthetic private data');
   await writeFile(path.join(root,'database-backup.sql'),'synthetic private backup',{mode:0o000});

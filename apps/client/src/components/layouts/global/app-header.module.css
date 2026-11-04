@@ -1,63 +1,94 @@
-.header {
-    height: 100%;
-    margin-bottom: rem(120px);
-    background-color: var(--mantine-color-body);
-    border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-    padding-left: var(--mantine-spacing-md);
-    padding-right: var(--mantine-spacing-md);
-}
-
 .brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .brandIcon {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.identity { min-width: 0; }
+.identity {
+  min-width: 0;
+}
+.routeTitle {
+  min-width: 0;
+  color: light-dark(#37352f, #e7e7e5);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.search,
+.actions {
+  flex-shrink: 0;
+}
+
+.root[data-personal-header] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 4px;
+  padding-inline: 12px;
+  color: light-dark(#37352f, #e7e7e5);
+}
+
+.root[data-personal-header] :global(.mantine-ActionIcon-root) {
+  color: light-dark(#787774, #b3b3ad);
+  border-radius: 5px;
+}
+
+.root[data-personal-header] :global(.mantine-ActionIcon-root:hover) {
+  background: light-dark(#37352f0f, #ffffff10);
+}
 
 @media (max-width: $mantine-breakpoint-sm) {
-    .root {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto auto;
-        gap: 4px;
-    }
-    .identity { gap: 8px; }
-    .root :global(.mantine-ActionIcon-root) {
-        width: 40px;
-        height: 40px;
-        flex-shrink: 0;
-    }
-    .root :global([data-personal-account-menu]) {
-        width: 40px;
-        height: 40px;
-        padding: 8px;
-        gap: 0;
-        border-radius: 50%;
-    }
-    .root :global([data-personal-account-menu]) > svg { display: none; }
+  .root {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 4px;
+  }
+  .root[data-personal-header] {
+    padding-inline: 8px;
+  }
+  .identity {
+    gap: 8px;
+  }
+  .root :global(.mantine-ActionIcon-root) {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  .root :global([data-personal-account-menu]) {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    gap: 0;
+    border-radius: 50%;
+  }
+  .root :global([data-personal-account-menu]) > svg {
+    display: none;
+  }
 }
 
 .link {
-    display: block;
-    line-height: 1;
-    padding: rem(8px) rem(12px);
-    border-radius: var(--mantine-radius-sm);
-    text-decoration: none;
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-    font-size: var(--mantine-font-size-sm);
-    font-weight: 500;
-    user-select: none;
-    white-space: nowrap;
-    flex-shrink: 0;
+  display: block;
+  line-height: 1;
+  padding: rem(8px) rem(12px);
+  border-radius: var(--mantine-radius-sm);
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 
-    @mixin hover {
-        background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-    }
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
+  }
 }

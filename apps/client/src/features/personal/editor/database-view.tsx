@@ -1,19 +1,38 @@
 import { useDatabaseProperties } from "./database-properties";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NodeViewContent, NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import {
   ActionIcon,
   Button,
   Group,
+  Menu,
   Modal,
   Select,
   Stack,
+  Text,
   TextInput,
 } from "@mantine/core";
 import {
+  IconCalendar,
+  IconChartBar,
+  IconChartDonut,
+  IconChartLine,
+  IconCheck,
+  IconChevronDown,
   IconDownload,
+  IconFilter,
+  IconForms,
+  IconLayoutBoard,
+  IconLayoutDashboard,
+  IconLayoutGrid,
+  IconList,
+  IconMap,
+  IconNumber,
   IconPlus,
   IconSearch,
+  IconSortAscending,
+  IconTable,
+  IconTimeline,
   IconTrash,
 } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
@@ -25,6 +44,15 @@ import {
 } from "@docmost/editor-ext";
 import classes from "./database-view.module.css";
 import { viewLabels, statusLabels } from "./presentation";
+import {
+  databaseViewSetting,
+  type DatabaseSort,
+  type DatabaseStatus,
+  type DatabaseView,
+  parseDatabaseViewSettings,
+  serializeDatabaseViewSettings,
+  updateDatabaseViewSetting,
+} from "./database-view-settings";
 const fields = [
   "title",
   "status",
@@ -41,6 +69,23 @@ const fieldLabels = {
   number: "Value",
   location: "Location",
 };
+const viewIcons = {
+  table: IconTable,
+  board: IconLayoutBoard,
+  gallery: IconLayoutGrid,
+  list: IconList,
+  feed: IconList,
+  dashboard: IconLayoutDashboard,
+  calendar: IconCalendar,
+  timeline: IconTimeline,
+  map: IconMap,
+  bar: IconChartBar,
+  "horizontal-bar": IconChartBar,
+  line: IconChartLine,
+  donut: IconChartDonut,
+  number: IconNumber,
+  form: IconForms,
+} satisfies Record<DatabaseView, typeof IconTable>;
 export default function DatabaseView({
   node,
   editor,
@@ -49,16 +94,44 @@ export default function DatabaseView({
 }: NodeViewProps) {
   const { t } = useTranslation();
   const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<string | null>(null);
-  const [sort, setSort] = useState<string | null>("default");
   const [selected, setSelected] = useState<string | null>(null);
   const [trash, setTrash] = useState(false);
   const [month, setMonth] = useState(new Date().toISOString().slice(0, 7));
   const [newTitle, setNewTitle] = useState("");
   const editable = editor.isEditable;
+  const storedView = PERSONAL_DATABASE_VIEWS.includes(node.attrs.view)
+    ? (node.attrs.view as DatabaseView)
+    : "table";
+  const [view, setView] = useState<DatabaseView>(storedView);
+  const [viewSettings, setViewSettings] = useState(() =>
+    parseDatabaseViewSettings(node.attrs.viewSettings),
+  );
+  const { status, sort } = databaseViewSetting(viewSettings, view);
+  const ActiveViewIcon = viewIcons[view];
+  useEffect(() => setView(storedView), [storedView]);
+  useEffect(
+    () => setViewSettings(parseDatabaseViewSettings(node.attrs.viewSettings)),
+    [node.attrs.viewSettings],
+  );
+  const changeView = (nextView: DatabaseView) => {
+    setView(nextView);
+    if (editable) updateAttributes({ view: nextView });
+  };
+  const changeViewSetting = (
+    change: Partial<{ status: DatabaseStatus | null; sort: DatabaseSort }>,
+  ) => {
+    const next = updateDatabaseViewSetting(viewSettings, view, change);
+    setViewSettings(next);
+    if (editable) {
+      updateAttributes({ viewSettings: serializeDatabaseViewSettings(next) });
+    }
+  };
   const properties = useDatabaseProperties({ node, editor, getPos });
   const allRows: PersonalRow[] = [];
-  node.forEach((child) => { if (child.type.name === "personalDatabaseRow") allRows.push(personalRowValues(child.attrs)); });
+  node.forEach((child) => {
+    if (child.type.name === "personalDatabaseRow")
+      allRows.push(personalRowValues(child.attrs));
+  });
   const rows = allRows.filter(
     (row) =>
       !row.deleted &&
@@ -79,9 +152,6 @@ export default function DatabaseView({
   if (sort === "value") rows.sort((a, b) => b.number - a.number);
   const current = allRows.find((row) => row.id === selected);
   const deleted = allRows.filter((row) => row.deleted);
-  const view = PERSONAL_DATABASE_VIEWS.includes(node.attrs.view)
-    ? node.attrs.view
-    : "table";
   const rowPosition = (id: string) => {
     const pos = getPos();
     if (typeof pos !== "number") return null;
@@ -122,15 +192,44 @@ export default function DatabaseView({
     setSelected(id);
   };
   const customCsv = () => {
-    const quote = (value: unknown) => { let text = String(value ?? ""); if (/^[\s]*[=+\-@]/.test(text)) text = "'" + text; return '"' + text.replace(/"/g, '""') + '"'; };
-    return [ [...fields, ...properties.definitions.map(d => d.name)].map(quote).join(","),
-      ...rows.map(row => [...fields.map(field => row[field]), ...properties.definitions.map(def => { try { return properties.value(row.id, def); } catch { return "#ERROR"; } })].map(quote).join(",")) ].join("\r\n");
+    const quote = (value: unknown) => {
+      let text = String(value ?? "");
+      if (/^[\s]*[=+\-@]/.test(text)) text = "'" + text;
+      return '"' + text.replace(/"/g, '""') + '"';
+    };
+    return [
+      [...fields, ...properties.definitions.map((d) => d.name)]
+        .map(quote)
+        .join(","),
+      ...rows.map((row) =>
+        [
+          ...fields.map((field) => row[field]),
+          ...properties.definitions.map((def) => {
+            try {
+              return properties.value(row.id, def);
+            } catch {
+              return "#ERROR";
+            }
+          }),
+        ]
+          .map(quote)
+          .join(","),
+      ),
+    ].join("\r\n");
   };
   const exportCsv = () => {
     const url = URL.createObjectURL(
-      new Blob(["\ufeff" + (properties.definitions.length ? customCsv() : personalRowsToCsv(rows))], {
-        type: "text/csv;charset=utf-8",
-      }),
+      new Blob(
+        [
+          "\ufeff" +
+            (properties.definitions.length
+              ? customCsv()
+              : personalRowsToCsv(rows)),
+        ],
+        {
+          type: "text/csv;charset=utf-8",
+        },
+      ),
     );
     const link = document.createElement("a");
     link.href = url;
@@ -382,23 +481,43 @@ export default function DatabaseView({
           maxLength={200}
           onChange={(e) => updateAttributes({ title: e.target.value })}
         />
-        <Select
-          aria-label={t("Database view")}
-          value={view}
-          onChange={(value) => {
-            if (value && editable) updateAttributes({ view: value });
-          }}
-          disabled={!editable}
-          data={PERSONAL_DATABASE_VIEWS.map((value) => ({
-            value,
-            label: t(viewLabels[value]),
-          }))}
-          variant="unstyled"
-          size="xs"
-          w={180}
-        />
       </div>
       {properties.configuration}
+      <div className={classes.viewBar}>
+        <Menu position="bottom-start" width={220} shadow="md" withinPortal>
+          <Menu.Target>
+            <button
+              type="button"
+              className={classes.viewTab}
+              aria-label={t("Database view")}
+            >
+              <ActiveViewIcon size={15} stroke={1.8} aria-hidden />
+              <span>{t(viewLabels[view])}</span>
+              <IconChevronDown size={13} stroke={1.8} aria-hidden />
+            </button>
+          </Menu.Target>
+          <Menu.Dropdown className={classes.viewMenu}>
+            <Menu.Label>{t("Database view")}</Menu.Label>
+            {PERSONAL_DATABASE_VIEWS.map((value) => {
+              const ViewIcon = viewIcons[value];
+              return (
+                <Menu.Item
+                  key={value}
+                  leftSection={<ViewIcon size={16} stroke={1.7} />}
+                  rightSection={value === view ? <IconCheck size={14} /> : null}
+                  aria-current={value === view ? "true" : undefined}
+                  onClick={() => changeView(value)}
+                >
+                  {t(viewLabels[value])}
+                </Menu.Item>
+              );
+            })}
+          </Menu.Dropdown>
+        </Menu>
+        <Text size="xs" c="dimmed" className={classes.recordCount}>
+          {rows.length} {t("records")}
+        </Text>
+      </div>
       <div className={classes.toolbar}>
         <TextInput
           leftSection={<IconSearch size={14} />}
@@ -407,62 +526,84 @@ export default function DatabaseView({
           value={query}
           onChange={(e) => setQuery(e.currentTarget.value)}
           size="xs"
-          variant="unstyled"
+          variant="default"
+          className={classes.search}
         />
-        <Select
-          aria-label={t("Filter by status")}
-          placeholder={t("Filter")}
-          value={status}
-          onChange={(value) => setStatus(value == null ? null : String(value))}
-          clearable
-          size="xs"
-          variant="unstyled"
-          w={125}
-          data={Object.entries(statusLabels).map(([value, label]) => ({
-            value,
-            label: t(label),
-          }))}
-        />
-        <Select
-          aria-label={t("Sort records")}
-          value={sort}
-          onChange={(value) => setSort(value == null ? null : String(value))}
-          data={[
-            { value: "default", label: t("Default order") },
-            { value: "name", label: t("Name") },
-            { value: "date", label: t("Date") },
-            { value: "value", label: t("Value") },
-          ]}
-          variant="unstyled"
-          size="xs"
-          w={110}
-        />
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          aria-label={t("Export CSV")}
-          onClick={exportCsv}
-        >
-          <IconDownload size={16} />
-        </ActionIcon>
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          aria-label={t("Deleted records")}
-          onClick={() => setTrash(true)}
-        >
-          <IconTrash size={16} />
-        </ActionIcon>
-        {editable && <Button size="xs" variant="subtle" onClick={properties.add}>＋ {t("Add property")}</Button>}
-        {editable && (
-          <Button
+        <div className={classes.toolbarActions}>
+          <Select
+            aria-label={t("Filter by status")}
+            placeholder={t("Filter")}
+            leftSection={<IconFilter size={14} />}
+            value={status}
+            onChange={(value) =>
+              changeViewSetting({ status: value as DatabaseStatus | null })
+            }
+            clearable
             size="xs"
-            leftSection={<IconPlus size={14} />}
-            onClick={() => add()}
+            variant="unstyled"
+            className={status ? classes.controlActive : classes.control}
+            w={130}
+            data={Object.entries(statusLabels).map(([value, label]) => ({
+              value,
+              label: t(label),
+            }))}
+          />
+          <Select
+            aria-label={t("Sort records")}
+            leftSection={<IconSortAscending size={14} />}
+            value={sort}
+            onChange={(value) =>
+              changeViewSetting({ sort: (value ?? "default") as DatabaseSort })
+            }
+            data={[
+              { value: "default", label: t("Default order") },
+              { value: "name", label: t("Name") },
+              { value: "date", label: t("Date") },
+              { value: "value", label: t("Value") },
+            ]}
+            variant="unstyled"
+            size="xs"
+            className={
+              sort !== "default" ? classes.controlActive : classes.control
+            }
+            w={125}
+          />
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            aria-label={t("Export CSV")}
+            onClick={exportCsv}
           >
-            {t("New")}
-          </Button>
-        )}
+            <IconDownload size={16} />
+          </ActionIcon>
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            aria-label={t("Deleted records")}
+            onClick={() => setTrash(true)}
+          >
+            <IconTrash size={16} />
+          </ActionIcon>
+          {editable && (
+            <Button
+              size="xs"
+              color="gray"
+              variant="subtle"
+              onClick={properties.add}
+            >
+              ＋ {t("Add property")}
+            </Button>
+          )}
+          {editable && (
+            <Button
+              size="xs"
+              leftSection={<IconPlus size={14} />}
+              onClick={() => add()}
+            >
+              {t("New")}
+            </Button>
+          )}
+        </div>
       </div>
       {view === "table" && (
         <div className={classes.tableScroll}>
@@ -472,7 +613,16 @@ export default function DatabaseView({
                 {fields.map((field) => (
                   <th key={field}>{t(fieldLabels[field])}</th>
                 ))}
-                {properties.definitions.map(def => <th key={def.id} data-db-property><button disabled={!editable} onClick={() => properties.edit(def)}>{def.name}</button></th>)}
+                {properties.definitions.map((def) => (
+                  <th key={def.id} data-db-property>
+                    <button
+                      disabled={!editable}
+                      onClick={() => properties.edit(def)}
+                    >
+                      {def.name}
+                    </button>
+                  </th>
+                ))}
                 <th />
               </tr>
             </thead>
@@ -482,7 +632,11 @@ export default function DatabaseView({
                   {fields.map((field) => (
                     <td key={field}>{cell(row, field)}</td>
                   ))}
-                  {properties.definitions.map(def => <td key={def.id} data-db-property>{properties.renderCell(row.id, def)}</td>)}
+                  {properties.definitions.map((def) => (
+                    <td key={def.id} data-db-property>
+                      {properties.renderCell(row.id, def)}
+                    </td>
+                  ))}
                   <td>
                     <ActionIcon
                       variant="subtle"
@@ -680,7 +834,13 @@ export default function DatabaseView({
                 {cell(current, field)}
               </label>
             ))}
-          {current && properties.definitions.map(def => <label className={classes.detailField} key={def.id}>{def.name}{properties.renderCell(current.id, def)}</label>)}
+          {current &&
+            properties.definitions.map((def) => (
+              <label className={classes.detailField} key={def.id}>
+                {def.name}
+                {properties.renderCell(current.id, def)}
+              </label>
+            ))}
           {current && editable && (
             <Button
               color="red"

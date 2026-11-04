@@ -1,4 +1,5 @@
 {
+  "Add icon": "Add icon",
   "Account": "Account",
   "Active": "Active",
   "Add": "Add",
@@ -1753,5 +1754,12 @@
   "Choose the font for the app and default document text.": "Choose the font for the app and default document text.",
   "Pretendard (default)": "Pretendard (default)",
   "System font": "System font",
-  "Your docs, your rules.": "Your docs, your rules."
+  "Your docs, your rules.": "Your docs, your rules.",
+  "Welcome back, {{name}}": "Welcome back, {{name}}",
+  "there": "there",
+  "Pick up where you left off.": "Pick up where you left off.",
+  "Find anything in your workspace": "Find anything in your workspace",
+  "Start with a ready-made page": "Start with a ready-made page",
+  "Resize sidebar": "Resize sidebar",
+  "Retry": "Retry"
 }

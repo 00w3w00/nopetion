@@ -82,6 +82,7 @@ import ColumnsMenu from "@/features/editor/components/columns/columns-menu.tsx";
 import { TransclusionLookupProvider } from "@/features/editor/components/transclusion/transclusion-lookup-context";
 import { useTranslation } from "react-i18next";
 import { isPersonalMode } from "@/lib/config";
+import FloatingTableOfContents from "./components/table-of-contents/floating-table-of-contents";
 import { PersistenceReceipt } from "@/features/personal/save-status";
 import { useBodySaveStatus } from "@/features/personal/hooks/use-body-save-status";
 import {
@@ -512,6 +513,7 @@ export function CollabPageEditor({
       {!managedOffline && isPersonalMode() && <OfflinePageControl pageId={pageId} provider={provider} />}
       <div ref={menuContainerRef}>
         <EditorContent editor={editor} />
+        {editor && isPersonalMode() && <FloatingTableOfContents editor={editor} />}
 
         {editor && (
           <SearchAndReplaceDialog editor={editor} editable={editable} />

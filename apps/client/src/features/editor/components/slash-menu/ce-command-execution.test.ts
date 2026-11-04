@@ -168,7 +168,7 @@ describe("CE slash commands use working editor transactions", () => {
     const groups = getSuggestionItems({ query: "" });
     const catalog = Object.values(groups).flat();
     expect(Object.keys(groups)).toHaveLength(7);
-    expect(catalog).toHaveLength(99);
+    expect(catalog).toHaveLength(100);
     expect(catalog.some(item => item.title === "Mention a person")).toBe(false);
     for (const item of catalog) {
       expect(item.title).toBeTypeOf("string");

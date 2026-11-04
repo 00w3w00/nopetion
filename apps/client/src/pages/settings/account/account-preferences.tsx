@@ -1,3 +1,4 @@
+import { isPersonalMode } from "@/lib/config";
 import SettingsTitle from "@/components/settings/settings-title.tsx";
 import AccountLanguage from "@/features/user/components/account-language.tsx";
 import AccountTheme from "@/features/user/components/account-theme.tsx";
@@ -31,16 +32,19 @@ export default function AccountPreferences() {
       <Divider my={"md"} />
 
       <PageWidthPref />
-      
+
       <Divider my={"md"} />
 
       <PageEditPref />
 
       <Divider my={"md"} />
 
-      <FixedToolbarPref />
-
-      <Divider my={"md"} />
+      {!isPersonalMode() && (
+        <>
+          <FixedToolbarPref />
+          <Divider my={"md"} />
+        </>
+      )}
 
       <NotificationPref />
     </>

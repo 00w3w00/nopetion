@@ -1,17 +1,25 @@
-import { useState } from "react";
-import { Button, Group, Stack, Switch } from "@mantine/core";
+import { useRef, useState } from "react";
+import { Group, Stack, Switch, Text, UnstyledButton } from "@mantine/core";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { notifications } from "@mantine/notifications";
 import { userAtom } from "@/features/user/atoms/current-user-atom";
 import { updateUser } from "@/features/user/services/user-service";
 import type { IUser } from "@/features/user/types/user.types";
-export default function DocumentAppearance() {
+import classes from "./document-appearance.module.css";
+
+export default function DocumentAppearance({
+  fullWidth = true,
+}: {
+  fullWidth?: boolean;
+}) {
   const { t } = useTranslation();
   const [user, setUser] = useAtom(userAtom);
   const [pending, setPending] = useState(false);
+  const pendingRef = useRef(false);
   const update = async (change: Partial<IUser>) => {
-    if (pending) return;
+    if (pendingRef.current) return;
+    pendingRef.current = true;
     setPending(true);
     try {
       setUser(await updateUser(change));
@@ -21,47 +29,59 @@ export default function DocumentAppearance() {
         message: t("Failed to update preferences"),
       });
     } finally {
+      pendingRef.current = false;
       setPending(false);
     }
   };
-  const font = user.settings?.preferences?.documentFont || "sans";
+  const preferences = user?.settings?.preferences;
+  const font = preferences?.documentFont || "sans";
   return (
-    <Stack gap="sm" p="xs">
-      <Group gap={5} grow>
+    <Stack gap={12} p={8}>
+      <Group gap={4} grow wrap="nowrap">
         {(["sans", "serif", "mono"] as const).map((value) => (
-          <Button
+          <UnstyledButton
             key={value}
-            variant={font === value ? "light" : "subtle"}
-            color="gray"
-            size="xs"
+            className={classes.font}
+            data-font={value}
+            aria-pressed={font === value}
             disabled={pending}
-            style={{
-              fontFamily:
-                value === "serif"
-                  ? "Georgia, serif"
-                  : value === "mono"
-                    ? "monospace"
-                    : undefined,
-            }}
             onClick={() => update({ documentFont: value })}
           >
-            {t(
-              value === "sans"
-                ? "Default font"
-                : value === "serif"
-                  ? "Serif"
-                  : "Monospace",
-            )}
-          </Button>
+            <span className={classes.specimen} aria-hidden="true">
+              Aa
+            </span>
+            <Text className={classes.label}>
+              {t(
+                value === "sans"
+                  ? "Default font"
+                  : value === "serif"
+                    ? "Serif"
+                    : "Monospace",
+              )}
+            </Text>
+          </UnstyledButton>
         ))}
       </Group>
       <Switch
+        className={classes.toggle}
         label={t("Small text")}
-        checked={!!user.settings?.preferences?.smallText}
+        labelPosition="left"
+        checked={!!preferences?.smallText}
         disabled={pending}
         onChange={(e) => update({ smallText: e.currentTarget.checked })}
         size="xs"
       />
+      {fullWidth && (
+        <Switch
+          className={classes.toggle}
+          label={t("Full width")}
+          labelPosition="left"
+          checked={!!preferences?.fullPageWidth}
+          disabled={pending}
+          onChange={(e) => update({ fullPageWidth: e.currentTarget.checked })}
+          size="xs"
+        />
+      )}
     </Stack>
   );
 }

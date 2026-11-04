@@ -2,7 +2,11 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Editor } from "@tiptap/core";
 import { aiDraftExtensions } from "./ai-draft-extensions";
 import { aiTextToBlocks } from "./ai-blocks";
-import { applyAiBlocks, captureAiSnapshot } from "./ai-editor";
+import {
+  applyAiBlocks,
+  canApplyAiBlocks,
+  captureAiSnapshot,
+} from "./ai-editor";
 import { StarterKit } from "@tiptap/starter-kit";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import { TableKit } from "@tiptap/extension-table";
@@ -165,6 +169,9 @@ describe("editable AI block proposals", () => {
     expect(editor.getText()).toContain("보존");
     const partial = create("<p>부분 원문</p>");
     partial.commands.setTextSelection({ from: 2, to: 4 });
+    expect(
+      canApplyAiBlocks(captureAiSnapshot(partial, "제목"), draft, true),
+    ).toBe(false);
     expect(
       applyAiBlocks(
         partial,

@@ -11,7 +11,13 @@ import {
   PersonalWidget,
 } from "@docmost/editor-ext";
 import { TaskList, TaskItem } from "@tiptap/extension-list";
-import { convertBlock, duplicateBlock, moveBlock } from "./block-actions";
+import {
+  canDuplicateBlock,
+  canMoveBlock,
+  convertBlock,
+  duplicateBlock,
+  moveBlock,
+} from "./block-actions";
 import {
   replaceMediaPlaceholder,
   validateMediaFile,
@@ -124,8 +130,16 @@ describe("Block controls preserve editor content", () => {
     );
     expect(editor.state.doc.firstChild.textContent).toBe("첫째");
     expect(moveBlock(editor, 0, -1)).toBe(false);
+    expect(canMoveBlock(editor, 0, -1)).toBe(false);
+    expect(canMoveBlock(editor, 0, 1)).toBe(true);
+    const lastPos =
+      editor.state.doc.content.size - editor.state.doc.lastChild.nodeSize;
+    expect(canMoveBlock(editor, lastPos, 1)).toBe(false);
+    expect(canDuplicateBlock(editor, 0)).toBe(true);
     const before = editor.getJSON();
     editor.setEditable(false);
+    expect(canMoveBlock(editor, 0, 1)).toBe(false);
+    expect(canDuplicateBlock(editor, 0)).toBe(false);
     expect(moveBlock(editor, 0, 1)).toBe(false);
     expect(duplicateBlock(editor, 0)).toBe(false);
     expect(editor.getJSON()).toEqual(before);

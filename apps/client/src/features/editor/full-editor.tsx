@@ -27,9 +27,11 @@ import clsx from "clsx";
 import { currentPageEditModeAtom } from "@/features/editor/atoms/editor-atoms.ts";
 import { EmptyPageGetStarted } from "@/features/editor/components/empty-page/empty-page-get-started";
 import { isPersonalMode } from "@/lib/config";
-import PageDecoration, { PersonalCover } from "@/features/personal/editor/page-decoration";
+import PageDecoration, {
+  PersonalCover,
+} from "@/features/personal/editor/page-decoration";
 import personalClasses from "@/features/personal/editor/personal-editor.module.css";
-import { ClassificationTags } from '@/features/personal-classification/classification-tags';
+import { ClassificationTags } from "@/features/personal-classification/classification-tags";
 
 const MemoizedTitleEditor = React.memo(TitleEditor);
 const MemoizedPageEditor = React.memo(PageEditor);
@@ -72,7 +74,7 @@ export function FullEditor({
   const [user] = useAtom(userAtom);
   const fullPageWidth = user.settings?.preferences?.fullPageWidth;
   const editorToolbarEnabled =
-    user.settings?.preferences?.editorToolbar ?? false;
+    !isPersonalMode() && (user.settings?.preferences?.editorToolbar ?? false);
   const [currentPageEditMode, setCurrentPageEditMode] = useAtom(
     currentPageEditModeAtom,
   );
@@ -91,43 +93,51 @@ export function FullEditor({
 
   return (
     <>
-    {isPersonalMode() && <PersonalCover pageId={pageId} editable={editable && isEditMode} />}
-    <Container
-      fluid={fullPageWidth}
-      size={fullPageWidth ? undefined : 900}
-      className={isPersonalMode() ? personalClasses.document : classes.editor}
-      data-personal-document={isPersonalMode() || undefined}
-      data-full-width={!!fullPageWidth}
-      data-document-font={user.settings?.preferences?.documentFont || "sans"}
-      data-small-text={!!user.settings?.preferences?.smallText}
-      style={{ display: "flex", flexDirection: "column" }}
-    >
-      {editorToolbarEnabled && editable && isEditMode && (
-        <MemoizedFixedToolbar />
+      {isPersonalMode() && (
+        <PersonalCover pageId={pageId} editable={editable && isEditMode} />
       )}
-      <MemoizedDeletedPageBanner slugId={slugId} />
-      {isPersonalMode() && <PageDecoration pageId={pageId} editable={editable && isEditMode} />}
-      <MemoizedTitleEditor
-        pageId={pageId}
-        slugId={slugId}
-        title={title}
-        spaceSlug={spaceSlug}
-        editable={editable}
-      />
-      {isPersonalMode() && <ClassificationTags pageId={pageId} />}
-      {!isPersonalMode() && <PageByline
-        creator={creator}
-        contributors={contributors}
-        readOnly={!editable}
-      />}
-      <MemoizedPageEditor
-        pageId={pageId}
-        editable={editable}
-        content={content}
-        canComment={canComment}
-      />
-      {!isPersonalMode() && <EmptyPageGetStarted pageId={pageId} editable={editable} />}
-    </Container>
+      <Container
+        fluid={fullPageWidth}
+        size={fullPageWidth ? undefined : isPersonalMode() ? 780 : 900}
+        className={isPersonalMode() ? personalClasses.document : classes.editor}
+        data-personal-document={isPersonalMode() || undefined}
+        data-full-width={!!fullPageWidth}
+        data-document-font={user.settings?.preferences?.documentFont || "sans"}
+        data-small-text={!!user.settings?.preferences?.smallText}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        {editorToolbarEnabled && editable && isEditMode && (
+          <MemoizedFixedToolbar />
+        )}
+        <MemoizedDeletedPageBanner slugId={slugId} />
+        {isPersonalMode() && (
+          <PageDecoration pageId={pageId} editable={editable && isEditMode} />
+        )}
+        <MemoizedTitleEditor
+          pageId={pageId}
+          slugId={slugId}
+          title={title}
+          spaceSlug={spaceSlug}
+          editable={editable}
+        />
+        {isPersonalMode() && <ClassificationTags pageId={pageId} />}
+        {!isPersonalMode() && (
+          <PageByline
+            creator={creator}
+            contributors={contributors}
+            readOnly={!editable}
+          />
+        )}
+        <MemoizedPageEditor
+          pageId={pageId}
+          editable={editable}
+          content={content}
+          canComment={canComment}
+        />
+        {!isPersonalMode() && (
+          <EmptyPageGetStarted pageId={pageId} editable={editable} />
+        )}
+      </Container>
     </>
   );
 }
@@ -225,8 +235,6 @@ function PageByline({ creator, contributors, readOnly }: PageBylineProps) {
           <IconInfoCircle size={20} stroke={1.5} />
         </ActionIcon>
       </Tooltip>
-
-
     </Group>
   );
 }

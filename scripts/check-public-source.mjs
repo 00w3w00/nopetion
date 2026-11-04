@@ -10,7 +10,7 @@ const sha = bytes=>createHash('sha256').update(bytes).digest('hex');
 const commercial = /^(?:apps\/(?:client|server)\/src\/ee|packages\/(?:ee|base-formula))\/(?!LICENSE$)/;
 const privateFile = /(?:^|\/)(?:\.env(?!\.example$)(?:\.|$)|AGENTS\.md$|SERVER-BUNDLE\.json$|docker-compose\.override\.yml$|\.gitmodules$)|^docs\/verification\//;
 const ignored = new Set(['node_modules','dist','.git','.nx','.pnpm-store','coverage']);
-const allowedRoot = new Set(['apps','packages','patches','notices','scripts','tests','.github','docs','.dockerignore','.env.example','.gitignore','.node-version','Dockerfile','LICENSE','README.md','SECURITY.md','CONTRIBUTING.md','docker-compose.yml','docker-compose.dev.yml','nx.json','package.json','pnpm-lock.yaml','pnpm-workspace.yaml','PUBLIC-SOURCE.json']);
+const allowedRoot = new Set(['apps','packages','patches','notices','scripts','tests','.github','docs','.dockerignore','.env.example','.gitignore','.node-version','Dockerfile','LICENSE','README.md','DESIGN.md','SECURITY.md','CONTRIBUTING.md','docker-compose.yml','docker-compose.dev.yml','nx.json','package.json','pnpm-lock.yaml','pnpm-workspace.yaml','PUBLIC-SOURCE.json']);
 const errors = [], files=[];
 async function walk(relative='') {
   for(const entry of await readdir(path.join(root,relative),{withFileTypes:true})) {
